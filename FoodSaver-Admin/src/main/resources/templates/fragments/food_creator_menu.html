@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" th:fragment="menu(role_id)">
+		<div class="app-brand demo">
+			<a href="/food_creator/dashboard" class="app-brand-link">
+				<span class="app-brand-logo demo">
+					<img width="25" src="/assets/img/favicon/food_saver_icon.png" />
+				</span>
+				<span class="app-brand-text demo menu-text fw-bold ms-2">Food Saver Creator</span>
+				<br>
+			</a>
+
+			<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+				<i class="bx bx-chevron-left bx-sm align-middle"></i>
+			</a>
+		</div>
+		<ul class="menu-inner py-1">
+			<!-- Dashboards -->
+			<li th:class="${role_id == 1} ? 'menu-item active' : 'menu-item'">
+				<a href="/food_creator/dashboard" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-home-circle"></i>
+					<div data-i18n="Dashboards">Dashboards</div>
+				</a>
+			</li>
+
+			<li class="menu-header small text-uppercase">
+				<span class="menu-header-text">Features</span>
+			</li>
+			<!-- Apps -->
+			<li th:class="${role_id == 5} ? 'menu-item active' : 'menu-item'">
+				<a href="/food_creator/products/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-food-menu"></i>
+					<div data-i18n="Product">Product</div>
+				</a>
+			</li>
+			<li th:class="${role_id == 6} ? 'menu-item active' : 'menu-item'">
+				<a class="menu-link">
+					<i class="menu-icon tf-icons bx bx-cube"></i>
+					<div data-i18n="Order">Order</div>
+				</a>
+			</li>
+		</ul>
+	</aside>
+</body>
+
+</html>
