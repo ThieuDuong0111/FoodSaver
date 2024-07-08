@@ -1,0 +1,27 @@
+steps:
+  - task: FlutterInstall@0
+    displayName: "Install Flutter"
+    inputs:
+      mode: 'auto'
+      channel: 'stable'
+      version: 'latest'
+  - task: FlutterCommand@0
+    displayName: "Flutter Packages Get"
+    inputs:
+      projectDirectory: '.'
+      arguments: 'packages get'
+  - task: FlutterCommand@0
+    displayName: "Build Runner Delete Conflicting Outputs"
+    inputs:
+      projectDirectory: '.'
+      arguments: 'pub run build_runner build --delete-conflicting-outputs'
+  - task: FlutterCommand@0
+    displayName: "Active Intl Utils"
+    inputs:
+      projectDirectory: '.'
+      arguments: 'pub global activate intl_utils'
+  - task: FlutterCommand@0
+    displayName: "Run Int Utils"
+    inputs:
+      projectDirectory: '.'
+      arguments: 'pub global run intl_utils:generate'

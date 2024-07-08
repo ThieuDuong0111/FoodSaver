@@ -1,0 +1,113 @@
+{
+    "Abstract class": {
+        "prefix": "ac",
+        "body": [
+            "import 'package:injectable/injectable.dart';",
+            "",
+            "abstract class $className {}",
+            "",
+            "@Injectable(as: $className)",
+            "class ${className}Impl implements $className {}",
+        ],
+        "description": "Creates an abstract class and a class to implement it"
+    },
+    "Creates a Freezed Model Class": {
+        "prefix": "fmc",
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "import 'package:funix_thieudvfx_foodsaver/core/data/data_model.dart';",
+            "",
+            "part '${TM_FILENAME_BASE}.freezed.dart';",
+            "part '${TM_FILENAME_BASE}.g.dart';",
+            "",
+            "@freezed",
+            "class ${name}Model with _$${name}Model implements DataModel{",
+            "  factory ${name}Model() = _${name}Model;",
+            "",
+            "  factory ${name}Model.fromJson(Map<String, dynamic> json) => _$${name}ModelFromJson(json);",
+            "}",
+        ],
+        "description": "Creates a Freezed Model class"
+    },
+    "Creates a Freezed Entity Class": {
+        "prefix": "fec",
+        "body": [
+            "import 'package:freezed_annotation/freezed_annotation.dart';",
+            "import 'package:funix_thieudvfx_foodsaver/core/data/domain_entity.dart';",
+            "",
+            "part '${TM_FILENAME_BASE}.freezed.dart';",
+            "",
+            "@freezed",
+            "class ${name}Entity with _$${name}Entity implements DomainEntity{",
+            "  factory ${name}Entity() = _${name}Entity;",
+            "}",
+        ],
+        "description": "Creates a Freezed Model class"
+    },
+    "Creates a Repostiroy Implementation": {
+        "prefix": "RepoImpl",
+        "body": [
+            "class ${name}RepositoryImpl extends ${name}Repository {",
+            "}"
+        ],
+        "description": "Creates a Repostiroy Implementation"
+    },
+    //StatefulScaffold
+    "Creates a Stateful with Scaffold": {
+        "prefix": "statefulScaffold",
+        "body": [
+            "import 'package:flutter/material.dart';",
+            "",
+            "class ${name}Screen extends StatefulWidget {",
+            "   const ${name}Screen({super.key});",
+              
+            "   @override",
+            "   State<${name}Screen> createState() => _${name}ScreenState();",
+            "}",
+              
+            "class _${name}ScreenState extends State<${name}Screen> {",
+            "   @override",
+            "   Widget build(BuildContext context) {",
+            "       return const Scaffold();",
+            "   }",
+            "}",
+        ],
+        "description": "Stateful with Scaffold"
+    },
+    "Creates a Freezed data state": {
+        "prefix": "fds",
+        "body": [
+            "@freezed",
+            "class ${name}State with _$${name}State {",
+            "  factory ${name}State() = _${name}State;",
+            "}",
+        ]
+    },
+    "Data Mapper Model to Entity": {
+        "description": "Creates mapper from model to entity",
+        "prefix": "mapem",
+        "body": [
+            "import 'package:funix_thieudvfx_foodsaver/core/data/domain_mapper.dart';",
+            "",
+            "part '${TM_FILENAME_BASE}.mapper.g.dart';",
+            "",
+            "@Mapper(useInjection: true)",
+            "abstract class ${name}FromModelToEntityMapper extends EntityFromModelMapper<${name}Entity, ${name}Model> {}",
+        ]
+    },
+    "Data Mapper Entity to Model": {
+        "description": "Creates mapper from entity to model",
+        "prefix": "mapme",
+        "body": [
+            "import 'package:funix_thieudvfx_foodsaver/data/models/${TM_FILENAME_BASE/(.+)_view/$1/}_model.dart';",
+            "import 'package:funix_thieudvfx_foodsaver/domain/entities/${TM_FILENAME_BASE/(.+)_view/$1/}_entity.dart';",
+            "import 'package:funix_thieudvfx_foodsaver/domain/mapper/domain_mapper.dart';",
+            "",
+            "part '${TM_FILENAME_BASE}.mapper.g.dart';",
+            "",
+            "@Mapper(useInjection: true)",
+            "abstract class ${name}FromEntiyToModelMapper extends ModelFromEntityMapper<${name}Model, ${name}Entity> {}",
+        ]
+    }
+
+}

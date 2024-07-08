@@ -1,0 +1,69 @@
+jobs:
+  - job: android_firebase_distribution
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      - group: mobile-app
+      - name: androidReleaseDir
+        value: $(Build.SourcesDirectory)/build/app/outputs/flutter-apk
+      - name: apkFile
+        value: $(androidReleaseDir)/mio-core.apk
+    steps:
+      - template: helper.yml
+      - task: CopyFiles@2
+        displayName: "Copy apk to artifact directory"
+        inputs:
+          contents: "**/*.apk"
+          targetFolder: "$(build.artifactStagingDirectory)"
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish signed apk as artifact"
+        inputs:
+          artifactName: "drop"
+
+      - task: Bash@3
+        displayName: "Upload to firebase app distribution"
+        inputs:
+          targetType: "inline"
+          script: |
+            npm i -g firebase-tools
+            ls -la $(androidReleaseDir)
+            firebase appdistribution:distribute "$(apkFile)" \
+              --app "$(androidFirebaseDistAppId)" \
+              --release-notes "From Azure Devops" \
+              --groups "beta-testers" \
+              --token "$(firebasetoken)"
+
+  # - job: ios_firebase_distribution
+  #   pool:
+  #     vmImage: ubuntu-latest
+
+  #   steps:
+  #     - template: helper.yml
+  #     - task: FlutterCommand@0
+  #       displayName: "Flutter Analyze"
+  #       inputs:
+  #         projectDirectory: '.'
+  #         arguments: 'analyze .'
+  #     - task: FlutterCommand@0
+  #       displayName: "Checks For Code Metrics"
+  #       inputs:
+  #         projectDirectory: '.'
+  #         arguments: 'pub run dart_code_metrics:metrics analyze lib --fatal-style --fatal-warnings --fatal-performance'
+  #     - task: FlutterCommand@0
+  #       displayName: "Checks For Unused Files"
+  #       inputs:
+  #         projectDirectory: '.'
+  #         arguments: 'pub run dart_code_metrics:metrics check-unused-files lib --no-fatal-unused'
+  #     - task: FlutterCommand@0
+  #       displayName: "Checks For Unused Code"
+  #       inputs:
+  #         projectDirectory: '.'
+  #         arguments: 'pub run dart_code_metrics:metrics check-unused-code lib --no-fatal-unused'
+  #     - task: FlutterCommand@0
+  #       displayName: "Checks For Unused Localizations"
+  #       inputs:
+  #         projectDirectory: '.'
+  #         arguments: 'pub run dart_code_metrics:metrics check-unused-l10n -p Il8n lib'
+
+

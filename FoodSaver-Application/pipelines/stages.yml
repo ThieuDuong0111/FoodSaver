@@ -1,0 +1,20 @@
+name: flutter-mio-core-pipeline-v1-$(Date:yyyyMMdd)$(Rev:.r)
+trigger:
+- main
+
+stages:
+# - stage: code_validation
+#   displayName: Code Validation
+#   jobs:
+#   - template: code-validation.yml
+
+- stage: build
+  displayName: Build
+  jobs:
+    - template: build.yml
+    
+- stage: deployment
+  displayName: Deployment
+  jobs:
+    - template: deployment.yml
+

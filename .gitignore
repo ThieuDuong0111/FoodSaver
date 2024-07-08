@@ -1,0 +1,40 @@
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+/FoodSaver-Application/**/doc/api/
+/FoodSaver-Application/**/ios/Flutter/.last_build_id
+/FoodSaver-Application/.dart_tool/
+/FoodSaver-Application/.flutter-plugins
+/FoodSaver-Application/.flutter-plugins-dependencies
+/FoodSaver-Application/.packages
+/FoodSaver-Application/.pub-cache/
+/FoodSaver-Application/.pub/
+/FoodSaver-Application/build/
+/FoodSaver-Application/coverage/
+/FoodSaver-Application/**/*.config.dart
+/FoodSaver-Application/**/*.mocks.dart
+/FoodSaver-Application/**/generated/**
+/FoodSaver-Application/**/*.gen.dart
+/FoodSaver-Application/**/*.gr.dart
+/FoodSaver-Application/**/*.g.dart
+/FoodSaver-Application/**/*.freezed.dart
+/FoodSaver-Application/.secrets/**
+
+
+# Web related
+/FoodSaver-Application/lib/generated_plugin_registrant.dart
+
+# Symbolication related
+/FoodSaver-Application/app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+

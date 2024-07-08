@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "dart-code.flutter",
+        "dart-code.dart-code",
+        "nash.awesome-flutter-snippets",
+        "redhat.vscode-yaml",
+        "gaetschwartz.build-runner",
+        "localizely.flutter-intl",
+        "dotup.dart-data-class-generator",
+        "ryanluker.vscode-coverage-gutters",
+        "flutterando.flutter-coverage",
+        "usernamehw.errorlens",
+        "psioniq.psi-header",
+        "rioj7.command-variable",
+		"kiritchoukc.flutter-clean-architecture"
+    ]
+}

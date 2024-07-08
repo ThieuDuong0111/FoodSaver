@@ -1,0 +1,32 @@
+jobs:
+  - job: code_validation
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+      - template: helper.yml
+      - task: FlutterCommand@0
+        displayName: "Flutter Analyze"
+        inputs:
+          projectDirectory: '.'
+          arguments: 'analyze .'
+      - task: FlutterCommand@0
+        displayName: "Checks For Code Metrics"
+        inputs:
+          projectDirectory: '.'
+          arguments: 'pub run dart_code_metrics:metrics analyze lib --fatal-style --fatal-warnings --fatal-performance'
+      - task: FlutterCommand@0
+        displayName: "Checks For Unused Files"
+        inputs:
+          projectDirectory: '.'
+          arguments: 'pub run dart_code_metrics:metrics check-unused-files lib --no-fatal-unused'
+      - task: FlutterCommand@0
+        displayName: "Checks For Unused Code"
+        inputs:
+          projectDirectory: '.'
+          arguments: 'pub run dart_code_metrics:metrics check-unused-code lib --no-fatal-unused'
+      - task: FlutterCommand@0
+        displayName: "Checks For Unused Localizations"
+        inputs:
+          projectDirectory: '.'
+          arguments: 'pub run dart_code_metrics:metrics check-unused-l10n -p Il8n lib'

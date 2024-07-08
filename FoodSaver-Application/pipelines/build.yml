@@ -1,0 +1,81 @@
+jobs:
+  - job: build_android
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      - group: mobile-app
+    steps:
+      - template: helper.yml
+      - task: FlutterBuild@0
+        displayName: "Flutter Build Android App"
+        inputs:
+          target: apk
+          projectDirectory: "."
+          buildNumber: ""
+
+      - task: AndroidSigning@3
+        displayName: "Signing and aligning APK file(s) **/*.apk"
+        inputs:
+          apkFiles: "**/*.apk"
+          apksign: true
+          apksignerKeystoreFile: android-keystore.jks
+          apksignerKeystorePassword: "$(androidKeystorePassword)"
+          apksignerKeystoreAlias: flutter-mio-core
+          apksignerKeyPassword: "$(androidKeyPassword)"
+
+  # - job: build_ios
+  #   pool:
+  #     vmImage: macos-12
+  #   variables:
+  #     - name: configuration
+  #       value: "Release"
+  #     - name: sdk
+  #       value: "iphoneos"
+  #     - name: iosReleaseDir
+  #       value: $(Build.SourcesDirectory)/output/$(sdk)/$(configuration)
+  #     - name: ipaFile
+  #       value: $(iosReleaseDir)/mio-core.ipa
+  #   steps:
+  #     - template: helper.yml
+  #     - task: FlutterBuild@0
+  #       displayName: "Flutter Build iOS App"
+  #       inputs:
+  #         target: ios
+  #         buildName: "$(Build.BuildNumber)"
+  #         entryPoint: "lib/main.dart"
+  #         iosCodesign: false
+
+  #     - task: InstallAppleCertificate@2
+  #       displayName: "Install Apple p12 cert"
+  #       inputs:
+  #         certSecureFile: "ios-certificate.p12"
+  #         keychain: "temp"
+
+  #     - task: InstallAppleProvisioningProfile@1
+  #       displayName: "Install Apple Mobile Provisioning Profile"
+  #       inputs:
+  #         provisioningProfileLocation: "secureFiles"
+  #         provProfileSecureFile: "ios-provision.mobileprovision"
+
+  #     - bash: |
+  #         # Fixing permissions issues, otherwise xcode build will fail with a failed 'PhaseScriptExecution Copy ...' command
+  #         # See: https://stackoverflow.com/questions/38465217/cordova-error-code-65-for-command-xcodebuild-with-args
+   
+  #         chmod -R +x $(System.DefaultWorkingDirectory)
+  #       displayName: 'Fix permission issues'
+
+  #     - task: Xcode@5
+  #       displayName: "Code Sign ipa for Distribution"
+  #       inputs:
+  #         actions: "build"
+  #         scheme: "Runner"
+  #         sdk: "$(sdk)"
+  #         exportOptionsPlist: "ios/exportOptions.plist"
+  #         configuration: "$(configuration)"
+  #         xcWorkspacePath: "ios/Runner.xcworkspace"
+  #         xcodeVersion: "default"
+  #         packageApp: true
+  #         signingOption: "manual"
+  #         args: "-verbose"
+  #         signingIdentity: "$(APPLE_CERTIFICATE_SIGNING_IDENTITY)"
+  #         provisioningProfileUuid: "$(APPLE_PROV_PROFILE_UUID)"
