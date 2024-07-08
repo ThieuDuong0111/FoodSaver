@@ -27,17 +27,20 @@ public class SignUpController {
 				.body(signUpDTO);
 		}
 		// add check for username exists in a DB
-		if (userServiceImpl.existsByNameSignUp(signUpDTO).getHasError() == true) {
+		if (userServiceImpl.existsByNameSignUp(signUpDTO)
+			.getHasError() == true) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signUpDTO);
 		}
 		// add check for email exists in DB
-		if (userServiceImpl.existsByEmailSignUp(signUpDTO).getHasError() == true) {
+		if (userServiceImpl.existsByEmailSignUp(signUpDTO)
+			.getHasError() == true) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signUpDTO);
 		}
 		// add check for email exists in DB
-		if (userServiceImpl.existsByEmailSignUp(signUpDTO).getHasError() == true) {
+		if (userServiceImpl.existsByEmailSignUp(signUpDTO)
+			.getHasError() == true) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signUpDTO);
 		}

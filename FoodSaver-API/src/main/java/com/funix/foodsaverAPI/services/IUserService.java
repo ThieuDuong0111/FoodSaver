@@ -7,6 +7,8 @@ import com.funix.foodsaverAPI.dto.SignUpDTO;
 import com.funix.foodsaverAPI.dto.UserDTO;
 import com.funix.foodsaverAPI.models.MyUser;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface IUserService {
 
 	UserDTO convertToDto(MyUser user);
@@ -15,11 +17,15 @@ public interface IUserService {
 
 	List<MyUser> getAllUsers();
 
-	void saveUser(UserDTO userDTO);
+	UserDTO updateUserInfo(HttpServletRequest request, UserDTO userDTO);
 
 	MyUser getUserById(int id);
 
+	MyUser getUserByName(String name);
+
 	MyUser getUserByImageUrl(String url);
+
+	MyUser getUserByToken(HttpServletRequest request);
 
 	// Sign-Up
 
@@ -38,6 +44,6 @@ public interface IUserService {
 	SignInDTO checkInformationSignInValid(SignInDTO ignInDTO);
 
 	SignInDTO existsByNameSignIn(SignInDTO signInDTO);
-	
+
 	SignInDTO validatePasswordSignIn(SignInDTO signInDTO);
 }

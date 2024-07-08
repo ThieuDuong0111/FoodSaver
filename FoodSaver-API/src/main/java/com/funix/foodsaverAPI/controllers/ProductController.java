@@ -1,7 +1,5 @@
 package com.funix.foodsaverAPI.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +18,12 @@ public class ProductController {
 	private ProductServiceImpl productServiceImpl;
 
 	@GetMapping({ "/products" })
-	public List<ProductDTO> getAllProducts() {
-		return productServiceImpl.getAllProducts();
+	public ResponseEntity<?> getAllProducts() {
+		return ResponseEntity.ok(productServiceImpl.getAllProducts());
 	}
 
 	@GetMapping({ "/product/{id}" })
-	public ResponseEntity<ProductDTO> getProductDetail(@PathVariable int id) {
+	public ResponseEntity<?> getProductDetail(@PathVariable int id) {
 		ProductDTO productDTO = productServiceImpl
 			.convertToDto(productServiceImpl.getProductById(id));
 		if (productDTO == null) {

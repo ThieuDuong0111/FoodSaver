@@ -1,9 +1,9 @@
 package com.funix.foodsaverAPI.dto;
 
-public class SignInResponse {
+public class TokenDTO {
 	private String token;
 
-	public SignInResponse(String token) {
+	public TokenDTO(String token) {
 		super();
 		this.token = token;
 	}

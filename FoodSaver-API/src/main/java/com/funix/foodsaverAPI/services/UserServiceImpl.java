@@ -1,5 +1,6 @@
 package com.funix.foodsaverAPI.services;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.funix.foodsaverAPI.dto.SignInDTO;
 import com.funix.foodsaverAPI.dto.SignUpDTO;
@@ -16,13 +18,22 @@ import com.funix.foodsaverAPI.models.Role;
 import com.funix.foodsaverAPI.repositories.IUserRepository;
 import com.funix.foodsaverAPI.utils.ValidationUtils;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import com.funix.foodsaverAPI.utils.ImageUtils;
+import com.funix.foodsaverAPI.utils.ParseUtils;
+
 @Service
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IUserRepository userRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private JWTService jWTService;
 
 	@Override
 	public UserDTO convertToDto(MyUser user) {
@@ -45,28 +56,59 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void saveUser(UserDTO userDTO) {
-		// save image file
-//		if (!userDTO.getImageFile().isEmpty()
-//			&& userDTO.getImageFile() != null) {
-//			MultipartFile image = userDTO.getImageFile();
-//			try {
-//				userDTO.setAvatar(
-//					Base64.getEncoder().encodeToString(
-//						ImageUtils.resizeImage(image.getBytes(), 500, 500)));
-//
-//			} catch (Exception e) {
-//				System.out.println("Upload Image Exception: " + e.getMessage());
-//			}
-//		}
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-		this.userRepository.save(convertToEntity(userDTO));
+	public UserDTO updateUserInfo(HttpServletRequest request, UserDTO userDTO) {
+
+		MyUser user = getUserByToken(request);
+		// update Image
+		if (userDTO.getImageFile() != null) {
+			MultipartFile image = userDTO.getImageFile();
+			try {
+				user.setAvatar(
+					Base64.getEncoder().encodeToString(
+						ImageUtils.resizeImage(image.getBytes(), 500, 500)));
+				user.setImageType(image.getContentType());
+				String array[] = image.getContentType().split("/");
+				String imageUrl = ParseUtils.parseImageUrl(image.getBytes());
+				if (array.length > 1) {
+					user.setImageUrl(
+						imageUrl + "." + array[1]);
+				} else {
+					user.setImageUrl(
+						imageUrl);
+				}
+			} catch (Exception e) {
+				System.out.println("Upload Image Exception: " + e.getMessage());
+			}
+		}
+		// update email
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getEmail())) {
+			user.setEmail(userDTO.getEmail());
+		}
+		// update phone
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getPhone())) {
+			user.setPhone(userDTO.getPhone());
+		}
+		// update address
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getAddress())) {
+			user.setAddress(userDTO.getAddress());
+		}
+		this.userRepository.save(user);
+		return convertToDto(getUserById(user.getId()));
 	}
 
 	@Override
 	public MyUser getUserById(int id) {
 		Optional<MyUser> optionalUser = userRepository.findById(id);
+		MyUser user = null;
+		if (optionalUser.isPresent()) {
+			user = optionalUser.get();
+		}
+		return user;
+	}
+
+	@Override
+	public MyUser getUserByName(String name) {
+		Optional<MyUser> optionalUser = userRepository.findByName(name);
 		MyUser user = null;
 		if (optionalUser.isPresent()) {
 			user = optionalUser.get();
@@ -84,6 +126,18 @@ public class UserServiceImpl implements IUserService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public MyUser getUserByToken(HttpServletRequest request) {
+		String array[] = request.getHeader("Authorization").split(" ");
+		String name = jWTService.extractUsername(array[1]);
+		Optional<MyUser> optionalUser = userRepository.findByName(name);
+		MyUser user = null;
+		if (optionalUser.isPresent()) {
+			user = optionalUser.get();
+		}
+		return user;
 	}
 
 	@Override

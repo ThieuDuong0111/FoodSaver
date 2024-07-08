@@ -38,7 +38,7 @@ public class MyUser {
 	@OneToMany(mappedBy = "userOrders")
 	private List<Order> orders;
 
-	@Column(length = 100)
+	@Column(length = 100, unique = true)
 	private String name;
 
 	@Lob
@@ -53,10 +53,10 @@ public class MyUser {
 
 	private String password;
 
-	@Column(length = 50)
+	@Column(length = 50, unique = true)
 	private String email;
 
-	@Column(length = 20)
+	@Column(length = 20, unique = true)
 	private String phone;
 
 	@Column(length = 100)

@@ -29,7 +29,7 @@ public class JWTService {
 			.setSubject(userName)
 			.setIssuedAt(new Date(System.currentTimeMillis()))
 			.setExpiration(
-				new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				new Date(System.currentTimeMillis() + 1000 * 60 * 30 * 24 * 7))
 			.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
 	}
 
@@ -70,5 +70,4 @@ public class JWTService {
 		return (username.equals(userDetails.getUsername())
 			&& !isTokenExpired(token));
 	}
-
 }

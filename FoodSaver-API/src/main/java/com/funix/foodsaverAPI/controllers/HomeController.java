@@ -21,7 +21,7 @@ public class HomeController {
 	private ProductServiceImpl productServiceImpl;
 
 	@GetMapping
-	public ResponseEntity<HomeDTO> getHome() {
+	public ResponseEntity<?> getHome() {
 		HomeDTO homeDTO = new HomeDTO();
 		homeDTO.setCategories(categoryServiceImpl.getAllCategories());
 		homeDTO.setProducts(productServiceImpl.getTop20Products());
