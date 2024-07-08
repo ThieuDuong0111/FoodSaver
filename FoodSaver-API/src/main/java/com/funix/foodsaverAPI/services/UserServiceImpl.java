@@ -213,7 +213,6 @@ public class UserServiceImpl implements IUserService {
 				signInDTO.setHasError(true);
 				return signInDTO;
 			}
-			signInDTO.setRole(user.getRole());
 		}
 		return signInDTO;
 	}

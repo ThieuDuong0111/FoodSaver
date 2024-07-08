@@ -1,14 +1,11 @@
 package com.funix.foodsaverAPI.dto;
 
-import com.funix.foodsaverAPI.models.Role;
-
 public class SignInDTO {
 	private String name;
 	private String password;
 	private String nameError;
 	private String passwordError;
 	private Boolean hasError;
-	private Role role;
 
 	public String getName() {
 		return name;
@@ -48,13 +45,5 @@ public class SignInDTO {
 
 	public void setHasError(Boolean hasError) {
 		this.hasError = hasError;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
 	}
 }
