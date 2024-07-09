@@ -27,6 +27,19 @@ public class OrderDetail {
 
 	private double unitPrice;
 
+	public OrderDetail() {
+		super();
+	}
+
+	public OrderDetail(Order order, Product orderProduct, int unitQuantity,
+		double unitPrice) {
+		super();
+		this.order = order;
+		this.orderProduct = orderProduct;
+		this.unitQuantity = unitQuantity;
+		this.unitPrice = unitPrice;
+	}
+
 	public int getId() {
 		return id;
 	}

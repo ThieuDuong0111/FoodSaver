@@ -1,5 +1,6 @@
 package com.funix.foodsaverAPI.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class CartDTO {
 	private Date publishedDate;
 
 	private Boolean isDone;
+
+	private BigDecimal totalAmount;
 
 	public int getId() {
 		return id;
@@ -52,5 +55,13 @@ public class CartDTO {
 
 	public void setIsDone(Boolean isDone) {
 		this.isDone = isDone;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 }

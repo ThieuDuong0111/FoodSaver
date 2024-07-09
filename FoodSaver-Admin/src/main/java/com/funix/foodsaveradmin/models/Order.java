@@ -1,5 +1,6 @@
 package com.funix.foodsaveradmin.models;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +28,14 @@ public class Order {
 	@JoinColumn(name = "user_id")
 	private MyUser userOrders;
 
+	private int creatorId;
+
 	private Date publishedDate;
 
 	@Column(length = 100)
 	private String orderCode;
 
-	private double totalAmount;
+	private BigDecimal totalAmount;
 
 	private Boolean isPaid;
 
@@ -76,11 +79,11 @@ public class Order {
 		this.orderCode = orderCode;
 	}
 
-	public double getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(double totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
@@ -92,4 +95,11 @@ public class Order {
 		this.isPaid = isPaid;
 	}
 
+	public int getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(int creatorId) {
+		this.creatorId = creatorId;
+	}
 }

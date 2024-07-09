@@ -1,6 +1,9 @@
 package com.funix.foodsaverAPI.controllers;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.funix.foodsaverAPI.dto.CartDTO;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
+import com.funix.foodsaverAPI.dto.ErrorMessageResponse;
 import com.funix.foodsaverAPI.services.CartServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,8 +48,14 @@ public class CartController {
 
 	@PostMapping("/checkout")
 	public ResponseEntity<?> checkout(HttpServletRequest request,
-		@RequestBody CartDTO cartDTO) {
-		return ResponseEntity
-			.ok(cartServiceImpl.checkout(request, cartDTO));
+		@RequestBody CartDTO cartDTO) throws ParseException {
+		try {
+			return ResponseEntity
+				.ok(cartServiceImpl.checkout(request, cartDTO));
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(
+				new ErrorMessageResponse(e.getMessage()),
+				HttpStatus.BAD_REQUEST);
+		}
 	}
 }

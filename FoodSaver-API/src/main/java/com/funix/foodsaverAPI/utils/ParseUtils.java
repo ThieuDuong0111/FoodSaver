@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,5 +34,16 @@ public class ParseUtils {
 		return UUID.nameUUIDFromBytes(byteArray)
 			.toString()
 			+ LocalDateTime.now().toString();
+	}
+
+	public static String generateOrderCode() throws ParseException {
+		LocalDateTime now = LocalDateTime.now();
+
+		DateTimeFormatter formatter = DateTimeFormatter
+			.ofPattern("HHmmssddMMyyyy");
+
+		String formattedDateTime = now.format(formatter);
+		
+		return formattedDateTime;
 	}
 }

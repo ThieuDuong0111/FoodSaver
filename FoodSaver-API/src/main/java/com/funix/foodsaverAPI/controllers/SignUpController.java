@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.SignUpDTO;
+import com.funix.foodsaverAPI.dto.SuccessMessageResponse;
 import com.funix.foodsaverAPI.services.UserServiceImpl;
 
 @RestController
@@ -47,7 +48,8 @@ public class SignUpController {
 
 		userServiceImpl.signUp(signUpDTO);
 
-		return new ResponseEntity<>("User registered successfully",
+		return new ResponseEntity<>(
+			new SuccessMessageResponse("User registered successfully"),
 			HttpStatus.OK);
 	}
 }
