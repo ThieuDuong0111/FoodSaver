@@ -43,6 +43,14 @@ public class CartItem {
 		this.cart = cart;
 	}
 
+	public Product getCartProduct() {
+		return cartProduct;
+	}
+
+	public void setCartProduct(Product cartProduct) {
+		this.cartProduct = cartProduct;
+	}
+
 	public int getUnitQuantity() {
 		return unitQuantity;
 	}
@@ -55,20 +63,7 @@ public class CartItem {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(int unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	public Product getCartProduct() {
-		return cartProduct;
-	}
-
-	public void setCartProduct(Product cartProduct) {
-		this.cartProduct = cartProduct;
-	}
-
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-
 }

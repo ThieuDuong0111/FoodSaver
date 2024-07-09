@@ -28,6 +28,8 @@ public class Cart {
 
 	private Date publishedDate;
 
+	private Boolean isDone;
+
 	public int getId() {
 		return id;
 	}
@@ -60,4 +62,11 @@ public class Cart {
 		this.publishedDate = publishedDate;
 	}
 
+	public Boolean getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(Boolean isDone) {
+		this.isDone = isDone;
+	}
 }

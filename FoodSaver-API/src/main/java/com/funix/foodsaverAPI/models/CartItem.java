@@ -27,6 +27,19 @@ public class CartItem {
 
 	private double unitPrice;
 
+	public CartItem() {
+		super();
+	}
+
+	public CartItem(Cart cart, Product cartProduct, int unitQuantity,
+		double unitPrice) {
+		super();
+		this.cart = cart;
+		this.cartProduct = cartProduct;
+		this.unitQuantity = unitQuantity;
+		this.unitPrice = unitPrice;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -43,6 +56,14 @@ public class CartItem {
 		this.cart = cart;
 	}
 
+	public Product getCartProduct() {
+		return cartProduct;
+	}
+
+	public void setCartProduct(Product cartProduct) {
+		this.cartProduct = cartProduct;
+	}
+
 	public int getUnitQuantity() {
 		return unitQuantity;
 	}
@@ -55,20 +76,7 @@ public class CartItem {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(int unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-
-	public Product getCartProduct() {
-		return cartProduct;
-	}
-
-	public void setCartProduct(Product cartProduct) {
-		this.cartProduct = cartProduct;
-	}
-
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-
 }

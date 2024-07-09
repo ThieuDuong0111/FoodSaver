@@ -28,6 +28,21 @@ public class Cart {
 
 	private Date publishedDate;
 
+	private Boolean isDone;
+
+	public Cart() {
+		super();
+	}
+
+	public Cart(List<CartItem> cartItems, MyUser userCarts, Date publishedDate,
+		Boolean isDone) {
+		super();
+		this.cartItems = cartItems;
+		this.userCarts = userCarts;
+		this.publishedDate = publishedDate;
+		this.isDone = isDone;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -60,4 +75,11 @@ public class Cart {
 		this.publishedDate = publishedDate;
 	}
 
+	public Boolean getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(Boolean isDone) {
+		this.isDone = isDone;
+	}
 }
