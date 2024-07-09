@@ -26,8 +26,8 @@ public interface ICartService {
 	CartDTO deleteItem(HttpServletRequest request,
 		CartItemDTO cartItemDTO);
 
-	CartDTO checkout(HttpServletRequest request,
-		CartDTO cartDTO) throws IllegalArgumentException, ParseException;
+	void checkout(HttpServletRequest request)
+		throws IllegalArgumentException, ParseException;
 
 	BigDecimal calculateTotalAmountOfCart(CartDTO cartDTO);
 

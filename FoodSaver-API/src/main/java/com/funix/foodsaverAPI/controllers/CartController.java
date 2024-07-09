@@ -16,6 +16,7 @@ import com.funix.foodsaverAPI.dto.CartDTO;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
 import com.funix.foodsaverAPI.dto.ErrorMessageResponse;
+import com.funix.foodsaverAPI.dto.SuccessMessageResponse;
 import com.funix.foodsaverAPI.services.CartServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,11 +48,12 @@ public class CartController {
 	}
 
 	@PostMapping("/checkout")
-	public ResponseEntity<?> checkout(HttpServletRequest request,
-		@RequestBody CartDTO cartDTO) throws ParseException {
+	public ResponseEntity<?> checkout(HttpServletRequest request)
+		throws ParseException {
 		try {
+			cartServiceImpl.checkout(request);
 			return ResponseEntity
-				.ok(cartServiceImpl.checkout(request, cartDTO));
+				.ok(new SuccessMessageResponse("Checkout Successfully"));
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(
 				new ErrorMessageResponse(e.getMessage()),

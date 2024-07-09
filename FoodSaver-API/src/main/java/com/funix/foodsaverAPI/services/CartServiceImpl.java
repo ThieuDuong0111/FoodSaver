@@ -153,7 +153,7 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public CartDTO checkout(HttpServletRequest request, CartDTO cartDTO)
+	public void checkout(HttpServletRequest request)
 		throws IllegalArgumentException, ParseException {
 		MyUser user = userService.getUserByToken(request);
 		Cart cart = cartRepository.getItemsByUserId(user.getId()).get();
@@ -209,14 +209,11 @@ public class CartServiceImpl implements ICartService {
 			}
 
 			// Update Cart Done
-//			cart.setIsDone(true);
+			cart.setIsDone(true);
 
-			// Parse to Order
-
-//			cartRepository.save(cart);
+			cartRepository.save(cart);
 		}
-		Optional<Cart> cartGet = cartRepository.getItemsByUserId(user.getId());
-		return convertToDto(cartGet.get());
+
 	}
 
 	@Override
