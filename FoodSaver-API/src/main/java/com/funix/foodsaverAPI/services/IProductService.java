@@ -17,4 +17,8 @@ public interface IProductService {
 	Product getProductByImageUrl(String url);
 
 	void deleteProductById(int id);
+
+	List<ProductDTO> findByCategoryId(int categoryId);
+
+	List<ProductDTO> searchByName(String name);
 }

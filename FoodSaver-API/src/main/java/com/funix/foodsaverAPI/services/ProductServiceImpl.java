@@ -68,6 +68,20 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
+	public List<ProductDTO> findByCategoryId(int categoryId) {
+		return productRepository.findByCategoryId(categoryId).stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ProductDTO> searchByName(String name) {
+		return productRepository.searchByName(name).stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
+	}
+
+	@Override
 	public void deleteProductById(int id) {
 		this.productRepository.deleteById(id);
 	}

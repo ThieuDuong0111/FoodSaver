@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.ProductDTO;
@@ -17,7 +18,7 @@ public class ProductController {
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
 
-	@GetMapping({ "/products" })
+	@GetMapping({ "/products/all" })
 	public ResponseEntity<?> getAllProducts() {
 		return ResponseEntity.ok(productServiceImpl.getAllProducts());
 	}
@@ -30,5 +31,12 @@ public class ProductController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(productDTO);
+	}
+
+	@GetMapping({ "/products" })
+	public ResponseEntity<?> getProductByCategoryId(
+		@RequestParam(value = "categoryId") int categoryId) {
+		return ResponseEntity
+			.ok(productServiceImpl.findByCategoryId(categoryId));
 	}
 }

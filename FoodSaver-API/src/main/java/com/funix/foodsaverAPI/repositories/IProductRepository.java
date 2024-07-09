@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.funix.foodsaverAPI.models.Product;
@@ -16,4 +17,9 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> getTop20Products();
 
 	Optional<Product> findByImageUrl(String imageUrl);
+
+	List<Product> findByCategoryId(int categoryId);
+
+	@Query(value = "SELECT * FROM Product p WHERE name LIKE %:name%", nativeQuery = true)
+	List<Product> searchByName(@Param("name") String name);
 }
