@@ -14,6 +14,7 @@ import com.funix.foodsaverAPI.models.OrderDetail;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface ICartService {
+	
 	CartDTO convertToDto(Cart cart);
 
 	OrderDetail convertToOrderDetail(CartItem cartItem);

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.ProductDTO;
 import com.funix.foodsaverAPI.models.Product;
 import com.funix.foodsaverAPI.repositories.IProductRepository;
@@ -38,6 +39,17 @@ public class ProductServiceImpl implements IProductService {
 			.setCategory(categoryService.convertToDto(product.getCategory()));
 		productDTO
 			.setCreator(userService.convertToDto(product.getCreator()));
+		return productDTO;
+	}
+
+	@Override
+	public ProductDTO convertFromCartItemToProductDTO(CartItemDTO cartItemDTO) {
+		ProductDTO productDTO = modelMapper.map(cartItemDTO.getCartProduct(),
+			ProductDTO.class);
+		if (cartItemDTO.getCartProduct().getImageUrl() != null) {
+			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
+				+ cartItemDTO.getCartProduct().getImageUrl());
+		}
 		return productDTO;
 	}
 
@@ -98,4 +110,5 @@ public class ProductServiceImpl implements IProductService {
 			return null;
 		}
 	}
+
 }

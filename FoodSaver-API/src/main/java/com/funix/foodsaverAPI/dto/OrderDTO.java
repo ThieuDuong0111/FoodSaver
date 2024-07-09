@@ -3,15 +3,10 @@ package com.funix.foodsaverAPI.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.funix.foodsaverAPI.models.OrderDetail;
-import com.funix.foodsaverAPI.models.MyUser;
-
 public class OrderDTO {
 	private int id;
 
-	private List<OrderDetail> orderDetails;
-
-	private MyUser userOrders;
+	private List<OrderDetailDTO> orderDetails;
 
 	private Date publishedDate;
 
@@ -27,20 +22,12 @@ public class OrderDTO {
 		this.id = id;
 	}
 
-	public List<OrderDetail> getOrderDetails() {
+	public List<OrderDetailDTO> getOrderDetails() {
 		return orderDetails;
 	}
 
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
+	public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
 		this.orderDetails = orderDetails;
-	}
-
-	public MyUser getUserOrders() {
-		return userOrders;
-	}
-
-	public void setUserOrders(MyUser userOrders) {
-		this.userOrders = userOrders;
 	}
 
 	public Date getPublishedDate() {

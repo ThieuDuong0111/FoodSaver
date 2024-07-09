@@ -31,9 +31,6 @@ public class Product {
 	@OneToMany(mappedBy = "cartProduct")
 	private List<CartItem> cartItems;
 
-	@OneToMany(mappedBy = "orderProduct")
-	private List<OrderDetail> orderDetails;
-
 	@Column(length = 100)
 	private String name;
 
@@ -126,14 +123,6 @@ public class Product {
 
 	public void setCartItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
-	}
-
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
 	}
 
 	public String getImage() {

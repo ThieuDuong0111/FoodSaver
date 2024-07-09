@@ -1,5 +1,6 @@
 package com.funix.foodsaverAPI.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,9 +20,12 @@ public class OrderDetail {
 	@JoinColumn(name = "order_id")
 	private Order order;
 
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product orderProduct;
+	private int productId;
+
+	private String productName;
+
+	@Column(columnDefinition = "TEXT")
+	private String productImage;
 
 	private int unitQuantity;
 
@@ -31,11 +35,14 @@ public class OrderDetail {
 		super();
 	}
 
-	public OrderDetail(Order order, Product orderProduct, int unitQuantity,
-		double unitPrice) {
+	public OrderDetail(Order order, int productId, String productName,
+		String productImage,
+		int unitQuantity, double unitPrice) {
 		super();
 		this.order = order;
-		this.orderProduct = orderProduct;
+		this.productId = productId;
+		this.productName = productName;
+		this.productImage = productImage;
 		this.unitQuantity = unitQuantity;
 		this.unitPrice = unitPrice;
 	}
@@ -72,11 +79,27 @@ public class OrderDetail {
 		this.unitPrice = unitPrice;
 	}
 
-	public Product getOrderProduct() {
-		return orderProduct;
+	public int getProductId() {
+		return productId;
 	}
 
-	public void setOrderProduct(Product orderProduct) {
-		this.orderProduct = orderProduct;
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 }

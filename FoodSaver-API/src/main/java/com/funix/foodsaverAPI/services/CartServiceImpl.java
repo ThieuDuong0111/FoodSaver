@@ -76,6 +76,8 @@ public class CartServiceImpl implements ICartService {
 		Optional<Cart> cartGet = cartRepository.getItemsByUserId(user.getId());
 		CartDTO cartDTO = convertToDto(cartGet.get());
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
+		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
+			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
 		return cartDTO;
 	}
 
@@ -136,6 +138,8 @@ public class CartServiceImpl implements ICartService {
 		Optional<Cart> cartGet = cartRepository.getItemsByUserId(user.getId());
 		CartDTO cartDTO = convertToDto(cartGet.get());
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
+		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
+			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
 		return cartDTO;
 
 	}
@@ -143,11 +147,16 @@ public class CartServiceImpl implements ICartService {
 	@Override
 	public CartDTO deleteItem(HttpServletRequest request,
 		CartItemDTO cartItemDTO) {
-		cartItemRepository.deleteById(cartItemDTO.getId());
 		MyUser user = userService.getUserByToken(request);
 		Optional<Cart> cart = cartRepository.getItemsByUserId(user.getId());
+
+		// Delete Cart Item
+		cartItemRepository.deleteById(cartItemDTO.getId());
+
 		CartDTO cartDTO = convertToDto(cart.get());
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
+		cartDTO.getCartItems().stream().map(cartItemDto -> productServiceImpl
+			.convertFromCartItemToProductDTO(cartItemDto)).toList();
 		return cartDTO;
 	}
 
@@ -198,7 +207,15 @@ public class CartServiceImpl implements ICartService {
 					if (creatorIds.get(i) == cartItems.get(j).getCartProduct()
 						.getCreator().getId()) {
 						orderDetails.add(new OrderDetail(order,
-							cartItems.get(j).getCartProduct(),
+							cartItems.get(j).getCartProduct().getId(),
+							cartItems.get(j).getCartProduct().getName(),
+							cartItems.get(j).getCartProduct()
+								.getImageUrl() != null
+									? "http://localhost:8080/api/image/product/"
+										+ cartItems.get(j).getCartProduct()
+											.getImageUrl()
+									: cartItems.get(j).getCartProduct()
+										.getImageUrl(),
 							cartItems.get(j).getUnitQuantity(),
 							cartItems.get(j).getUnitPrice()));
 					}

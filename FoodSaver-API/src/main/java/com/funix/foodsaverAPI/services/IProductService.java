@@ -2,11 +2,15 @@ package com.funix.foodsaverAPI.services;
 
 import java.util.List;
 
+import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.ProductDTO;
 import com.funix.foodsaverAPI.models.Product;
 
 public interface IProductService {
+
 	ProductDTO convertToDto(Product product);
+
+	ProductDTO convertFromCartItemToProductDTO(CartItemDTO cartItemDTO);
 
 	List<ProductDTO> getAllProducts();
 

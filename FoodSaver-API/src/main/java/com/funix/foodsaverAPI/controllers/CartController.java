@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.funix.foodsaverAPI.dto.CartDTO;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
 import com.funix.foodsaverAPI.dto.ErrorMessageResponse;
