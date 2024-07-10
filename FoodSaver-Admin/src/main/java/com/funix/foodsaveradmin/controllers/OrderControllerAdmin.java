@@ -6,23 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 
+import com.funix.foodsaveradmin.dto.OrderDTO;
+import com.funix.foodsaveradmin.dto.UserDTO;
 import com.funix.foodsaveradmin.models.Order;
 import com.funix.foodsaveradmin.services.OrderServiceImpl;
+import com.funix.foodsaveradmin.services.UserServiceImpl;
 
 @Controller
 @RequestMapping({ "/admin/orders" })
-public class OrderController {
+public class OrderControllerAdmin {
 	private static String redirectOrder = "redirect:/admin/orders/page/1?sortField=id&sortDir=desc";
 
 	@Autowired
 	private OrderServiceImpl orderServiceImpl;
 
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+
 	@GetMapping({ "", "/" })
 	public String viewOrderPage(Model model) {
 		return redirectOrder;
+	}
+
+	@GetMapping("/detail/{id}")
+	public String showFormForUpdate(@PathVariable(value = "id") int id,
+		Model model) {
+		OrderDTO orderDTO = orderServiceImpl.getOrderById(id);
+		UserDTO userDTO = userServiceImpl.getUserById(orderDTO.getId());
+		model.addAttribute("userDTO", userDTO);
+		model.addAttribute("orderDTO", orderDTO);
+		return "order_detail_admin";
 	}
 
 	@GetMapping("/page/{pageNo}")
@@ -47,7 +62,6 @@ public class OrderController {
 		model.addAttribute("reverseSortDir",
 			sortDir.equals("asc") ? "desc" : "asc");
 		model.addAttribute("listorders", listorders);
-
-		return "list_orders";
+		return "list_orders_admin";
 	}
 }

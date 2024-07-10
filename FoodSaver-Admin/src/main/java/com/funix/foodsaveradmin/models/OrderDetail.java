@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -24,8 +25,15 @@ public class OrderDetail {
 
 	private String productName;
 
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+	private String image;
+
 	@Column(columnDefinition = "TEXT")
 	private String productImage;
+
+	@Column(length = 20)
+	private String imageType;
 
 	private int unitQuantity;
 
@@ -86,4 +94,21 @@ public class OrderDetail {
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getImageType() {
+		return imageType;
+	}
+
+	public void setImageType(String imageType) {
+		this.imageType = imageType;
+	}
+
 }

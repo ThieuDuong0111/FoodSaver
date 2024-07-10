@@ -9,7 +9,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>Product - Food Saver Creator</title>
+	<title>Order - Food Saver Creator</title>
 
 	<meta name="description" content="" />
 
@@ -48,7 +48,7 @@
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
 			<!-- Menu -->
-			<div th:replace="~{fragments/food_creator_menu :: menu(role_id=5)}"></div>
+			<div th:replace="~{fragments/food_creator_menu :: menu(role_id=6)}"></div>
 			<!-- / Menu -->
 
 			<!-- Layout container -->
@@ -63,60 +63,46 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="card">
 							<div class="table-header">
-								<h5 class="card-header">Product</h5>
-
-								<div style="padding: 15px;"><a th:href="@{'/food_creator/products/add'}"
-										class="btn btn-success">Add</a>
-								</div>
+								<h5 class="card-header">Order</h5>
 							</div>
-
 							<div class="table-responsive text-nowrap">
 								<table class="table">
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Image</th>
-											<th>Name</th>
-											<th>Category</th>
-											<th>Description</th>
-											<th>Price</th>
-											<th>Discount Price</th>
+											<th>Order Code</th>
+											<th>User Name</th>
+											<th>Phone</th>
+											<th>Total Amount</th>
+											<th>Order Date</th>
+											<th>Status</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="product : ${listproducts}">
-											<td th:text="${product.id}"></td>
-
-											<td th:if="${product.image == null || product.image == ''}"><img
-													th:src="@{'/images/none_image.png'} " height="40px" , /></td>
-											<td th:unless="${product.image == null || product.image == ''}"><img
-													th:src="@{'data:image/jpeg;base64,' + ${product.image}}"
-													height="40px" />
+										<tr th:each="order : ${listorders}">
+											<td th:text="${order.id}"></td>
+											<td th:text="${order.orderCode}"></td>
+											<td th:text="${order.userOrders.name}"></td>
+											<td th:text="${order.userOrders.phone}"></td>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(order.totalAmount)}">
 											</td>
-
-											<td th:text="${product.name}"></td>
-											<td th:text="${product.category.name}"></td>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseDateTime(order.publishedDate)}">
+											</td>
 											<td>
-												<span th:text="${product.description}"
-													style="display: block; width: 220px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-												</span>
-											</td>
-											<td
-												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(product.price)}">
-											</td>
-											<td
-												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(product.discountPrice)}">
+												<span th:if="${order.isPaid == true}" class="badge
+													bg-label-success me-1" th:text="Complete"></span>
+												<span th:unless="${order.isPaid == true}" class="badge
+													bg-label-danger me-1" th:text="Waiting"></span>
 											</td>
 											<td>
 												<div class="demo-inline-spacing">
 													<a class="btn btn-primary"
-														th:href="@{/food_creator/products/update/{id}(id=${product.id})}"
+														th:href="@{/food_creator/orders/detail/{id}(id=${order.id})}"
 														style="text-decoration: none; color: white;">
-														Edit</a>
-													<button class="btn btn-danger" data-bs-toggle="modal"
-														data-bs-target="#modalDelete"
-														th:attr="data-id=${product.id}">Delete</button>
+														Detail</a>
 												</div>
 											</td>
 										</tr>
@@ -132,7 +118,7 @@
 											<ul class="pagination">
 												<li class="page-item first">
 													<a th:if="${currentPage >= 2}" class="page-link"
-														th:href="@{'/food_creator/products/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/food_creator/orders/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
 													<a th:unless="${currentPage >= 2}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
@@ -141,7 +127,7 @@
 													style="padding-left: 2px; padding-right: 2px;">
 													<li th:if="${currentPage != i}" class="page-item">
 														<a class="page-link"
-															th:href="@{'/food_creator/products/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+															th:href="@{'/food_creator/orders/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 													</li>
 													<li th:unless="${currentPage != i}" class="page-item active">
 														<a class="page-link">[[${i}]]</a>
@@ -149,12 +135,11 @@
 												</span>
 												<li class="page-item last">
 													<a th:if="${currentPage < totalPages}" class="page-link"
-														th:href="@{'/food_creator/products/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/food_creator/orders/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 													<a th:unless="${currentPage < totalPages}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 												</li>
-
 											</ul>
 										</nav>
 									</div>
@@ -228,19 +213,7 @@
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#modalDelete').on('show.bs.modal', function (event) {
-				var button = $(event.relatedTarget);
-				var productId = button.data('id');
-				var modal = $(this);
-				var deleteButton = modal.find('#confirmDelete');
-				deleteButton.off('click').on('click', function () {
-					window.location.href = '/food_creator/products/delete/' + productId;
-				});
-			});
-		});
-	</script>
+
 </body>
 
 </html>

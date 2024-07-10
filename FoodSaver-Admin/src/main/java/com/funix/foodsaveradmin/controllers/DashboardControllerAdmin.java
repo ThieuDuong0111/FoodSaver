@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping({ "/food_creator/dashboard" })
-public class DashboardFoodCreatorController {
+@RequestMapping({ "/admin/dashboard" })
+public class DashboardControllerAdmin {
 	@GetMapping({ "", "/" })
 	public String viewProductPage(Model model) {
-		return "dashboard_food_creator";
+		return "dashboard_admin";
 	}
 }

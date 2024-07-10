@@ -9,7 +9,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>Order - Food Saver Admin</title>
+	<title>Product - Food Saver Admin</title>
 
 	<meta name="description" content="" />
 
@@ -48,7 +48,7 @@
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
 			<!-- Menu -->
-			<div th:replace="~{fragments/admin_menu :: menu(role_id=6)}"></div>
+			<div th:replace="~{fragments/admin_menu :: menu(role_id=5)}"></div>
 			<!-- / Menu -->
 
 			<!-- Layout container -->
@@ -63,36 +63,48 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="card">
 							<div class="table-header">
-								<h5 class="card-header">Order</h5>
+								<h5 class="card-header">Product</h5>
 							</div>
-
 							<div class="table-responsive text-nowrap">
 								<table class="table">
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Order Code</th>
-											<th>Total Amount</th>
-											<th>Publish Date</th>
-											<th>Status</th>
-											<th>Actions</th>
+											<th>Image</th>
+											<th>Name</th>
+											<th>Category</th>
+											<th>Description</th>
+											<th>Price</th>
+											<th>Discount Price</th>
+											<th>Quantity</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="order : ${listorders}">
-											<td th:text="${order.id}"></td>
-											<td th:text="${order.orderCode}"></td>
-											<td th:text="${order.totalAmount}"></td>
-											<td th:text="${order.publishedDate}"></td>
-											<td>Waiting</td>
-											<td>
-												<div class="demo-inline-spacing">
-													<a class="btn btn-primary"
-														th:href="@{/admin/orders/detail/{id}(id=${order.id})}"
-														style="text-decoration: none; color: white;">
-														Detail</a>
-												</div>
+										<tr th:each="product : ${listproducts}">
+											<td th:text="${product.id}"></td>
+
+											<td th:if="${product.image == null || product.image == ''}"><img
+													th:src="@{'/images/none_image_product.jpg'} " height="40px" , />
 											</td>
+											<td th:unless="${product.image == null || product.image == ''}"><img
+													th:src="@{'data:image/jpeg;base64,' + ${product.image}}"
+													height="40px" />
+											</td>
+
+											<td th:text="${product.name}"></td>
+											<td th:text="${product.category.name}"></td>
+											<td>
+												<span th:text="${product.description}"
+													style="display: block; width: 220px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+												</span>
+											</td>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(product.price)}">
+											</td>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(product.discountPrice)}">
+											</td>
+											<td th:text="${product.quantity}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -106,7 +118,7 @@
 											<ul class="pagination">
 												<li class="page-item first">
 													<a th:if="${currentPage >= 2}" class="page-link"
-														th:href="@{'/admin/orders/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/admin/products/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
 													<a th:unless="${currentPage >= 2}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
@@ -115,7 +127,7 @@
 													style="padding-left: 2px; padding-right: 2px;">
 													<li th:if="${currentPage != i}" class="page-item">
 														<a class="page-link"
-															th:href="@{'/admin/orders/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+															th:href="@{'/admin/products/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 													</li>
 													<li th:unless="${currentPage != i}" class="page-item active">
 														<a class="page-link">[[${i}]]</a>
@@ -123,11 +135,12 @@
 												</span>
 												<li class="page-item last">
 													<a th:if="${currentPage < totalPages}" class="page-link"
-														th:href="@{'/admin/orders/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/admin/products/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 													<a th:unless="${currentPage < totalPages}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 												</li>
+
 											</ul>
 										</nav>
 									</div>
@@ -140,31 +153,6 @@
 					<!-- Footer -->
 					<div th:replace="~{fragments/footer :: footer}"></div>
 					<!-- / Footer -->
-
-					<!-- Modal -->
-					<div class="modal fade" id="modalDelete" aria-labelledby="modalToggleLabel" tabindex="-1"
-						style="display: none" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="modalToggleLabel">Delete
-									</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">Are you sure to want to delete
-									this record</span>?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-										Close
-									</button>
-									<button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- / Modal -->
-
 				</div>
 				<!-- Content wrapper -->
 			</div>
@@ -201,7 +189,6 @@
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </body>
 
 </html>

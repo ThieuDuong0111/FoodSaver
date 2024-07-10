@@ -94,4 +94,15 @@ public class ProductServiceImpl implements IProductService {
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
 		return this.productRepository.findAllByCreatorId(creator_id, pageable);
 	}
+
+	@Override
+	public Page<Product> findPaginatedAll(int pageNum, int pageSize,
+		String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+			? Sort.by(sortField).ascending()
+			: Sort.by(sortField).descending();
+
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+		return this.productRepository.findAll(pageable);
+	}
 }

@@ -14,6 +14,8 @@ public class OrderDTO {
 
 	private double totalAmount;
 
+	private Boolean isPaid;
+
 	public int getId() {
 		return id;
 	}
@@ -52,5 +54,13 @@ public class OrderDTO {
 
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
 	}
 }

@@ -49,6 +49,12 @@
 					<div data-i18n="Category">Category</div>
 				</a>
 			</li>
+			<li th:class="${role_id == 5} ? 'menu-item active' : 'menu-item'">
+				<a href="/admin/products/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-food-menu"></i>
+					<div data-i18n="Product">Product</div>
+				</a>
+			</li>
 			<li th:class="${role_id == 6} ? 'menu-item active' : 'menu-item'">
 				<a href="/admin/orders/page/1?sortField=id&sortDir=desc" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-cube"></i>

@@ -20,4 +20,9 @@ public interface IProductService {
 	Page<Product> findPaginated(int pageNum, int pageSize,
 		String sortField,
 		String sortDirection, int creator_id);
+
+	Page<Product> findPaginatedAll(int pageNum, int pageSize,
+		String sortField,
+		String sortDirection);
+
 }

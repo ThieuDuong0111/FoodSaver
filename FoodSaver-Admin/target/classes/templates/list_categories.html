@@ -85,7 +85,7 @@
 										<tr th:each="category : ${listCategories}">
 											<td th:text="${category.id}"></td>
 											<td th:if="${category.image == null || category.image == ''}"><img
-													th:src="@{'/images/none_image.png'} " height="40px" , /></td>
+													th:src="@{'/images/none_image_product.jpg'} " height="40px" , /></td>
 											<td th:unless="${category.image == null || category.image == ''}"><img
 													th:src="@{'data:image/jpeg;base64,' + ${category.image}}"
 													height="40px" />
@@ -93,13 +93,13 @@
 											<td th:text="${category.name}"></td>
 											<td>
 												<span th:text="${category.description}"
-													style="display: block; width: 750px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+													style="display: block; width: 780px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
 												</span>
 											</td>
 
 											<td>
 												<div class="demo-inline-spacing">
-													<a class="btn btn-primary"
+													<a class="btn btn-info"
 														th:href="@{/admin/categories/update/{id}(id=${category.id})}"
 														style="text-decoration: none; color: white;">
 														Edit</a>

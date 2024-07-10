@@ -19,6 +19,7 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
 	private IOrderRepository orderRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -53,6 +54,30 @@ public class OrderServiceImpl implements IOrderService {
 
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
 		return this.orderRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<Order> findPaginatedByCreatorId(int pageNum, int pageSize,
+		String sortField, String sortDirection, int creatorId) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+			? Sort.by(sortField).ascending()
+			: Sort.by(sortField).descending();
+
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+		return this.orderRepository.findByCreatorId(creatorId, pageable);
+	}
+
+	@Override
+	public void approveOrderById(int id) {
+		Optional<Order> optionalOrder = orderRepository.findById(id);
+		Order order = null;
+		if (optionalOrder.isPresent()) {
+			order = optionalOrder.get();
+		} else {
+			throw new RuntimeException("Order not found for id : " + id);
+		}
+		order.setIsPaid(true);
+		orderRepository.save(order);
 	}
 
 }

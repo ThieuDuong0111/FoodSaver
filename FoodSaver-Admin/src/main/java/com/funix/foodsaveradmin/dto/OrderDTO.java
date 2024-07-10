@@ -3,15 +3,14 @@ package com.funix.foodsaveradmin.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.funix.foodsaveradmin.models.OrderDetail;
-import com.funix.foodsaveradmin.models.MyUser;
-
 public class OrderDTO {
 	private int id;
 
-	private List<OrderDetail> orderDetails;
+	private List<OrderDetailDTO> orderDetails;
 
-	private MyUser userOrders;
+	private UserDTO userOrders;
+
+	private UserDTO creator;
 
 	private Date publishedDate;
 
@@ -19,28 +18,14 @@ public class OrderDTO {
 
 	private double totalAmount;
 
+	private Boolean isPaid;
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-	public MyUser getUserOrders() {
-		return userOrders;
-	}
-
-	public void setUserOrders(MyUser userOrders) {
-		this.userOrders = userOrders;
 	}
 
 	public Date getPublishedDate() {
@@ -66,4 +51,37 @@ public class OrderDTO {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
+
+	public List<OrderDetailDTO> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	public UserDTO getUserOrders() {
+		return userOrders;
+	}
+
+	public void setUserOrders(UserDTO userOrders) {
+		this.userOrders = userOrders;
+	}
+
+	public UserDTO getCreator() {
+		return creator;
+	}
+
+	public void setCreator(UserDTO creator) {
+		this.creator = creator;
+	}
+
+	public Boolean getIsPaid() {
+		return isPaid;
+	}
+
+	public void setIsPaid(Boolean isPaid) {
+		this.isPaid = isPaid;
+	}
+
 }

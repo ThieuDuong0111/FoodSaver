@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping({ "/food_creator/products" })
-public class ProductController {
+public class ProductControllerFoodCreator {
 	private static String redirectProduct = "redirect:/food_creator/products/page/1?sortField=id&sortDir=desc";
 
 	@Autowired
@@ -79,7 +79,6 @@ public class ProductController {
 		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("creator_id",
 			userServiceImpl.getLoggedInUserInfo().getId());
-//		System.out.println(productDTO.getImageBytes());
 		return "update_product";
 	}
 
@@ -109,7 +108,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteCourse(@PathVariable(value = "id") int id) {
+	public String deleteProduct(@PathVariable(value = "id") int id) {
 		try {
 			productServiceImpl.deleteProductById(id);
 		} catch (Exception e) {
@@ -142,6 +141,6 @@ public class ProductController {
 			sortDir.equals("asc") ? "desc" : "asc");
 		model.addAttribute("listproducts", listproducts);
 
-		return "list_products";
+		return "list_products_food_creator";
 	}
 }

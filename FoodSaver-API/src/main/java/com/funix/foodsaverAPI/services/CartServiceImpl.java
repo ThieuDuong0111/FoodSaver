@@ -87,7 +87,12 @@ public class CartServiceImpl implements ICartService {
 		CartItemProductDTO cartItemProductDTO) {
 		MyUser user = userService.getUserByToken(request);
 		Optional<Cart> cart = cartRepository.getItemsByUserId(user.getId());
-
+		if (!cart.isPresent()) {
+			cartRepository
+				.save(new Cart(new ArrayList<CartItem>(), user, new Date(),
+					false));
+			cart = cartRepository.getItemsByUserId(user.getId());
+		}
 		List<CartItem> cartItems = cart.get().getCartItems();
 		Boolean isItemExist = false;
 
@@ -216,6 +221,8 @@ public class CartServiceImpl implements ICartService {
 											.getImageUrl()
 									: cartItems.get(j).getCartProduct()
 										.getImageUrl(),
+							cartItems.get(j).getCartProduct().getImageType(),
+							cartItems.get(j).getCartProduct().getImage(),
 							cartItems.get(j).getUnitQuantity(),
 							cartItems.get(j).getUnitPrice()));
 					}
