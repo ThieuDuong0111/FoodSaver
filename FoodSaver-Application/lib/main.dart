@@ -20,7 +20,7 @@ Future<void> main() async {
   Bloc.observer = BlocObserverService();
   //Native Splash Start
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Future<void>.delayed(const Duration(seconds: 3));
+  await Future<void>.delayed(const Duration(seconds: 2));
   //Load Intl
   await Lang.load(const Locale('vi', 'VN'));
   //App Logger

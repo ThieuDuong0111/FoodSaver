@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.SignInDTO;
-import com.funix.foodsaverAPI.dto.TokenDTO;
 import com.funix.foodsaverAPI.services.JWTService;
 import com.funix.foodsaverAPI.services.UserServiceImpl;
 
@@ -52,9 +51,9 @@ public class SignInController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signInDTO);
 		}
-		return new ResponseEntity<>(
-			new TokenDTO(authenticateAndGetToken(signInDTO)),
-			HttpStatus.OK);
+		signInDTO.setToken(authenticateAndGetToken(signInDTO));
+		return ResponseEntity.status(HttpStatus.OK)
+			.body(signInDTO);
 	}
 
 	public String authenticateAndGetToken(

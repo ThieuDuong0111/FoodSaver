@@ -6,6 +6,7 @@ public class SignInDTO {
 	private String nameError;
 	private String passwordError;
 	private Boolean hasError;
+	private String token;
 
 	public String getName() {
 		return name;
@@ -46,4 +47,13 @@ public class SignInDTO {
 	public void setHasError(Boolean hasError) {
 		this.hasError = hasError;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 }

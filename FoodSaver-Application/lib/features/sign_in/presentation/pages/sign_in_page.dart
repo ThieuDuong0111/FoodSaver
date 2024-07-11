@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/presentation/bloc/sign_in_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_common_style.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
@@ -51,103 +52,120 @@ class _SignInWrapperState extends State<SignInWrapper> {
           systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSizes.paddingHorizontal),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Sign In',
-                style: AppTextStyle.bigTitle(),
-              ),
-              SizedBox(height: 24.h),
-              Text(
-                'Username',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                style: AppTextStyle.focusText(),
-                controller: _usernameController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: hasUsernameError,
-                  hintText: 'Enter your username',
+      body: BlocListener<SignInBloc, SignInState>(
+        listener: (context, state) {
+          if (state is SignInSubmitErrorState) {
+            setState(() {
+              hasUsernameError = true;
+              hasPasswordError = true;
+            });
+          }
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(AppSizes.paddingHorizontal),
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Sign In',
+                  style: AppTextStyle.bigTitle(),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Password',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                obscureText: _isPasswordObscure,
-                style: AppTextStyle.focusText(),
-                controller: _passwordController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: hasPasswordError,
-                  hintText: 'Enter your password',
-                  isPassword: true,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      !_isPasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                      color: AppColors.greyColor,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordObscure = !_isPasswordObscure;
-                      });
-                    },
+                SizedBox(height: 24.h),
+                Text(
+                  'Username',
+                  style: AppTextStyle.labelText(),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  style: AppTextStyle.focusText(),
+                  controller: _usernameController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasUsernameError,
+                    hintText: 'Enter your username',
                   ),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: AppSizes.buttonHeight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(AppColors.primaryBrand),
-                    shape: WidgetStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                Text(
+                  'Password',
+                  style: AppTextStyle.labelText(),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  obscureText: _isPasswordObscure,
+                  style: AppTextStyle.focusText(),
+                  controller: _passwordController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasPasswordError,
+                    hintText: 'Enter your password',
+                    isPassword: true,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        !_isPasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: AppColors.greyColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordObscure = !_isPasswordObscure;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: AppSizes.buttonHeight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<SignInBloc>(context).add(
+                        SignInSubmitEvent(
+                          signInRequest:
+                              SignInRequest(name: _usernameController.text, password: _passwordController.text),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(AppColors.primaryBrand),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
+                        ),
                       ),
                     ),
+                    child: Text('SIGN IN', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                   ),
-                  child: Text('SIGN IN', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                 ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: 'Don’t have an account? ', style: AppTextStyle.primaryText()),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()..onTap = () async {},
-                      text: 'Sign up',
-                      style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
-                    ),
-                  ],
+                SizedBox(
+                  height: 10.h,
                 ),
-              ),
-              SizedBox(height: AppSizes.paddingBottom),
-            ],
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Don’t have an account? ', style: AppTextStyle.primaryText()),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()..onTap = () async {},
+                        text: 'Sign up',
+                        style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: AppSizes.paddingBottom),
+              ],
+            ),
           ),
         ),
       ),

@@ -6,3 +6,10 @@ abstract class SignInEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SignInSubmitEvent extends SignInEvent {
+  const SignInSubmitEvent({
+    required this.signInRequest,
+  });
+  final SignInRequest signInRequest;
+}

@@ -28,7 +28,7 @@ class AppLoggerImpl implements AppLogger {
   String _loggerOwner = 'General';
 
   @override
-  void logFor(Object owner) => _loggerOwner = (owner.runtimeType).toString();
+  void logFor(Object owner) => _loggerOwner = owner.runtimeType.toString();
 
   @override
   void debug(String message) => _logger.d('$_loggerOwner | $message');

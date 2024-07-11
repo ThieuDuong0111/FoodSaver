@@ -74,7 +74,7 @@ class _DioLoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
 
     final reqUuid = _createUuidFromRequest(err.requestOptions);
@@ -86,9 +86,9 @@ class _DioLoggingInterceptor extends Interceptor {
     }
 
     switch (err.type) {
-      case DioErrorType.connectionTimeout:
-      case DioErrorType.receiveTimeout:
-      case DioErrorType.sendTimeout:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.sendTimeout:
         final timeOutMessage = 'Failed: ${err.type.name.split(RegExp('(?=[A-Z])')).join(' ')}';
         _logger.info('$resTag $timeOutMessage');
         throw TimeoutException(timeOutMessage);

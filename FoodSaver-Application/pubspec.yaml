@@ -62,7 +62,7 @@ flutter_gen:
 
 # Native Splash
 flutter_native_splash:
-  color: '#CD3838'
+  color: "#CD3838"
   image: assets/foodsaver_splash.png
   android: true
   ios: true

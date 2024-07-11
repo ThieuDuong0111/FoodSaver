@@ -31,4 +31,5 @@
         "editor.wordBasedSuggestions": "off",
     },
     "flutter-coverage.sufficientCoverageThreshold": 80,
+    "java.configuration.updateBuildConfiguration": "interactive",
 }

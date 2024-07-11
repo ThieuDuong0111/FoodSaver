@@ -40,6 +40,8 @@
             "@freezed",
             "class ${name}Entity with _$${name}Entity implements DomainEntity{",
             "  factory ${name}Entity() = _${name}Entity;",
+            
+            " ${name}Entity._();",
             "}",
         ],
         "description": "Creates a Freezed Model class"
