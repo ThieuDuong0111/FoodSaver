@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.SignUpDTO;
-import com.funix.foodsaverAPI.dto.SuccessMessageResponse;
 import com.funix.foodsaverAPI.services.UserServiceImpl;
 
 @RestController

@@ -31,10 +31,10 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public ProductDTO convertToDto(Product product) {
 		ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-		if (product.getImageUrl() != null) {
-			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
-				+ product.getImageUrl());
-		}
+//		if (product.getImageUrl() != null) {
+//			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
+//				+ product.getImageUrl());
+//		}
 		productDTO
 			.setCategory(categoryService.convertToDto(product.getCategory()));
 		productDTO
@@ -46,10 +46,10 @@ public class ProductServiceImpl implements IProductService {
 	public ProductDTO convertFromCartItemToProductDTO(CartItemDTO cartItemDTO) {
 		ProductDTO productDTO = modelMapper.map(cartItemDTO.getCartProduct(),
 			ProductDTO.class);
-		if (cartItemDTO.getCartProduct().getImageUrl() != null) {
-			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
-				+ cartItemDTO.getCartProduct().getImageUrl());
-		}
+//		if (cartItemDTO.getCartProduct().getImageUrl() != null) {
+//			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
+//				+ cartItemDTO.getCartProduct().getImageUrl());
+//		}
 		return productDTO;
 	}
 

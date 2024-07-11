@@ -215,12 +215,7 @@ public class CartServiceImpl implements ICartService {
 							cartItems.get(j).getCartProduct().getId(),
 							cartItems.get(j).getCartProduct().getName(),
 							cartItems.get(j).getCartProduct()
-								.getImageUrl() != null
-									? "http://localhost:8080/api/image/product/"
-										+ cartItems.get(j).getCartProduct()
-											.getImageUrl()
-									: cartItems.get(j).getCartProduct()
-										.getImageUrl(),
+								.getImageUrl(),
 							cartItems.get(j).getCartProduct().getImageType(),
 							cartItems.get(j).getCartProduct().getImage(),
 							cartItems.get(j).getUnitQuantity(),

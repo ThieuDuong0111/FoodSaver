@@ -38,10 +38,10 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDTO convertToDto(MyUser user) {
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-		if (user.getImageUrl() != null) {
-			userDTO.setImageUrl("http://localhost:8080/api/image/user/"
-				+ user.getImageUrl());
-		}
+//		if (user.getImageUrl() != null) {
+//			userDTO.setImageUrl("http://localhost:8080/api/image/user/"
+//				+ user.getImageUrl());
+//		}
 		return userDTO;
 	}
 

@@ -31,10 +31,10 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public CategoryDTO convertToDto(Category category) {
 		CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
-		if (category.getImageUrl() != null) {
-			categoryDTO.setImageUrl("http://localhost:8080/api/image/category/"
-				+ category.getImageUrl());
-		}
+//		if (category.getImageUrl() != null) {
+//			categoryDTO.setImageUrl("http://localhost:8080/api/image/category/"
+//				+ category.getImageUrl());
+//		}
 		return categoryDTO;
 	}
 
