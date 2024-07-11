@@ -66,9 +66,7 @@ class JsonConverterImpl implements JsonConverter {
       final json = jsonDecode(decodable) as Object;
 
       if (json is Iterable<Map> && itemConverter != null) {
-        return json
-            .cast<Map>()
-            .map<T>((e) => itemConverter(e.cast<String, Object>()));
+        return json.cast<Map>().map<T>((e) => itemConverter(e.cast<String, Object>()));
       } else if (json is Iterable<T>) {
         return json;
       } else {

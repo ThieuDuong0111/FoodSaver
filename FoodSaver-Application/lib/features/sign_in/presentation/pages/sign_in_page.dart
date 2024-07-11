@@ -34,6 +34,8 @@ class _SignInWrapperState extends State<SignInWrapper> {
   late final TextEditingController _passwordController;
   bool _isPasswordObscure = true;
   bool hasPasswordError = false;
+  String nameError = '';
+  String passwordError = '';
   @override
   void initState() {
     _usernameController = TextEditingController();
@@ -54,10 +56,19 @@ class _SignInWrapperState extends State<SignInWrapper> {
       ),
       body: BlocListener<SignInBloc, SignInState>(
         listener: (context, state) {
+          if (state is SignInSubmitLoadingState) {}
           if (state is SignInSubmitErrorState) {
             setState(() {
               hasUsernameError = true;
               hasPasswordError = true;
+              nameError = state.signInEntity.nameError!;
+              passwordError = state.signInEntity.passwordError!;
+            });
+          }
+          if (state is SignInSubmitFinishedState) {
+            setState(() {
+              hasUsernameError = false;
+              hasPasswordError = false;
             });
           }
         },
@@ -75,7 +86,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                 SizedBox(height: 24.h),
                 Text(
                   'Username',
-                  style: AppTextStyle.labelText(),
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
                   height: AppSizes.spaceBetweenLabelAndForm,
@@ -88,12 +99,16 @@ class _SignInWrapperState extends State<SignInWrapper> {
                     hintText: 'Enter your username',
                   ),
                 ),
+                if (hasUsernameError)
+                  Text(nameError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  SizedBox(height: 8.h),
                 SizedBox(
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
                 Text(
                   'Password',
-                  style: AppTextStyle.labelText(),
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
                   height: AppSizes.spaceBetweenLabelAndForm,
@@ -119,6 +134,10 @@ class _SignInWrapperState extends State<SignInWrapper> {
                     ),
                   ),
                 ),
+                if (hasPasswordError)
+                  Text(passwordError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  SizedBox(height: 8.h),
                 SizedBox(
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),

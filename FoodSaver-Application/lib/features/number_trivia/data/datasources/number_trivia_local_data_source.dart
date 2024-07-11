@@ -1,4 +1,3 @@
-import 'package:funix_thieudvfx_foodsaver/core/exception/api_exception.dart';
 import 'package:funix_thieudvfx_foodsaver/core/storage/app_storage.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/json_converter.dart';
 import 'package:funix_thieudvfx_foodsaver/features/number_trivia/data/models/number_trivia_model.dart';
@@ -33,7 +32,7 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
     if (jsonString != null) {
       return Future.value(_jsonConverter.decodeToObject(jsonString, converter: NumberTriviaModel.fromJson));
     } else {
-      throw CacheException();
+      throw Exception();
     }
   }
 

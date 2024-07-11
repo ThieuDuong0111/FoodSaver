@@ -12,7 +12,6 @@ import 'package:funix_thieudvfx_foodsaver/features/edit_profile/presentation/pag
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/pages/home_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/pages/init_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/pages/my_profile_page.dart';
-import 'package:funix_thieudvfx_foodsaver/features/number_trivia/presentation/pages/number_trivia_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_detail/presentation/pages/order_detail_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/pages/order_history_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_detail_page.dart';
@@ -27,10 +26,10 @@ abstract class NavigationService implements RootStackRouter {}
 
 @MaterialAutoRouter(
   routes: [
-    AutoRoute<Object>(
-      path: 'number_trivia',
-      page: NumberTriviaPage,
-    ),
+    // AutoRoute<Object>(
+    //   path: 'number_trivia',
+    //   page: NumberTriviaPage,
+    // ),
     AutoRoute<Object>(
       path: 'init',
       page: InitPage,

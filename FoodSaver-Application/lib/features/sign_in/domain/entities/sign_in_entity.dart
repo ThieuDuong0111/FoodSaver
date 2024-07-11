@@ -6,12 +6,12 @@ part 'sign_in_entity.freezed.dart';
 @freezed
 class SignInEntity with _$SignInEntity implements DomainEntity {
   factory SignInEntity({
-    required String name,
-    required String password,
-    required String nameError,
-    required String passwordError,
+    required String? name,
+    required String? password,
+    required String? nameError,
+    required String? passwordError,
     required bool hasError,
-    required String token,
+    required String? token,
   }) = _SignInEntity;
 
   SignInEntity._();

@@ -47,7 +47,6 @@ class FoodSaverApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp.router(
-          // routerConfig: appRouter.config(),
           localizationsDelegates: const [
             Lang.delegate,
             GlobalMaterialLocalizations.delegate,

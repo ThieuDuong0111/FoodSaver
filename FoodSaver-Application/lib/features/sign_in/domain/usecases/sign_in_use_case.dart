@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:funix_thieudvfx_foodsaver/core/usecase/usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_request.dart';
@@ -11,7 +12,7 @@ class SignInUsecase extends UseCase<SignInEntity, SignInRequest> {
   final SignInRepository _signInRepository;
 
   @override
-  Future<SignInEntity> call(SignInRequest param) {
-    return _signInRepository.signIn(param);
+  Future<Either<SignInEntity, SignInEntity>> call(SignInRequest params) {
+    return _signInRepository.signIn(params);
   }
 }

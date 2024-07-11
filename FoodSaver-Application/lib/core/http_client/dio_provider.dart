@@ -95,12 +95,10 @@ class _DioLoggingInterceptor extends Interceptor {
       default:
         break;
     }
+    APIException.handle(err);
+    // _logger.severe('$resTag $e');
 
-    // final exception = _errorToException(err);
-
-    // _logger.severe('$resTag ${exception.message}');
-
-    throw ServerException();
+    // throw Exception();
   }
 
   void _logResponse(Response response) {
@@ -145,33 +143,4 @@ class _DioLoggingInterceptor extends Interceptor {
 
     return identity.split('#').last;
   }
-
-  // static ApiException _errorToException(DioError error) {
-  //   final statusCode = error.response?.statusCode ?? 0;
-  //   final errorCode = _tryGetErrorCode(error.response?.data);
-
-  //   if (statusCode >= 400 && statusCode < 500) {
-  //     return statusCode == 401
-  //         ? UnauthorizedException(error: error, errorCode: errorCode)
-  //         : BadRequestException(error: error, errorCode: errorCode);
-  //   } else if (statusCode >= 500 && statusCode < 600) {
-  //     return ServerUnavailableException(error: error, errorCode: errorCode);
-  //   } else {
-  //     return ApiException(error: error, errorCode: errorCode);
-  //   }
-  // }
-
-  // static String? _tryGetErrorCode(Object? response) {
-  //   if (response == null || (response is String && response.isEmpty)) {
-  //     return null;
-  //   }
-
-  //   final responseMap = (response as Map?)?.cast<String, Map<String, dynamic>>();
-
-  //   if (responseMap != null) {
-  //     return responseMap['error']?['code']?.toString();
-  //   }
-
-  //   return null;
-  // }
 }

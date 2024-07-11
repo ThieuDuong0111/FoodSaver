@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
+
 abstract class UseCase<Type, Params> {
-  Future<Type> call(Params param);
+  Future<Either<Type, Type>> call(Params params);
 }
 
 class NoParams {}
