@@ -39,17 +39,14 @@ public class SignUpController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signUpDTO);
 		}
-		// add check for email exists in DB
-		if (userServiceImpl.existsByEmailSignUp(signUpDTO)
+		// add check for phone exists in DB
+		if (userServiceImpl.existsByPhoneSignUp(signUpDTO)
 			.getHasError() == true) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(signUpDTO);
 		}
-
 		userServiceImpl.signUp(signUpDTO);
-
-		return new ResponseEntity<>(
-			new SuccessMessageResponse("User registered successfully"),
-			HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK)
+			.body(signUpDTO);
 	}
 }

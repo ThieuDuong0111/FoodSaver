@@ -56,7 +56,9 @@ class AppHttpClientImpl implements AppHttpClient {
   @override
   Future<Response> head(Uri url, {Map<String, String>? headers}) async {
     final Response response = await _iOClient.head(url, headers: headers);
-    _appLogger.info('Method: HEAD | Url: $url | Headers: $headers \n==> RESPONE:\n${response.body}');
+    _appLogger.info(
+      'Method: HEAD\nUrl: $url\nHeaders: $headers\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
+    );
 
     return response;
   }
@@ -64,7 +66,9 @@ class AppHttpClientImpl implements AppHttpClient {
   @override
   Future<Response> get(Uri url, {Map<String, String>? headers}) async {
     final Response response = await _iOClient.get(url, headers: headers);
-    _appLogger.info('Method: GET | Url: $url | Headers: $headers \n==> RESPONE:\n${response.body}');
+    _appLogger.info(
+      'Method: GET\nUrl: $url\nHeaders: $headers\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
+    );
 
     return response;
   }
@@ -73,7 +77,7 @@ class AppHttpClientImpl implements AppHttpClient {
   Future<Response> patch(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final Response response = await _iOClient.patch(url, headers: headers, body: jsonEncode(body), encoding: encoding);
     _appLogger.info(
-      'Method: PATCH | Url: $url | Headers: $headers | Body: $body, | Encoding: $encoding \n==> RESPONE:\n${response.body}',
+      'Method: PATCH\nUrl: $url\nHeaders: $headers\nBody: $jsonEncode(body),\nEncoding: $encoding\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
     );
 
     return response;
@@ -83,7 +87,7 @@ class AppHttpClientImpl implements AppHttpClient {
   Future<Response> post(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final Response response = await _iOClient.post(url, headers: headers, body: jsonEncode(body), encoding: encoding);
     _appLogger.info(
-      'Method: POST | Url: $url | Headers: $headers | Body: $body, | Encoding: $encoding \n==> RESPONE:\n${response.body}',
+      'Method: POST  Url: $url\nHeaders: $headers\nBody: $jsonEncode(body),\nEncoding: $encoding\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
     );
 
     return response;
@@ -93,7 +97,7 @@ class AppHttpClientImpl implements AppHttpClient {
   Future<Response> put(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final Response response = await _iOClient.put(url, headers: headers, body: jsonEncode(body), encoding: encoding);
     _appLogger.info(
-      'Method: PUT | Url: $url | Headers: $headers | Body: $body, | Encoding: $encoding \n==> RESPONE:\n${response.body}',
+      'Method: PUT\nUrl: $url\nHeaders: $headers\nBody: $jsonEncode(body),\nEncoding: $encoding\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
     );
 
     return response;
@@ -103,7 +107,7 @@ class AppHttpClientImpl implements AppHttpClient {
   Future<Response> delete(Uri url, {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final Response response = await _iOClient.delete(url, headers: headers, body: jsonEncode(body), encoding: encoding);
     _appLogger.info(
-      'Method: DELETE | Url: $url | Headers: $headers | Body: $body, | Encoding: $encoding \n==> RESPONE:\n${response.body}',
+      'Method: DELETE\nUrl: $url\nHeaders: $headers\nBody: $jsonEncode(body),\nEncoding: $encoding\n==> Status CODE: ${response.statusCode}\n==> RESPONE:\n${response.body}',
     );
 
     return response;
@@ -112,7 +116,7 @@ class AppHttpClientImpl implements AppHttpClient {
   @override
   Future<String> read(Uri url, {Map<String, String>? headers}) async {
     final String response = await _iOClient.read(url, headers: headers);
-    _appLogger.info('Method: READ | Url: $url | Headers: $headers');
+    _appLogger.info('Method: READ\nUrl: $url\nHeaders: $headers');
 
     return response;
   }
@@ -120,7 +124,7 @@ class AppHttpClientImpl implements AppHttpClient {
   @override
   Future<Uint8List> readBytes(Uri url, {Map<String, String>? headers}) async {
     final Uint8List response = await _iOClient.readBytes(url, headers: headers);
-    _appLogger.info('Method: READBYTES | Url: $url | Headers: $headers');
+    _appLogger.info('Method: READBYTES\nUrl: $url\nHeaders: $headers');
 
     return response;
   }

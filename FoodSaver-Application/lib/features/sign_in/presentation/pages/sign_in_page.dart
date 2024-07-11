@@ -1,11 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/presentation/bloc/sign_in_bloc.dart';
+import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_common_style.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -31,10 +34,10 @@ class SignInWrapper extends StatefulWidget {
 class _SignInWrapperState extends State<SignInWrapper> {
   late final TextEditingController _usernameController;
   bool hasUsernameError = false;
+  String nameError = '';
   late final TextEditingController _passwordController;
   bool _isPasswordObscure = true;
   bool hasPasswordError = false;
-  String nameError = '';
   String passwordError = '';
   @override
   void initState() {
@@ -59,10 +62,12 @@ class _SignInWrapperState extends State<SignInWrapper> {
           if (state is SignInSubmitLoadingState) {}
           if (state is SignInSubmitErrorState) {
             setState(() {
-              hasUsernameError = true;
-              hasPasswordError = true;
-              nameError = state.signInEntity.nameError!;
-              passwordError = state.signInEntity.passwordError!;
+              //name
+              hasUsernameError = ValidateUtils.isNullOrEmpty(state.signInEntity.nameError);
+              nameError = ValidateUtils.parseError(state.signInEntity.nameError);
+              //password
+              hasPasswordError = ValidateUtils.isNullOrEmpty(state.signInEntity.passwordError);
+              passwordError = ValidateUtils.parseError(state.signInEntity.passwordError);
             });
           }
           if (state is SignInSubmitFinishedState) {
@@ -102,7 +107,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                 if (hasUsernameError)
                   Text(nameError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
                 else
-                  SizedBox(height: 8.h),
+                  const SizedBox(),
                 SizedBox(
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
@@ -137,7 +142,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                 if (hasPasswordError)
                   Text(passwordError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
                 else
-                  SizedBox(height: 8.h),
+                  const SizedBox(),
                 SizedBox(
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
@@ -175,7 +180,10 @@ class _SignInWrapperState extends State<SignInWrapper> {
                     children: [
                       TextSpan(text: 'Don’t have an account? ', style: AppTextStyle.primaryText()),
                       TextSpan(
-                        recognizer: TapGestureRecognizer()..onTap = () async {},
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.router.replace(const SignUpPageRoute());
+                          },
                         text: 'Sign up',
                         style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
                       ),

@@ -1,10 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/sign_up/domain/entities/sign_up_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_up/presentation/bloc/sign_up_bloc.dart';
+import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_common_style.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -29,19 +33,25 @@ class SignUpWrapper extends StatefulWidget {
 
 class _SignUpWrapperState extends State<SignUpWrapper> {
   late final TextEditingController _usernameController;
-  final bool _hasUsernameError = false;
+  bool hasUsernameError = false;
+  String nameError = '';
   late final TextEditingController _passwordController;
   bool _isPasswordObscure = true;
-  final bool _hasPasswordError = false;
+  bool hasPasswordError = false;
+  String passwordError = '';
   late final TextEditingController _rePasswordController;
   bool _isRePasswordObscure = true;
-  final bool _hasRePasswordError = false;
+  bool hasRePasswordError = false;
+  String rePasswordError = '';
   late final TextEditingController _emailController;
-  final bool _hasEmailError = false;
+  bool hasEmailError = false;
+  String emaildError = '';
   late final TextEditingController _phoneController;
-  final bool _hasPhoneError = false;
+  bool hasPhoneError = false;
+  String phoneError = '';
   late final TextEditingController _addressController;
-  final bool _hasAddressError = false;
+  bool hasAddressError = false;
+  String addressError = '';
   @override
   void initState() {
     _usernameController = TextEditingController();
@@ -64,188 +74,266 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
           systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSizes.paddingHorizontal),
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Sign Up',
-                style: AppTextStyle.bigTitle(),
-              ),
-              SizedBox(height: 24.h),
-              Text(
-                'Username',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                style: AppTextStyle.focusText(),
-                controller: _usernameController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasUsernameError,
-                  hintText: 'Enter your username',
+      body: BlocListener<SignUpBloc, SignUpState>(
+        listener: (context, state) {
+          if (state is SignUpSubmitLoadingState) {}
+          if (state is SignUpSubmitErrorState) {
+            setState(() {
+              //name
+              hasUsernameError = ValidateUtils.isNullOrEmpty(state.signUpEntity.nameError);
+              nameError = ValidateUtils.parseError(state.signUpEntity.nameError);
+              //password
+              hasPasswordError = ValidateUtils.isNullOrEmpty(state.signUpEntity.passwordError);
+              passwordError = ValidateUtils.parseError(state.signUpEntity.passwordError);
+              //confirm-password
+              hasRePasswordError = ValidateUtils.isNullOrEmpty(state.signUpEntity.confirmPasswordError);
+              rePasswordError = ValidateUtils.parseError(state.signUpEntity.confirmPasswordError);
+              //email
+              hasEmailError = ValidateUtils.isNullOrEmpty(state.signUpEntity.emailError);
+              emaildError = ValidateUtils.parseError(state.signUpEntity.emailError);
+              //phone
+              hasPhoneError = ValidateUtils.isNullOrEmpty(state.signUpEntity.phoneError);
+              phoneError = ValidateUtils.parseError(state.signUpEntity.phoneError);
+              //address
+              hasAddressError = ValidateUtils.isNullOrEmpty(state.signUpEntity.addressError);
+              addressError = ValidateUtils.parseError(state.signUpEntity.addressError);
+            });
+          }
+          if (state is SignUpSubmitFinishedState) {
+            setState(() {
+              hasUsernameError = false;
+              hasPasswordError = false;
+              hasRePasswordError = false;
+              hasEmailError = false;
+              hasPhoneError = false;
+              hasAddressError = false;
+            });
+            context.router.replace(const SignInPageRoute());
+          }
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(AppSizes.paddingHorizontal),
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Sign Up',
+                  style: AppTextStyle.bigTitle(),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Password',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                obscureText: _isPasswordObscure,
-                style: AppTextStyle.focusText(),
-                controller: _passwordController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasPasswordError,
-                  hintText: 'Enter your password',
-                  isPassword: true,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      !_isPasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                      color: AppColors.greyColor,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordObscure = !_isPasswordObscure;
-                      });
-                    },
+                SizedBox(height: 24.h),
+                Text(
+                  'Username',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  style: AppTextStyle.focusText(),
+                  controller: _usernameController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasUsernameError,
+                    hintText: 'Enter your username',
                   ),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Confirm Password',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                obscureText: _isRePasswordObscure,
-                style: AppTextStyle.focusText(),
-                controller: _rePasswordController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasRePasswordError,
-                  hintText: 'Enter your confirm password',
-                  isPassword: true,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      !_isRePasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                      color: AppColors.greyColor,
+                if (hasUsernameError)
+                  Text(nameError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                Text(
+                  'Password',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  obscureText: _isPasswordObscure,
+                  style: AppTextStyle.focusText(),
+                  controller: _passwordController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasPasswordError,
+                    hintText: 'Enter your password',
+                    isPassword: true,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        !_isPasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: AppColors.greyColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordObscure = !_isPasswordObscure;
+                        });
+                      },
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isRePasswordObscure = !_isRePasswordObscure;
-                      });
-                    },
                   ),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Email',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                style: AppTextStyle.focusText(),
-                controller: _emailController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasEmailError,
-                  hintText: 'Enter your email',
+                if (hasPasswordError)
+                  Text(passwordError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Phone Number',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                style: AppTextStyle.focusText(),
-                controller: _phoneController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasPhoneError,
-                  hintText: 'Enter your phone number',
+                Text(
+                  'Confirm Password',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              Text(
-                'Address',
-                style: AppTextStyle.labelText(),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenLabelAndForm,
-              ),
-              TextField(
-                style: AppTextStyle.focusText(),
-                controller: _addressController,
-                decoration: AppCommonStyle.textFieldStyle(
-                  hasError: _hasAddressError,
-                  hintText: 'Enter your address',
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
                 ),
-              ),
-              SizedBox(
-                height: AppSizes.spaceBetweenFormAndForm,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: AppSizes.buttonHeight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(AppColors.primaryBrand),
-                    shape: WidgetStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
+                TextField(
+                  obscureText: _isRePasswordObscure,
+                  style: AppTextStyle.focusText(),
+                  controller: _rePasswordController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasRePasswordError,
+                    hintText: 'Enter your confirm password',
+                    isPassword: true,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        !_isRePasswordObscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: AppColors.greyColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isRePasswordObscure = !_isRePasswordObscure;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                if (hasRePasswordError)
+                  Text(rePasswordError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                Text(
+                  'Email',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  style: AppTextStyle.focusText(),
+                  controller: _emailController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasEmailError,
+                    hintText: 'Enter your email',
+                  ),
+                ),
+                if (hasEmailError)
+                  Text(emaildError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                Text(
+                  'Phone Number',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  style: AppTextStyle.focusText(),
+                  controller: _phoneController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasPhoneError,
+                    hintText: 'Enter your phone number',
+                  ),
+                ),
+                if (hasPhoneError)
+                  Text(phoneError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                Text(
+                  'Address',
+                  style: AppTextStyle.labelText().copyWith(color: Colors.black),
+                ),
+                SizedBox(
+                  height: AppSizes.spaceBetweenLabelAndForm,
+                ),
+                TextField(
+                  style: AppTextStyle.focusText(),
+                  controller: _addressController,
+                  decoration: AppCommonStyle.textFieldStyle(
+                    hasError: hasAddressError,
+                    hintText: 'Enter your address',
+                  ),
+                ),
+                if (hasAddressError)
+                  Text(addressError, style: AppTextStyle.primaryText().copyWith(color: AppColors.textFieldError))
+                else
+                  const SizedBox(),
+                SizedBox(
+                  height: AppSizes.spaceBetweenFormAndForm,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: AppSizes.buttonHeight,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<SignUpBloc>(context).add(
+                        SignUpSubmitEvent(
+                          signUpRequest: SignUpRequest(
+                            name: _usernameController.text,
+                            password: _passwordController.text,
+                            confirmPassword: _rePasswordController.text,
+                            email: _emailController.text,
+                            phone: _phoneController.text,
+                            address: _addressController.text,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(AppColors.primaryBrand),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
+                        ),
                       ),
                     ),
+                    child: Text('SIGN UP', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                   ),
-                  child: Text('SIGN UP', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                 ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: 'Already have an account? ', style: AppTextStyle.primaryText()),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()..onTap = () async {},
-                      text: 'Sign in',
-                      style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
-                    ),
-                  ],
+                SizedBox(
+                  height: 10.h,
                 ),
-              ),
-              SizedBox(height: AppSizes.paddingBottom),
-            ],
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Already have an account? ', style: AppTextStyle.primaryText()),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.router.replace(const SignInPageRoute());
+                          },
+                        text: 'Sign in',
+                        style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: AppSizes.paddingBottom),
+              ],
+            ),
           ),
         ),
       ),
