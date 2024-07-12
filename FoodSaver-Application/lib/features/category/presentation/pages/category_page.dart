@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/bloc/category_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
-import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -49,7 +48,7 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.black, 'Categories', context),
+        title: Center(child: Text('Categories', style: AppTextStyle.mediumTitle().copyWith(color: Colors.black))),
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<CategoryBloc, CategoryState>(
@@ -65,8 +64,8 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                     physics: const ScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
-                      mainAxisSpacing: AppSizes.homeMainAxisSpacing,
+                      crossAxisSpacing: AppSizes.categoryCrossAxisSpacing,
+                      mainAxisSpacing: AppSizes.categoryMainAxisSpacing,
                       childAspectRatio: 153 / 201,
                     ),
                     itemCount: state.listCategories.length,

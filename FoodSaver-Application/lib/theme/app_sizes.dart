@@ -12,6 +12,8 @@ class AppSizes {
   static double buttonBorderRadius = 30.r;
   static double homeCrossAxisSpacing = 16.w;
   static double homeMainAxisSpacing = 16.w;
+  static double categoryCrossAxisSpacing = 12.w;
+  static double categoryMainAxisSpacing = 12.w;
 
   static double homeProductImageSize(BuildContext context) {
     return (MediaQuery.sizeOf(context).width - paddingHorizontal * 2 - homeCrossAxisSpacing) / 2 - 1.w * 2;
