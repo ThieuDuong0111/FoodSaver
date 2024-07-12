@@ -63,10 +63,10 @@ class _SignInWrapperState extends State<SignInWrapper> {
           if (state is SignInSubmitErrorState) {
             setState(() {
               //name
-              hasUsernameError = ValidateUtils.isNullOrEmpty(state.signInEntity.nameError);
+              hasUsernameError = ValidateUtils.isNotNullOrEmpty(state.signInEntity.nameError);
               nameError = ValidateUtils.parseError(state.signInEntity.nameError);
               //password
-              hasPasswordError = ValidateUtils.isNullOrEmpty(state.signInEntity.passwordError);
+              hasPasswordError = ValidateUtils.isNotNullOrEmpty(state.signInEntity.passwordError);
               passwordError = ValidateUtils.parseError(state.signInEntity.passwordError);
             });
           }

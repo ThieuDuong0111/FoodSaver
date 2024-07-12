@@ -37,7 +37,7 @@ class _InitPageState extends State<InitPage> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: [HomePage(pageController: pageController), const SearchPage(), const MyProfilePage()],
+        children: const [HomePage(), SearchPage(), MyProfilePage()],
       ),
       bottomNavigationBar: Container(
         // height: 46.h,

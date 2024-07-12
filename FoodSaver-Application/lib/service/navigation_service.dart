@@ -33,11 +33,11 @@ abstract class NavigationService implements RootStackRouter {}
     AutoRoute<Object>(
       path: 'init',
       page: InitPage,
+      initial: true,
     ),
     AutoRoute<Object>(
       path: 'sign_in',
       page: SignInPage,
-      initial: true,
     ),
     AutoRoute<Object>(
       path: 'sign_up',

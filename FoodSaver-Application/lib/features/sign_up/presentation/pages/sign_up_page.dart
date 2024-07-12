@@ -80,22 +80,22 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
           if (state is SignUpSubmitErrorState) {
             setState(() {
               //name
-              hasUsernameError = ValidateUtils.isNullOrEmpty(state.signUpEntity.nameError);
+              hasUsernameError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.nameError);
               nameError = ValidateUtils.parseError(state.signUpEntity.nameError);
               //password
-              hasPasswordError = ValidateUtils.isNullOrEmpty(state.signUpEntity.passwordError);
+              hasPasswordError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.passwordError);
               passwordError = ValidateUtils.parseError(state.signUpEntity.passwordError);
               //confirm-password
-              hasRePasswordError = ValidateUtils.isNullOrEmpty(state.signUpEntity.confirmPasswordError);
+              hasRePasswordError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.confirmPasswordError);
               rePasswordError = ValidateUtils.parseError(state.signUpEntity.confirmPasswordError);
               //email
-              hasEmailError = ValidateUtils.isNullOrEmpty(state.signUpEntity.emailError);
+              hasEmailError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.emailError);
               emaildError = ValidateUtils.parseError(state.signUpEntity.emailError);
               //phone
-              hasPhoneError = ValidateUtils.isNullOrEmpty(state.signUpEntity.phoneError);
+              hasPhoneError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.phoneError);
               phoneError = ValidateUtils.parseError(state.signUpEntity.phoneError);
               //address
-              hasAddressError = ValidateUtils.isNullOrEmpty(state.signUpEntity.addressError);
+              hasAddressError = ValidateUtils.isNotNullOrEmpty(state.signUpEntity.addressError);
               addressError = ValidateUtils.parseError(state.signUpEntity.addressError);
             });
           }

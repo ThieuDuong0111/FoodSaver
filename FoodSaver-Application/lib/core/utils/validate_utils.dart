@@ -1,5 +1,5 @@
 class ValidateUtils {
-  static bool isNullOrEmpty(String? input) {
+  static bool isNotNullOrEmpty(String? input) {
     if (input == null || input.isEmpty) {
       return false;
     }

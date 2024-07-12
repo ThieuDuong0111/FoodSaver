@@ -10,23 +10,29 @@ import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final int productId;
+  final String productName;
   const ProductDetailPage({
     Key? key,
     required this.productId,
+    required this.productName,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ProductDetailBloc>(
       create: (context) => DependencyInjection.instance(),
-      child: ProductDetailWrapper(productId: productId),
+      child: ProductDetailWrapper(
+        productId: productId,
+        productName: productName,
+      ),
     );
   }
 }
 
 class ProductDetailWrapper extends StatefulWidget {
   final int productId;
-  const ProductDetailWrapper({super.key, required this.productId});
+  final String productName;
+  const ProductDetailWrapper({super.key, required this.productId, required this.productName});
 
   @override
   State<ProductDetailWrapper> createState() => _ProductDetailWrapperState();
@@ -48,7 +54,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.black, 'Hamburger Cheese', context),
+        title: AppComponent.customAppBar(Colors.black, widget.productName, context),
       ),
       body: Stack(
         clipBehavior: Clip.none,

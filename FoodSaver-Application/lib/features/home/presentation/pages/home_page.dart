@@ -3,39 +3,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/bloc/home_bloc.dart';
-import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
-  final PageController pageController;
   const HomePage({
     Key? key,
-    required this.pageController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (context) => DependencyInjection.instance(),
-      child: HomeWrapper(pageController: pageController),
+      child: const HomeWrapper(),
     );
   }
 }
 
 class HomeWrapper extends StatefulWidget {
-  final PageController pageController;
-  const HomeWrapper({super.key, required this.pageController});
+  const HomeWrapper({super.key});
 
   @override
   State<HomeWrapper> createState() => _HomeWrapperState();
 }
 
 class _HomeWrapperState extends State<HomeWrapper> {
+  late HomeBloc _homeBloc;
   @override
   void initState() {
+    _homeBloc = BlocProvider.of<HomeBloc>(context);
+    _homeBloc.add(const HomePageEvent());
     super.initState();
   }
 
@@ -47,7 +48,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        toolbarHeight: 115.h,
+        toolbarHeight: 110.h,
         titleSpacing: 0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
@@ -101,11 +102,13 @@ class _HomeWrapperState extends State<HomeWrapper> {
                 ],
               ),
               SizedBox(
-                height: 10.h,
+                height: 8.h,
               ),
               //Search Bar
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  context.router.push(const SearchPageRoute());
+                },
                 child: Container(
                   width: double.infinity,
                   height: 35.h,
@@ -129,73 +132,138 @@ class _HomeWrapperState extends State<HomeWrapper> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(AppSizes.paddingHorizontal),
+          padding: EdgeInsets.symmetric(vertical: AppSizes.paddingHorizontal),
           width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
-                  mainAxisSpacing: AppSizes.homeMainAxisSpacing,
-                  childAspectRatio: 146 / 201,
-                ),
-                itemCount: 20,
-                itemBuilder: (context, index) {
-                  //Home Product Component
-                  return InkWell(
-                    onTap: () {
-                      context.router.push(ProductDetailPageRoute(productId: 1));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.r),
-                        border: Border.all(color: const Color(0xFFD2C7C7), width: 1.w),
+          child: BlocBuilder<HomeBloc, HomeState>(
+            bloc: _homeBloc,
+            builder: (context, state) {
+              if (state is HomePageFinishedState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                      child: Text(
+                        'Categories',
+                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
                       ),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius:
-                                BorderRadius.only(topLeft: Radius.circular(15.r), topRight: Radius.circular(15.r)),
-                            child: Image.asset(
-                              Assets.images.foodImage.path,
-                              height: AppSizes.homeProductImageSize(context),
-                              width: AppSizes.homeProductImageSize(context),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                    SizedBox(height: 10.h),
+                    SizedBox(
+                      height: 95.h,
+                      child: ListView.builder(
+                        itemCount: state.homeEntity.categories.length,
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Column(
                                 children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Hamburger Cheese',
-                                      style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
-                                      maxLines: 1,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    child: ImageParse(
+                                      width: 70.h,
+                                      height: 70.h,
+                                      url: state.homeEntity.categories[index]!.imageUrl,
+                                      type: 'category',
                                     ),
                                   ),
+                                  SizedBox(height: 4.h),
                                   Text(
-                                    '235,000VND',
+                                    state.homeEntity.categories[index]!.name.toString(),
                                     style: AppTextStyle.primaryText()
-                                        .copyWith(fontWeight: FontWeight.w500, color: AppColors.primaryBrand),
+                                        .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
-                        ],
+                              SizedBox(width: 14.w),
+                            ],
+                          );
+                        },
                       ),
                     ),
-                  );
-                },
-              ),
-              SizedBox(height: AppSizes.paddingBottom),
-            ],
+                    SizedBox(height: 10.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                      child: Text(
+                        'Top Products',
+                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    GridView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
+                        mainAxisSpacing: AppSizes.homeMainAxisSpacing,
+                        childAspectRatio: 146 / 201,
+                      ),
+                      itemCount: state.homeEntity.products.length,
+                      itemBuilder: (context, index) {
+                        //Home Product Component
+                        return InkWell(
+                          onTap: () {
+                            context.router
+                                .push(ProductDetailPageRoute(productId: state.homeEntity.products[index]!.id));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              border: Border.all(color: const Color(0xFFD2C7C7), width: 1.w),
+                            ),
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15.r),
+                                    topRight: Radius.circular(15.r),
+                                  ),
+                                  child: ImageParse(
+                                    width: AppSizes.homeProductImageSize(context),
+                                    height: AppSizes.homeProductImageSize(context),
+                                    url: state.homeEntity.products[index]!.imageUrl,
+                                    type: 'product',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            state.homeEntity.products[index]!.name.toString(),
+                                            style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                        Text(
+                                          ParseUtils.formatCurrency(state.homeEntity.products[index]!.price.toDouble()),
+                                          style: AppTextStyle.primaryText()
+                                              .copyWith(fontWeight: FontWeight.w400, color: AppColors.primaryBrand),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: AppSizes.paddingBottom),
+                  ],
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
         ),
       ),
