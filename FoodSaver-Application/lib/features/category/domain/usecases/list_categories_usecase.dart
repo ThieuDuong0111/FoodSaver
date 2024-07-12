@@ -6,8 +6,8 @@ import 'package:funix_thieudvfx_foodsaver/features/category/domain/repositories/
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class CategoryUsecase extends UseCaseHandleFailure<List<CategoryEntity>, NoParams> {
-  CategoryUsecase(this._categoryRepository);
+class ListCategoiresUsecase extends UseCaseHandleFailure<List<CategoryEntity>, NoParams> {
+  ListCategoiresUsecase(this._categoryRepository);
 
   final CategoryRepository _categoryRepository;
 
