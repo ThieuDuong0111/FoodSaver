@@ -28,6 +28,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (left) => emit(HomePageErrorState(failure: left)),
       (right) => emit(HomePageFinishedState(homeEntity: right)),
     );
-    return null;
   }
 }

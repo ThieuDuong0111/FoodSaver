@@ -25,6 +25,11 @@ class ImageParse extends StatelessWidget {
         child: Image.asset(Assets.images.noneImageProduct.path, width: width, height: height - 16.h),
       );
     }
-    return Image.network('${ApiEndpoints.baseUrl}/image/$type/$url', width: width, height: height);
+    // debugPrint('$url');
+    return Image.network(
+      '${ApiEndpoints.baseUrl}/image/$type/$url',
+      width: width,
+      fit: BoxFit.fitWidth,
+    );
   }
 }

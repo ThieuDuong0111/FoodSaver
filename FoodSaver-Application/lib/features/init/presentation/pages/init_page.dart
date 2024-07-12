@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/features/category/presentation/pages/category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/pages/home_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/pages/my_profile_page.dart';
-import 'package:funix_thieudvfx_foodsaver/features/search/presentation/pages/search_page.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class InitPage extends StatefulWidget {
@@ -37,7 +37,7 @@ class _InitPageState extends State<InitPage> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [HomePage(), SearchPage(), MyProfilePage()],
+        children: const [HomePage(), CategoryPage(), MyProfilePage()],
       ),
       bottomNavigationBar: Container(
         // height: 46.h,
@@ -70,9 +70,9 @@ class _InitPageState extends State<InitPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.category_outlined,
               ),
-              label: 'Search',
+              label: 'Category',
             ),
             BottomNavigationBarItem(
               icon: Icon(

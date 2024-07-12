@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:funix_thieudvfx_foodsaver/core/constants/widget_keys.dart';
 import 'package:funix_thieudvfx_foodsaver/features/about/presentation/pages/about_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/cart_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/category/presentation/pages/category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/customer_support/presentation/pages/customer_support_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/edit_profile/presentation/pages/edit_profile_page.dart';
@@ -50,6 +51,10 @@ abstract class NavigationService implements RootStackRouter {}
     AutoRoute<Object>(
       path: 'search',
       page: SearchPage,
+    ),
+    AutoRoute<Object>(
+      path: 'category',
+      page: CategoryPage,
     ),
     AutoRoute<Object>(
       path: 'product_detail',

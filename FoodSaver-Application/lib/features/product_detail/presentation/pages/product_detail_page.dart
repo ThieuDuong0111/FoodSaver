@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/bloc/product_detail_bloc.dart';
-import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -39,9 +40,12 @@ class ProductDetailWrapper extends StatefulWidget {
 }
 
 class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
+  late ProductDetailBloc _productDetailBloc;
   int count = 1;
   @override
   void initState() {
+    _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
+    _productDetailBloc.add(ProductDetailPageEvent(widget.productId));
     super.initState();
   }
 
@@ -62,109 +66,120 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
         children: [
           SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 12.h),
-                SizedBox(
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.r),
-                    child: Image.asset(
-                      Assets.images.foodImage.path,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text('Hamburger Cheese', style: AppTextStyle.mediumTitle()),
-                    ),
-                    SizedBox(
-                      width: 3.w,
-                    ),
-                    Text(
-                      '235,000VND',
-                      style: AppTextStyle.mediumTitle().copyWith(color: AppColors.primaryBrand),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'by ',
-                              style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
-                            ),
-                            TextSpan(
-                              text: 'Foodiesfeed',
-                              style: AppTextStyle.primaryText()
-                                  .copyWith(color: const Color(0xFF03A33A), fontWeight: FontWeight.w500),
-                            ),
-                          ],
+            child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
+              bloc: _productDetailBloc,
+              builder: (context, state) {
+                if (state is ProductDetailPageFinishedState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 12.h),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.r),
+                          child: ImageParse(
+                            width: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal,
+                            height: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal,
+                            url: state.productEntity.imageUrl,
+                            type: 'product',
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 3.w,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (count > 1) {
-                                  count--;
-                                }
-                              });
-                            },
-                            child: const Icon(
-                              Icons.remove_circle,
-                              color: AppColors.primaryBrand,
+                          Expanded(
+                            child: Text(state.productEntity.name!, style: AppTextStyle.mediumTitle()),
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          Text(
+                            ParseUtils.formatCurrency(state.productEntity.price.toDouble()),
+                            style: AppTextStyle.mediumTitle().copyWith(color: AppColors.primaryBrand),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'by ',
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: state.productEntity.creator.name,
+                                    style: AppTextStyle.primaryText()
+                                        .copyWith(color: const Color(0xFF03A33A), fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          SizedBox(width: 8.w),
-                          Text(
-                            count.toString(),
-                            style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                          SizedBox(
+                            width: 3.w,
                           ),
-                          SizedBox(width: 8.w),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                count++;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.add_circle,
-                              color: AppColors.primaryBrand,
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      if (count > 1) {
+                                        count--;
+                                      }
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.remove_circle,
+                                    color: AppColors.primaryBrand,
+                                  ),
+                                ),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  count.toString(),
+                                  style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(width: 8.w),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      count++;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.add_circle,
+                                    color: AppColors.primaryBrand,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5.h),
-                Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                  style: AppTextStyle.primaryText(),
-                ),
-                SizedBox(
-                  height: AppSizes.buttonHeight + 24.h,
-                ),
-                SizedBox(height: AppSizes.paddingBottom),
-              ],
+                      SizedBox(height: 5.h),
+                      Text(
+                        state.productEntity.description!,
+                        style: AppTextStyle.primaryText(),
+                      ),
+                      SizedBox(
+                        height: AppSizes.buttonHeight + 24.h,
+                      ),
+                      SizedBox(height: AppSizes.paddingBottom),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           ),
           Positioned(

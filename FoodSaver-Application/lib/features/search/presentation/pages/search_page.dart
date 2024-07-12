@@ -102,7 +102,7 @@ class _SearchWrapperState extends State<SearchWrapper> {
                       //Search Product Component
                       return InkWell(
                         onTap: () {
-                          context.router.push(ProductDetailPageRoute(productId: 1));
+                          context.router.push(ProductDetailPageRoute(productId: 1, productName: ''));
                         },
                         child: Column(
                           children: [

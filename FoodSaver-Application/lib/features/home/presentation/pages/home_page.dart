@@ -73,9 +73,9 @@ class _HomeWrapperState extends State<HomeWrapper> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Hello,',
+                                'Welcome to FoodSaver',
                                 style: AppTextStyle.primaryText()
-                                    .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
                               ),
                               Text(
                                 'thieuduong01526',
@@ -207,8 +207,12 @@ class _HomeWrapperState extends State<HomeWrapper> {
                         //Home Product Component
                         return InkWell(
                           onTap: () {
-                            context.router
-                                .push(ProductDetailPageRoute(productId: state.homeEntity.products[index]!.id));
+                            context.router.push(
+                              ProductDetailPageRoute(
+                                productId: state.homeEntity.products[index]!.id,
+                                productName: state.homeEntity.products[index]!.name.toString(),
+                              ),
+                            );
                           },
                           child: Container(
                             decoration: BoxDecoration(
