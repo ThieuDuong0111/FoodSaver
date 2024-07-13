@@ -56,9 +56,10 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.black, widget.productName, context),
+        backgroundColor: AppColors.primaryBrand,
+        systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
+        title: AppComponent.customAppBar(Colors.white, widget.productName, context),
+        toolbarHeight: 50.h,
       ),
       body: Stack(
         clipBehavior: Clip.none,

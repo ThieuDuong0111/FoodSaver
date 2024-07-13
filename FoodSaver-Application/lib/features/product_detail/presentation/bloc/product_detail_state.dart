@@ -22,3 +22,17 @@ class ProductDetailPageFinishedState extends ProductDetailState {
   });
   final ProductEntity productEntity;
 }
+
+class ProductByCategoryPageLoadingState extends ProductDetailState {}
+
+class ProductByCategoryPageErrorState extends ProductDetailState {
+  const ProductByCategoryPageErrorState({required this.failure});
+  final Failure failure;
+}
+
+class ProductByCategoryPageFinishedState extends ProductDetailState {
+  const ProductByCategoryPageFinishedState({
+    required this.listProductEntity,
+  });
+  final List<ProductEntity> listProductEntity;
+}

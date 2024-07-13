@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/bloc/category_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
+import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -46,9 +48,10 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
-        backgroundColor: Colors.transparent,
-        systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-        title: Center(child: Text('Categories', style: AppTextStyle.mediumTitle().copyWith(color: Colors.black))),
+        backgroundColor: AppColors.primaryBrand,
+        systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
+        title: Center(child: Text('Categories', style: AppTextStyle.mediumTitle().copyWith(color: Colors.white))),
+        toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<CategoryBloc, CategoryState>(
@@ -57,7 +60,7 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
             if (state is CategoriesPageFinishedState) {
               return Column(
                 children: [
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 24.h),
                   GridView.builder(
                     padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                     shrinkWrap: true,
@@ -72,7 +75,14 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                     itemBuilder: (context, index) {
                       //Home Product Component
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.router.push(
+                            ProductByCategoryPageRoute(
+                              categoryId: state.listCategories[index].id,
+                              categoryName: state.listCategories[index].name.toString(),
+                            ),
+                          );
+                        },
                         child: Column(
                           children: [
                             ClipRRect(

@@ -15,6 +15,7 @@ import 'package:funix_thieudvfx_foodsaver/features/init/presentation/pages/init_
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/pages/my_profile_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_detail/presentation/pages/order_detail_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/pages/order_history_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_by_category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_detail_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/search/presentation/pages/search_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/presentation/pages/sign_in_page.dart';
@@ -59,6 +60,10 @@ abstract class NavigationService implements RootStackRouter {}
     AutoRoute<Object>(
       path: 'product_detail',
       page: ProductDetailPage,
+    ),
+    AutoRoute<Object>(
+      path: 'product_by_category',
+      page: ProductByCategoryPage,
     ),
     AutoRoute<Object>(
       path: 'cart',

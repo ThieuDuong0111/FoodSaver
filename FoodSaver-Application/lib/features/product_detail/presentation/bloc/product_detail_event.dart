@@ -11,3 +11,8 @@ class ProductDetailPageEvent extends ProductDetailEvent {
   const ProductDetailPageEvent(this.productId);
   final int productId;
 }
+
+class ProductByCategoryPageEvent extends ProductDetailEvent {
+  const ProductByCategoryPageEvent(this.categoryId);
+  final int categoryId;
+}

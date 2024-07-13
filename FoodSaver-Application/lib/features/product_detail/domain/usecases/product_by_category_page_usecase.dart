@@ -6,13 +6,13 @@ import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/reposit
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class ProductDetailUsecase extends UseCaseHandleFailure<ProductEntity, int> {
-  ProductDetailUsecase(this._productRepository);
+class ProductByCategoryUsecase extends UseCaseHandleFailure<List<ProductEntity>, int> {
+  ProductByCategoryUsecase(this._productRepository);
 
   final ProductRepository _productRepository;
 
   @override
-  Future<Either<Failure, ProductEntity>> call(int params) {
-    return _productRepository.productDetailPage(params);
+  Future<Either<Failure, List<ProductEntity>>> call(int params) {
+    return _productRepository.productByCategoryPage(params);
   }
 }

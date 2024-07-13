@@ -156,29 +156,39 @@ class _HomeWrapperState extends State<HomeWrapper> {
                         scrollDirection: Axis.horizontal,
                         padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                         itemBuilder: (context, index) {
-                          return Row(
-                            children: [
-                              Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    child: ImageParse(
-                                      width: 70.h,
-                                      height: 70.h,
-                                      url: state.homeEntity.categories[index]!.imageUrl,
-                                      type: 'category',
+                          return InkWell(
+                            onTap: () {
+                              context.router.push(
+                                ProductByCategoryPageRoute(
+                                  categoryId: state.homeEntity.categories[index]!.id,
+                                  categoryName: state.homeEntity.categories[index]!.name.toString(),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      child: ImageParse(
+                                        width: 70.h,
+                                        height: 70.h,
+                                        url: state.homeEntity.categories[index]!.imageUrl,
+                                        type: 'category',
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Text(
-                                    state.homeEntity.categories[index]!.name.toString(),
-                                    style: AppTextStyle.primaryText()
-                                        .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 14.w),
-                            ],
+                                    SizedBox(height: 4.h),
+                                    Text(
+                                      state.homeEntity.categories[index]!.name.toString(),
+                                      style: AppTextStyle.primaryText()
+                                          .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 14.w),
+                              ],
+                            ),
                           );
                         },
                       ),
