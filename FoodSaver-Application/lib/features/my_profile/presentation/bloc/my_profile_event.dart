@@ -6,3 +6,7 @@ abstract class MyProfileEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SignOutEvent extends MyProfileEvent {
+  const SignOutEvent();
+}

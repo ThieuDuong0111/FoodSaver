@@ -13,3 +13,7 @@ class SignInSubmitEvent extends SignInEvent {
   });
   final SignInRequest signInRequest;
 }
+
+class ContinueWithoutSignInEvent extends SignInEvent {
+  const ContinueWithoutSignInEvent();
+}

@@ -4,7 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class AppDialog {
-  static void showAppDialog({required BuildContext context, required String content, required String buttonName}) {
+  static void showAppDialog({
+    required BuildContext context,
+    required String content,
+    required String buttonName,
+    required void Function() action,
+  }) {
     final AlertDialog alert = AlertDialog(
       insetPadding: EdgeInsets.zero,
       titlePadding: EdgeInsets.zero,
@@ -35,7 +40,7 @@ class AppDialog {
                       width: double.infinity,
                       height: 30.h,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: action,
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(AppColors.primaryBrand),
                           shape: WidgetStateProperty.all<OutlinedBorder>(

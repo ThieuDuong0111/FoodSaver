@@ -24,8 +24,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     ProductDetailPageEvent event,
     Emitter<ProductDetailState> emit,
   ) async {
-    final Either<Failure, ProductEntity> result = await _productDetailUsecase(event.productId);
     emit(ProductDetailPageLoadingState());
+    final Either<Failure, ProductEntity> result = await _productDetailUsecase(event.productId);
     result.fold(
       (left) => emit(ProductDetailPageErrorState(failure: left)),
       (right) => emit(ProductDetailPageFinishedState(productEntity: right)),
@@ -37,8 +37,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     ProductByCategoryPageEvent event,
     Emitter<ProductDetailState> emit,
   ) async {
-    final Either<Failure, List<ProductEntity>> result = await _productByCategoryUsecase(event.categoryId);
     emit(ProductByCategoryPageLoadingState());
+    final Either<Failure, List<ProductEntity>> result = await _productByCategoryUsecase(event.categoryId);
     result.fold(
       (left) => emit(ProductByCategoryPageErrorState(failure: left)),
       (right) => emit(ProductByCategoryPageFinishedState(listProductEntity: right)),

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:funix_thieudvfx_foodsaver/core/constants/widget_keys.dart';
 import 'package:funix_thieudvfx_foodsaver/features/about/presentation/pages/about_page.dart';
-import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/auth_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/pages/auth_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/cart_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/pages/category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/checkout/presentation/pages/checkout_page.dart';

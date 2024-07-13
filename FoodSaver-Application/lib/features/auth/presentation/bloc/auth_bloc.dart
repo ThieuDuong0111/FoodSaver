@@ -31,6 +31,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (left) => emit(const AuthInitAppErrorState()),
       (right) => emit(AuthInitAppFinishedState(userEntity: right)),
     );
-    return null;
   }
 }

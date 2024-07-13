@@ -23,8 +23,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     SignUpSubmitEvent event,
     Emitter<SignUpState> emit,
   ) async {
-    final Either<SignUpEntity, SignUpEntity> result = await _signUpUsecase(event.signUpRequest);
     emit(SignUpSubmitLoadingState());
+    final Either<SignUpEntity, SignUpEntity> result = await _signUpUsecase(event.signUpRequest);
     result.fold(
       (left) => emit(SignUpSubmitErrorState(signUpEntity: left)),
       (right) => emit(SignUpSubmitFinishedState(signUpEntity: right)),

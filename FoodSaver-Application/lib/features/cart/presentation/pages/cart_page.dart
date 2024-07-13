@@ -114,6 +114,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                           content:
                                                               'Are you sure you want to remove this item from your cart?',
                                                           buttonName: 'Delete',
+                                                          action: () {},
                                                         );
                                                       },
                                                       child: const Icon(

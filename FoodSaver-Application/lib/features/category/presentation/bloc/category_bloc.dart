@@ -22,8 +22,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     CategoriesPageEvent event,
     Emitter<CategoryState> emit,
   ) async {
-    final Either<Failure, List<CategoryEntity>> result = await _listCategoiresUsecase(NoParams());
     emit(CategoriesPageLoadingState());
+    final Either<Failure, List<CategoryEntity>> result = await _listCategoiresUsecase(NoParams());
     result.fold(
       (left) => emit(CategoriesPageErrorState(failure: left)),
       (right) => emit(CategoriesPageFinishedState(listCategories: right)),

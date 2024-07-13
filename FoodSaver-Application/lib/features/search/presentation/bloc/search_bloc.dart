@@ -22,12 +22,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchByNamePageEvent event,
     Emitter<SearchState> emit,
   ) async {
-    final Either<Failure, List<ProductEntity>> result = await _searchProductByNameUsecase(event.productName);
     emit(SearchByNamePageLoadingState());
+    final Either<Failure, List<ProductEntity>> result = await _searchProductByNameUsecase(event.productName);
     result.fold(
       (left) => emit(SearchByNamePageErrorState(failure: left)),
       (right) => emit(SearchByNamePageFinishedState(listProductEntity: right)),
     );
-    return null;
   }
 }

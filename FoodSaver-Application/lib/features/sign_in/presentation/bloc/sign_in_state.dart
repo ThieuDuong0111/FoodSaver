@@ -22,3 +22,13 @@ class SignInSubmitFinishedState extends SignInState {
   });
   final SignInEntity signInEntity;
 }
+
+class ContinueWithoutSignInLoadingState extends SignInState {}
+
+class ContinueWithoutSignInErrorState extends SignInState {
+  const ContinueWithoutSignInErrorState();
+}
+
+class ContinueWithoutSignInFinishedState extends SignInState {
+  const ContinueWithoutSignInFinishedState();
+}

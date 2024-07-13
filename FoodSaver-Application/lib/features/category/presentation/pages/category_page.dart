@@ -122,7 +122,7 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                   SizedBox(height: AppSizes.paddingBottom),
                 ],
               );
-            } else if (state is CategoriesPageFinishedState) {
+            } else if (state is CategoriesPageLoadingState) {
               return const LoadingPage();
             } else {
               return const SizedBox();
