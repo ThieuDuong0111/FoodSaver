@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
@@ -177,6 +178,8 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                       SizedBox(height: AppSizes.paddingBottom),
                     ],
                   );
+                } else if (state is ProductDetailPageLoadingState) {
+                  return const LoadingPage();
                 } else {
                   return const SizedBox();
                 }

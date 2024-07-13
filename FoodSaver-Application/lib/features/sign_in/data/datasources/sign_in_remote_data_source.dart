@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:funix_thieudvfx_foodsaver/core/constants/api_endpoints.dart';
 import 'package:funix_thieudvfx_foodsaver/core/http_client/app_http_client.dart';
+import 'package:funix_thieudvfx_foodsaver/core/storage/app_storage.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/data/models/sign_in_model.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_request.dart';
@@ -18,10 +19,12 @@ abstract class SignInRemoteDataSource {
 class SignInRemoteDataSourceImpl implements SignInRemoteDataSource {
   SignInRemoteDataSourceImpl(
     this._appHttpClient,
+    this._appStorage,
     this._signInFromModelToEntityMapper,
   );
 
   final AppHttpClient _appHttpClient;
+  final AppStorage _appStorage;
   final SignInFromModelToEntityMapper _signInFromModelToEntityMapper;
 
   @override
@@ -40,6 +43,8 @@ class SignInRemoteDataSourceImpl implements SignInRemoteDataSource {
       );
       model = SignInModel.fromJson(json.decode(response.body));
       if (response.statusCode == 200) {
+        //Save token
+        await _appStorage.writeValue(key: 'token', value: model.token);
         return Right(_signInFromModelToEntityMapper.fromModel(model)!);
       }
       throw Exception();

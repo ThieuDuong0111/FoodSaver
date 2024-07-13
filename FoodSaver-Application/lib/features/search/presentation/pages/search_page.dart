@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/search/presentation/bloc/search_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -248,6 +249,8 @@ class _SearchWrapperState extends State<SearchWrapper> {
                       );
                     },
                   );
+                } else if (state is SearchByNamePageLoadingState) {
+                  return const LoadingPage();
                 } else {
                   return const SizedBox();
                 }

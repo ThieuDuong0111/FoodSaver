@@ -24,6 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     final Either<Failure, HomeEntity> result = await _homeUsecase(NoParams());
     emit(HomePageLoadingState());
+
     result.fold(
       (left) => emit(HomePageErrorState(failure: left)),
       (right) => emit(HomePageFinishedState(homeEntity: right)),

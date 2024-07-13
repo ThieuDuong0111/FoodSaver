@@ -2,11 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/bloc/home_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
+import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
+import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -50,84 +55,92 @@ class _HomeWrapperState extends State<HomeWrapper> {
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
         toolbarHeight: 110.h,
         titleSpacing: 0,
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-          child: Column(
-            children: [
-              Row(
+        title: Consumer(
+          builder: (context, ref, child) {
+            final UserEntity userinfo = ref.watch(UserInfoNotifier.provider).userInfo;
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 40.w,
-                          width: 40.w,
-                          decoration: BoxDecoration(
-                            color: Colors.amberAccent,
-                            borderRadius: BorderRadius.circular(40.w),
-                          ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Welcome to FoodSaver',
-                                style: AppTextStyle.primaryText()
-                                    .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                'thieuduong01526',
-                                style: AppTextStyle.primaryText()
-                                    .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 5.w),
-                  InkWell(
-                    onTap: () {
-                      context.router.push(const CartPageRoute());
-                    },
-                    child: const Icon(
-                      Icons.shopping_cart,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(width: 5.w),
-                ],
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              //Search Bar
-              InkWell(
-                onTap: () {
-                  context.router.push(const SearchPageRoute());
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 35.h,
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30.r)),
-                  child: Row(
+                  Row(
                     children: [
-                      const Icon(
-                        Icons.search,
-                        color: AppColors.primaryBrand,
+                      Expanded(
+                        child: Row(
+                          children: [
+                            if (ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl))
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(40.w),
+                                child: ImageParse(width: 40.w, height: 40.w, url: userinfo.imageUrl, type: 'user'),
+                              )
+                            else
+                              Icon(
+                                Icons.account_circle,
+                                size: 40.w,
+                                color: AppColors.greyColor,
+                              ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Welcome to FoodSaver',
+                                    style: AppTextStyle.primaryText()
+                                        .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl) ? userinfo.name! : 'User',
+                                    style: AppTextStyle.primaryText()
+                                        .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 8.w),
-                      Expanded(child: Text('Search for foods you like', style: AppTextStyle.hintText())),
+                      SizedBox(width: 5.w),
+                      InkWell(
+                        onTap: () {
+                          context.router.push(const CartPageRoute());
+                        },
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
                     ],
                   ),
-                ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  //Search Bar
+                  InkWell(
+                    onTap: () {
+                      context.router.push(const SearchPageRoute());
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 35.h,
+                      padding: EdgeInsets.symmetric(horizontal: 18.w),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30.r)),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.search,
+                            color: AppColors.primaryBrand,
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(child: Text('Search for foods you like', style: AppTextStyle.hintText())),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -274,6 +287,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
                     SizedBox(height: AppSizes.paddingBottom),
                   ],
                 );
+              } else if (state is HomePageLoadingState) {
+                return const LoadingPage();
               } else {
                 return const SizedBox();
               }

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:funix_thieudvfx_foodsaver/core/constants/widget_keys.dart';
 import 'package:funix_thieudvfx_foodsaver/features/about/presentation/pages/about_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/auth_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/cart_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/pages/category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/checkout/presentation/pages/checkout_page.dart';
@@ -28,14 +29,14 @@ abstract class NavigationService implements RootStackRouter {}
 
 @MaterialAutoRouter(
   routes: [
-    // AutoRoute<Object>(
-    //   path: 'number_trivia',
-    //   page: NumberTriviaPage,
-    // ),
+    AutoRoute<Object>(
+      path: 'auth',
+      page: AuthPage,
+      initial: true,
+    ),
     AutoRoute<Object>(
       path: 'init',
       page: InitPage,
-      initial: true,
     ),
     AutoRoute<Object>(
       path: 'sign_in',

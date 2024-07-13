@@ -75,6 +75,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
               hasUsernameError = false;
               hasPasswordError = false;
             });
+            context.router.replace(const InitPageRoute());
           }
         },
         child: SingleChildScrollView(
