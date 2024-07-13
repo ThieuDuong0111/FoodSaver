@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
-import 'package:funix_thieudvfx_foodsaver/features/Search/presentation/bloc/search_bloc.dart';
-import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
+import 'package:funix_thieudvfx_foodsaver/features/search/presentation/bloc/search_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_common_style.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
@@ -31,9 +32,10 @@ class SearchWrapper extends StatefulWidget {
 
 class _SearchWrapperState extends State<SearchWrapper> {
   late final TextEditingController _searchController;
-  int length = 24;
+  late SearchBloc _searchBloc;
   @override
   void initState() {
+    _searchBloc = BlocProvider.of<SearchBloc>(context);
     _searchController = TextEditingController();
     super.initState();
   }
@@ -43,6 +45,7 @@ class _SearchWrapperState extends State<SearchWrapper> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
         title: Column(
@@ -51,11 +54,16 @@ class _SearchWrapperState extends State<SearchWrapper> {
               padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
               child: Row(
                 children: [
-                  // const Icon(
-                  //   Icons.arrow_back_ios,
-                  //   color: Colors.black,
-                  // ),
-                  // SizedBox(width: 5.w),
+                  InkWell(
+                    onTap: () {
+                      context.router.pop();
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(width: 5.w),
                   Expanded(
                     child: SizedBox(
                       height: 40.h,
@@ -69,9 +77,14 @@ class _SearchWrapperState extends State<SearchWrapper> {
                     ),
                   ),
                   SizedBox(width: 5.w),
-                  Text(
-                    'Search',
-                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                  InkWell(
+                    onTap: () {
+                      _searchBloc.add(SearchByNamePageEvent(_searchController.text));
+                    },
+                    child: Text(
+                      'Search',
+                      style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ],
               ),
@@ -89,20 +102,29 @@ class _SearchWrapperState extends State<SearchWrapper> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-        child: length > 0
-            ? ListView(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                children: <Widget>[
-                  ListView.builder(
-                    itemCount: length,
+        child: ListView(
+          physics: const ScrollPhysics(),
+          shrinkWrap: true,
+          children: <Widget>[
+            SizedBox(height: 10.h),
+            BlocBuilder<SearchBloc, SearchState>(
+              bloc: _searchBloc,
+              builder: (context, state) {
+                if (state is SearchByNamePageFinishedState) {
+                  return ListView.builder(
+                    itemCount: state.listProductEntity.length,
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       //Search Product Component
                       return InkWell(
                         onTap: () {
-                          context.router.push(ProductDetailPageRoute(productId: 1, productName: ''));
+                          context.router.push(
+                            ProductDetailPageRoute(
+                              productId: state.listProductEntity[index].id,
+                              productName: state.listProductEntity[index].name!,
+                            ),
+                          );
                         },
                         child: Column(
                           children: [
@@ -131,67 +153,83 @@ class _SearchWrapperState extends State<SearchWrapper> {
                                                   topLeft: Radius.circular(10.r),
                                                   bottomLeft: Radius.circular(10.r),
                                                 ),
-                                                child: Image.asset(
-                                                  Assets.images.foodImage.path,
-                                                  height: 60.w,
-                                                  width: 60.w,
+                                                child: ImageParse(
+                                                  width: 75.w,
+                                                  height: 75.w,
+                                                  url: state.listProductEntity[index].imageUrl,
+                                                  type: 'product',
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(width: 8.w),
+                                            SizedBox(width: 10.w),
                                             Expanded(
                                               child: SizedBox(
-                                                height: 60.w,
+                                                height: 75.w,
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    SizedBox(height: 4.h),
+                                                    SizedBox(height: 3.h),
                                                     Expanded(
                                                       child: Text(
-                                                        'Hamburger Cheese',
+                                                        state.listProductEntity[index].name!.toString(),
                                                         maxLines: 1,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: AppTextStyle.primaryText()
                                                             .copyWith(fontWeight: FontWeight.w500),
                                                       ),
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text.rich(
-                                                            TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text: 'by ',
-                                                                  style: AppTextStyle.primaryText()
-                                                                      .copyWith(fontWeight: FontWeight.w500),
-                                                                ),
-                                                                TextSpan(
-                                                                  text: 'Foodiesfeed',
-                                                                  style: AppTextStyle.primaryText().copyWith(
-                                                                    color: const Color(0xFF03A33A),
-                                                                    fontWeight: FontWeight.w500,
+                                                    Expanded(
+                                                      child: Text(
+                                                        state.listProductEntity[index].description!,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: AppTextStyle.primaryText().copyWith(
+                                                          color: AppColors.greyColor,
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text.rich(
+                                                              TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text: 'by ',
+                                                                    style: AppTextStyle.primaryText()
+                                                                        .copyWith(fontWeight: FontWeight.w400),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                  TextSpan(
+                                                                    text: state.listProductEntity[index].creator.name,
+                                                                    style: AppTextStyle.primaryText().copyWith(
+                                                                      color: const Color(0xFF03A33A),
+                                                                      fontWeight: FontWeight.w400,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        SizedBox(width: 5.w),
-                                                        Text(
-                                                          '235,000VND',
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: AppTextStyle.primaryText().copyWith(
-                                                            color: AppColors.primaryBrand,
+                                                          SizedBox(width: 5.w),
+                                                          Text(
+                                                            ParseUtils.formatCurrency(
+                                                              state.listProductEntity[index].price.toDouble(),
+                                                            ),
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: AppTextStyle.primaryText().copyWith(
+                                                              color: AppColors.primaryBrand,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(width: 8.w),
-                                                      ],
+                                                          SizedBox(width: 8.w),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    SizedBox(height: 4.h),
+                                                    SizedBox(height: 3.h),
                                                   ],
                                                 ),
                                               ),
@@ -209,11 +247,15 @@ class _SearchWrapperState extends State<SearchWrapper> {
                         ),
                       );
                     },
-                  ),
-                  SizedBox(height: AppSizes.paddingBottom),
-                ],
-              )
-            : const SizedBox(),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+            SizedBox(height: AppSizes.paddingBottom),
+          ],
+        ),
       ),
     );
   }

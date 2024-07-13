@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:funix_thieudvfx_foodsaver/core/exception/api_exception.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/product_entity.dart';
-import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_category_page_usecase.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_category_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_detail_usecase.dart';
 import 'package:injectable/injectable.dart';
 
