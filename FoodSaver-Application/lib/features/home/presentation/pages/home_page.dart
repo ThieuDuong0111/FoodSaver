@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
@@ -40,11 +41,14 @@ class HomeWrapper extends StatefulWidget {
 
 class _HomeWrapperState extends State<HomeWrapper> {
   late HomeBloc _homeBloc;
+  late FToast fToast;
   @override
   void initState() {
     _homeBloc = BlocProvider.of<HomeBloc>(context);
     _homeBloc.add(const HomePageEvent());
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override

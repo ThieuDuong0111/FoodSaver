@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toast_widget.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/domain/entities/cart_update_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
@@ -41,12 +43,15 @@ class _CartWrapperState extends State<CartWrapper> {
   late CartBloc _cartBloc;
   late CartBloc _cartBlocAction;
   double totalAmount = 0;
+  late FToast fToast;
   @override
   void initState() {
     _cartBloc = BlocProvider.of<CartBloc>(context);
     _cartBlocAction = BlocProvider.of<CartBloc>(context);
     _cartBloc.add(const CartGetItemsEvent());
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override
@@ -76,11 +81,13 @@ class _CartWrapperState extends State<CartWrapper> {
                     name: userInfo.name.toString(),
                   ),
                 );
+                fToast.showToast(child: const ToastWidget(message: 'Checkout successfully'));
               }
-              if (state is CartCheckoutErrorState) {}
+              if (state is CartCheckoutErrorState) {
+                fToast.showToast(child: const ToastWidget(message: 'Something went wrong. Please try again!'));
+              }
             },
             child: BlocConsumer<CartBloc, CartState>(
-              // buildWhen: (previous, current) => true,
               bloc: _cartBloc,
               listener: (context, state) {
                 if (state is CartPageFinishedState) {

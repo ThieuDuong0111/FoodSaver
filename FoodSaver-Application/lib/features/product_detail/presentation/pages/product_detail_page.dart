@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toast_widget.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/domain/entities/cart_update_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
@@ -65,12 +67,15 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
   late ProductDetailBloc _productDetailBloc;
   late CartBloc _cartBloc;
   int count = 1;
+  late FToast fToast;
   @override
   void initState() {
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
     _productDetailBloc.add(ProductDetailPageEvent(widget.productId));
     _cartBloc = BlocProvider.of<CartBloc>(context);
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override
@@ -94,6 +99,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
               if (state is CartPageFinishedState) {
                 final CartItemsCountNotifier cartItemsCount = ref.read(CartItemsCountNotifier.provider);
                 cartItemsCount.setCartItemsCount(state.cartEntity.itemsCount);
+                fToast.showToast(child: const ToastWidget(message: 'Add to cart successfully'));
               }
             },
             child: Stack(

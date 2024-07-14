@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toast_widget.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/domain/entities/sign_in_request.dart';
@@ -51,11 +53,14 @@ class _SignInWrapperState extends State<SignInWrapper> {
   bool _isPasswordObscure = true;
   bool hasPasswordError = false;
   String passwordError = '';
+  late FToast fToast;
   @override
   void initState() {
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override
@@ -97,6 +102,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                   setState(() {
                     hasUsernameError = false;
                     hasPasswordError = false;
+                    fToast.showToast(child: const ToastWidget(message: 'Sign In Successfully'));
                   });
                   BlocProvider.of<AuthBloc>(context).add(const AuthInitAppEvent());
                 }

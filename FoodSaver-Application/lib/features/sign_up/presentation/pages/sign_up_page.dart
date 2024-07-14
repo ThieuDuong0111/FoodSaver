@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toast_widget.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_up/domain/entities/sign_up_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_up/presentation/bloc/sign_up_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -52,6 +54,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
   late final TextEditingController _addressController;
   bool hasAddressError = false;
   String addressError = '';
+  late FToast fToast;
   @override
   void initState() {
     _usernameController = TextEditingController();
@@ -61,6 +64,8 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
     _phoneController = TextEditingController();
     _addressController = TextEditingController();
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override
@@ -108,6 +113,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
               hasPhoneError = false;
               hasAddressError = false;
             });
+            fToast.showToast(child: const ToastWidget(message: 'Sign Up Successfully'));
             context.router.replace(const SignInPageRoute());
           }
         },
