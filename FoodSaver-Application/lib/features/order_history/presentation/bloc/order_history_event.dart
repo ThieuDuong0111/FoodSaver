@@ -6,3 +6,12 @@ abstract class OrderHistoryEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class OrderHistoryPageEvent extends OrderHistoryEvent {
+  const OrderHistoryPageEvent();
+}
+
+class OrderDetailPageEvent extends OrderHistoryEvent {
+  const OrderDetailPageEvent({required this.orderId});
+  final int orderId;
+}

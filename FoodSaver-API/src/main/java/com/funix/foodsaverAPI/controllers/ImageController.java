@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.funix.foodsaverAPI.models.Category;
 import com.funix.foodsaverAPI.models.MyUser;
+import com.funix.foodsaverAPI.models.OrderDetail;
 import com.funix.foodsaverAPI.models.Product;
 import com.funix.foodsaverAPI.services.CategoryServiceImpl;
+import com.funix.foodsaverAPI.services.OrderDetailServiceImpl;
 import com.funix.foodsaverAPI.services.ProductServiceImpl;
 import com.funix.foodsaverAPI.services.UserServiceImpl;
 
@@ -27,6 +29,9 @@ public class ImageController {
 
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
+	
+	@Autowired
+	private OrderDetailServiceImpl orderDetailServiceImpl;
 
 	@GetMapping("/user/{url}")
 	public ResponseEntity<?> getImageUserById(
@@ -57,6 +62,17 @@ public class ImageController {
 			.decode(product.getImage());
 		return ResponseEntity.status(HttpStatus.OK)
 			.contentType(MediaType.valueOf(product.getImageType()))
+			.body(image);
+	}
+	
+	@GetMapping("/order/{url}")
+	public ResponseEntity<?> getImageOrderById(
+		@PathVariable("url") String url) {
+		OrderDetail orderDetail = orderDetailServiceImpl.getOrderByImageUrl(url);
+		byte[] image = Base64.getDecoder()
+			.decode(orderDetail.getImage());
+		return ResponseEntity.status(HttpStatus.OK)
+			.contentType(MediaType.valueOf(orderDetail.getImageType()))
 			.body(image);
 	}
 

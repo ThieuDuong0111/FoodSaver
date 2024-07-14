@@ -14,4 +14,10 @@ class UserRepositoryImpl extends UserRepository {
   Future<Either<Failure, UserEntity>> userInfo() {
     return _userInfoRemoteDataSource.getUserInfo();
   }
+
+  @override
+  Future<Either<Failure, UserEntity>> editInfo() {
+    // TODO: implement editInfo
+    throw UnimplementedError();
+  }
 }

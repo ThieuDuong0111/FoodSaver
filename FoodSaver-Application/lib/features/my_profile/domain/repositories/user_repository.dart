@@ -4,4 +4,5 @@ import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/us
 
 abstract class UserRepository {
   Future<Either<Failure, UserEntity>> userInfo();
+  Future<Either<Failure, UserEntity>> editInfo();
 }

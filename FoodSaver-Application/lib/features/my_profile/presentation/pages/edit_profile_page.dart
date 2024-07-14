@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
-import 'package:funix_thieudvfx_foodsaver/features/edit_profile/presentation/bloc/edit_profile_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
+import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/bloc/my_profile_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_common_style.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
@@ -18,7 +18,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<EditProfileBloc>(
+    return BlocProvider<MyProfileBloc>(
       create: (context) => DependencyInjection.instance(),
       child: const EditProfileWrapper(),
     );

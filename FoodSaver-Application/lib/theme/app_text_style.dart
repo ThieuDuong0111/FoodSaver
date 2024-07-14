@@ -26,6 +26,13 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle smallText() {
+    return TextStyle(
+      color: Colors.black,
+      fontSize: 12.sp,
+    );
+  }
+
   static TextStyle labelText() {
     return TextStyle(
       color: AppColors.primaryBrand,

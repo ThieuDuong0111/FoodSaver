@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
-import 'package:funix_thieudvfx_foodsaver/features/order_detail/presentation/bloc/order_detail_bloc.dart';
+import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/bloc/order_history_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
@@ -17,7 +17,7 @@ class OrderDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<OrderDetailBloc>(
+    return BlocProvider<OrderHistoryBloc>(
       create: (context) => DependencyInjection.instance(),
       child: OrderDetailWrapper(orderId: orderId),
     );
