@@ -21,3 +21,7 @@ class CartDeleteItemEvent extends CartEvent {
   const CartDeleteItemEvent({required this.id});
   final int id;
 }
+
+class CartCheckoutEvent extends CartEvent {
+  const CartCheckoutEvent();
+}

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:funix_thieudvfx_foodsaver/core/exception/api_exception.dart';
+import 'package:funix_thieudvfx_foodsaver/features/cart/data/datasources/cart_checkout_remote_data_source.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/data/datasources/cart_delete_item_remote_data_source.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/data/datasources/cart_get_items_remote_data_source.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/data/datasources/cart_update_item_remote_data_source.dart';
@@ -14,10 +15,12 @@ class CartRepositoryImpl extends CartRepository {
     this._cartGetItemsRemoteDataSource,
     this._cartUpdateItemRemoteDataSource,
     this._cartDeleteItemRemoteDataSource,
+    this._cartCheckoutRemoteDataSource,
   );
   final CartGetItemsRemoteDataSource _cartGetItemsRemoteDataSource;
   final CartUpdateItemRemoteDataSource _cartUpdateItemRemoteDataSource;
   final CartDeleteItemRemoteDataSource _cartDeleteItemRemoteDataSource;
+  final CartCheckoutRemoteDataSource _cartCheckoutRemoteDataSource;
 
   @override
   Future<Either<Failure, CartEntity>> deleteItem(int id) {
@@ -32,5 +35,10 @@ class CartRepositoryImpl extends CartRepository {
   @override
   Future<Either<Failure, CartEntity>> updateItem(CartUpdateRequest cartUpdateRequest) {
     return _cartUpdateItemRemoteDataSource.cartUpdateItem(cartUpdateRequest);
+  }
+
+  @override
+  Future<Either<Failure, CartEntity>> checkout() {
+    return _cartCheckoutRemoteDataSource.cartCheckOut();
   }
 }

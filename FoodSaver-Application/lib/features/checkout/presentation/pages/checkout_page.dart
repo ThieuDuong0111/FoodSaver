@@ -2,25 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+  final double totalAmount;
+  final String name;
+  const CheckoutPage({
+    Key? key,
+    required this.totalAmount,
+    required this.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CheckoutBloc>(
       create: (context) => DependencyInjection.instance(),
-      child: const CheckoutWrapper(),
+      child: CheckoutWrapper(
+        totalAmount: totalAmount,
+        name: name,
+      ),
     );
   }
 }
 
 class CheckoutWrapper extends StatefulWidget {
-  const CheckoutWrapper({super.key});
+  final double totalAmount;
+  final String name;
+  const CheckoutWrapper({super.key, required this.totalAmount, required this.name});
 
   @override
   State<CheckoutWrapper> createState() => _CheckoutWrapperState();
@@ -62,11 +74,6 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
               style: AppTextStyle.mediumTitle().copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 5.h),
-            Text(
-              'OrderID: 11055515072024',
-              style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 8.h),
             Container(
               width: double.infinity,
               height: 1.h,
@@ -79,11 +86,11 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Amount paid: ',
+                    text: 'Total Amount: ',
                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: '235,000VND',
+                    text: ParseUtils.formatCurrency(widget.totalAmount.toDouble()),
                     style: AppTextStyle.primaryText().copyWith(
                       color: AppColors.primaryBrand,
                       fontWeight: FontWeight.w600,
@@ -99,11 +106,11 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Payed by ',
+                    text: 'User order: ',
                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: 'thieuduong01526',
+                    text: widget.name,
                     style: AppTextStyle.primaryText().copyWith(
                       color: AppColors.primaryBrand,
                       fontWeight: FontWeight.w500,

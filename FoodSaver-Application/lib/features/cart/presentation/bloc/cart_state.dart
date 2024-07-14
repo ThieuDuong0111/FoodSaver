@@ -22,3 +22,17 @@ class CartPageFinishedState extends CartState {
   });
   final CartEntity cartEntity;
 }
+
+class CartCheckoutLoadingState extends CartState {}
+
+class CartCheckoutErrorState extends CartState {
+  const CartCheckoutErrorState({required this.failure});
+  final Failure failure;
+}
+
+class CartCheckoutFinishedState extends CartState {
+  const CartCheckoutFinishedState({
+    required this.cartEntity,
+  });
+  final CartEntity cartEntity;
+}

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
 import com.funix.foodsaverAPI.dto.ErrorMessageResponse;
-import com.funix.foodsaverAPI.dto.SuccessMessageResponse;
 import com.funix.foodsaverAPI.services.CartServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,9 +49,8 @@ public class CartController {
 	public ResponseEntity<?> checkout(HttpServletRequest request)
 		throws ParseException {
 		try {
-			cartServiceImpl.checkout(request);
 			return ResponseEntity
-				.ok(new SuccessMessageResponse("Checkout Successfully"));
+				.ok(cartServiceImpl.checkout(request));
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(
 				new ErrorMessageResponse(e.getMessage()),

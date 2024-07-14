@@ -170,11 +170,11 @@ public class CartServiceImpl implements ICartService {
 
 	@Transactional
 	@Override
-	public void checkout(HttpServletRequest request)
+	public CartDTO checkout(HttpServletRequest request)
 		throws IllegalArgumentException, ParseException {
 		MyUser user = userService.getUserByToken(request);
-		Cart cart = cartRepository.getItemsByUserId(user.getId()).get();
-		List<CartItem> cartItems = cart.getCartItems();
+		Cart currentCart = cartRepository.getItemsByUserId(user.getId()).get();
+		List<CartItem> cartItems = currentCart.getCartItems();
 
 		if (cartItems.size() > 0) {
 			// Check quantity
@@ -200,13 +200,13 @@ public class CartServiceImpl implements ICartService {
 
 			// Get Distinct Creator Id
 			List<Integer> creatorIds = cartRepository
-				.getDistinctCreatorId(cart.getId());
+				.getDistinctCreatorId(currentCart.getId());
 
 			// Seperate Order
 			for (int i = 0; i < creatorIds.size(); i++) {
 
 				// Create Order
-				Order order = new Order(cart.getUserCarts(), new Date(),
+				Order order = new Order(currentCart.getUserCarts(), new Date(),
 					ParseUtils.generateOrderCode(), false, creatorIds.get(i),
 					userService.getUserById(creatorIds.get(i)).getName());
 				List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
@@ -232,11 +232,22 @@ public class CartServiceImpl implements ICartService {
 			}
 
 			// Update Cart Done
-			cart.setIsDone(true);
+			currentCart.setIsDone(true);
+			cartRepository.save(currentCart);
 
-			cartRepository.save(cart);
+			// Create new cart
+			Cart newCart = new Cart(new ArrayList<CartItem>(), user, new Date(),
+				false);
+			cartRepository
+				.save(newCart);
+			
+			CartDTO cartDTO = convertToDto(newCart);
+			cartDTO.setTotalAmount(new BigDecimal(0.0));
+			return cartDTO;
+		}else {
+			return convertToDto(currentCart);
 		}
-
+		
 	}
 
 	@Override

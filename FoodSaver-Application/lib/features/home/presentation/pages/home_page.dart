@@ -14,6 +14,7 @@ import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/ca
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
+import 'package:funix_thieudvfx_foodsaver/theme/app_dialog.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -146,7 +147,16 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                 ),
                               )
                             : InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  AppDialog.showAppDialog(
+                                    context: context,
+                                    content: 'You need to login to see your cart items. Do you you want to log in?',
+                                    buttonName: 'Yes',
+                                    action: () {
+                                      context.router.replace(const SignInPageRoute());
+                                    },
+                                  );
+                                },
                                 child: Icon(
                                   Icons.shopping_cart,
                                   color: Colors.white,
