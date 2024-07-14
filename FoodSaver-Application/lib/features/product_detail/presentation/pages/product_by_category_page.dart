@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/no_data_found.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -69,83 +70,87 @@ class _ProductByCategoryWrapperState extends State<ProductByCategoryWrapper> {
           bloc: _productDetailBloc,
           builder: (context, state) {
             if (state is ProductByCategoryPageFinishedState) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 24.h),
-                  GridView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
-                      mainAxisSpacing: AppSizes.homeMainAxisSpacing,
-                      childAspectRatio: 150 / 201,
-                    ),
-                    itemCount: state.listProductEntity.length,
-                    itemBuilder: (context, index) {
-                      //Home Product Component
-                      return InkWell(
-                        onTap: () {
-                          context.router.push(
-                            ProductDetailPageRoute(
-                              productId: state.listProductEntity[index].id,
-                              productName: state.listProductEntity[index].name.toString(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.r),
-                            border: Border.all(color: const Color(0xFFD2C7C7), width: 1.w),
+              return state.listProductEntity.isNotEmpty
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 24.h),
+                        GridView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
+                            mainAxisSpacing: AppSizes.homeMainAxisSpacing,
+                            childAspectRatio: 150 / 201,
                           ),
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.r),
-                                  topRight: Radius.circular(15.r),
+                          itemCount: state.listProductEntity.length,
+                          itemBuilder: (context, index) {
+                            //Home Product Component
+                            return InkWell(
+                              onTap: () {
+                                context.router.push(
+                                  ProductDetailPageRoute(
+                                    productId: state.listProductEntity[index].id,
+                                    productName: state.listProductEntity[index].name.toString(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  border: Border.all(color: const Color(0xFFD2C7C7), width: 1.w),
                                 ),
-                                child: ImageParse(
-                                  width: AppSizes.homeProductImageSize(context),
-                                  height: AppSizes.homeProductImageSize(context),
-                                  url: state.listProductEntity[index].imageUrl,
-                                  type: 'product',
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          state.listProductEntity[index].name.toString(),
-                                          style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15.r),
+                                        topRight: Radius.circular(15.r),
+                                      ),
+                                      child: ImageParse(
+                                        width: AppSizes.homeProductImageSize(context),
+                                        height: AppSizes.homeProductImageSize(context),
+                                        url: state.listProductEntity[index].imageUrl,
+                                        type: 'product',
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                state.listProductEntity[index].name.toString(),
+                                                style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Text(
+                                              ParseUtils.formatCurrency(
+                                                state.listProductEntity[index].price.toDouble(),
+                                              ),
+                                              style: AppTextStyle.primaryText()
+                                                  .copyWith(fontWeight: FontWeight.w400, color: AppColors.primaryBrand),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Text(
-                                        ParseUtils.formatCurrency(state.listProductEntity[index].price.toDouble()),
-                                        style: AppTextStyle.primaryText()
-                                            .copyWith(fontWeight: FontWeight.w400, color: AppColors.primaryBrand),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: AppSizes.paddingBottom),
-                ],
-              );
+                        SizedBox(height: AppSizes.paddingBottom),
+                      ],
+                    )
+                  : const NoDataFound();
             } else if (state is ProductByCategoryPageLoadingState) {
               return const LoadingPage();
             } else {

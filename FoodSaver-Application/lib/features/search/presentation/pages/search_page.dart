@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/no_data_found.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/search/presentation/bloc/search_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -112,143 +113,146 @@ class _SearchWrapperState extends State<SearchWrapper> {
               bloc: _searchBloc,
               builder: (context, state) {
                 if (state is SearchByNamePageFinishedState) {
-                  return ListView.builder(
-                    itemCount: state.listProductEntity.length,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      //Search Product Component
-                      return InkWell(
-                        onTap: () {
-                          context.router.push(
-                            ProductDetailPageRoute(
-                              productId: state.listProductEntity[index].id,
-                              productName: state.listProductEntity[index].name!,
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0XFF000000).withOpacity(0.25),
-                                    blurRadius: 3,
-                                    offset: const Offset(3, 4),
+                  return state.listProductEntity.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: state.listProductEntity.length,
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            //Search Product Component
+                            return InkWell(
+                              onTap: () {
+                                context.router.push(
+                                  ProductDetailPageRoute(
+                                    productId: state.listProductEntity[index].id,
+                                    productName: state.listProductEntity[index].name!,
                                   ),
-                                ],
-                              ),
+                                );
+                              },
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0XFF000000).withOpacity(0.25),
+                                          blurRadius: 3,
+                                          offset: const Offset(3, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
                                           children: [
-                                            ClipRRect(
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10.r),
-                                                  bottomLeft: Radius.circular(10.r),
-                                                ),
-                                                child: ImageParse(
-                                                  width: 75.w,
-                                                  height: 75.w,
-                                                  url: state.listProductEntity[index].imageUrl,
-                                                  type: 'product',
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.w),
                                             Expanded(
-                                              child: SizedBox(
-                                                height: 75.w,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    SizedBox(height: 3.h),
-                                                    Expanded(
-                                                      child: Text(
-                                                        state.listProductEntity[index].name!.toString(),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: AppTextStyle.primaryText()
-                                                            .copyWith(fontWeight: FontWeight.w500),
+                                              child: Row(
+                                                children: [
+                                                  ClipRRect(
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.only(
+                                                        topLeft: Radius.circular(10.r),
+                                                        bottomLeft: Radius.circular(10.r),
+                                                      ),
+                                                      child: ImageParse(
+                                                        width: 75.w,
+                                                        height: 75.w,
+                                                        url: state.listProductEntity[index].imageUrl,
+                                                        type: 'product',
                                                       ),
                                                     ),
-                                                    Expanded(
-                                                      child: Text(
-                                                        state.listProductEntity[index].description!,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: AppTextStyle.primaryText().copyWith(
-                                                          color: AppColors.greyColor,
-                                                          fontWeight: FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
+                                                  ),
+                                                  SizedBox(width: 10.w),
+                                                  Expanded(
+                                                    child: SizedBox(
+                                                      height: 75.w,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
+                                                          SizedBox(height: 3.h),
                                                           Expanded(
-                                                            child: Text.rich(
-                                                              TextSpan(
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text: 'by ',
-                                                                    style: AppTextStyle.primaryText()
-                                                                        .copyWith(fontWeight: FontWeight.w400),
-                                                                  ),
-                                                                  TextSpan(
-                                                                    text: state.listProductEntity[index].creator.name,
-                                                                    style: AppTextStyle.primaryText().copyWith(
-                                                                      color: const Color(0xFF03A33A),
-                                                                      fontWeight: FontWeight.w400,
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                            child: Text(
+                                                              state.listProductEntity[index].name!.toString(),
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: AppTextStyle.primaryText()
+                                                                  .copyWith(fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              state.listProductEntity[index].description!,
+                                                              maxLines: 1,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              style: AppTextStyle.primaryText().copyWith(
+                                                                color: AppColors.greyColor,
+                                                                fontWeight: FontWeight.w400,
                                                               ),
                                                             ),
                                                           ),
-                                                          SizedBox(width: 5.w),
-                                                          Text(
-                                                            ParseUtils.formatCurrency(
-                                                              state.listProductEntity[index].price.toDouble(),
-                                                            ),
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: AppTextStyle.primaryText().copyWith(
-                                                              color: AppColors.primaryBrand,
+                                                          Expanded(
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text.rich(
+                                                                    TextSpan(
+                                                                      children: [
+                                                                        TextSpan(
+                                                                          text: 'by ',
+                                                                          style: AppTextStyle.primaryText()
+                                                                              .copyWith(fontWeight: FontWeight.w400),
+                                                                        ),
+                                                                        TextSpan(
+                                                                          text: state
+                                                                              .listProductEntity[index].creator.name,
+                                                                          style: AppTextStyle.primaryText().copyWith(
+                                                                            color: const Color(0xFF03A33A),
+                                                                            fontWeight: FontWeight.w400,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(width: 5.w),
+                                                                Text(
+                                                                  ParseUtils.formatCurrency(
+                                                                    state.listProductEntity[index].price.toDouble(),
+                                                                  ),
+                                                                  maxLines: 1,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  style: AppTextStyle.primaryText().copyWith(
+                                                                    color: AppColors.primaryBrand,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(width: 8.w),
+                                                              ],
                                                             ),
                                                           ),
-                                                          SizedBox(width: 8.w),
+                                                          SizedBox(height: 3.h),
                                                         ],
                                                       ),
                                                     ),
-                                                    SizedBox(height: 3.h),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
+                                  SizedBox(height: 12.h),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: 12.h),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                            );
+                          },
+                        )
+                      : const NoDataFound();
                 } else if (state is SearchByNamePageLoadingState) {
                   return const LoadingPage();
                 } else {

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/no_data_found.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/bloc/order_history_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -68,78 +69,44 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                 if (state is OrderHistoryPageLoadingState) {
                   return const LoadingPage();
                 } else if (state is OrderHistoryPageFinishedState) {
-                  return ListView.builder(
-                    itemCount: state.listOrderEntity.length,
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      //Order History Component
-                      final List<String> orderCode = state.listOrderEntity[index].orderCode!.split('-');
-                      return InkWell(
-                        onTap: () {
-                          context.router.push(OrderDetailPageRoute(orderId: state.listOrderEntity[index].id));
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.r),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0XFF000000).withOpacity(0.25),
-                                    blurRadius: 3,
-                                    offset: const Offset(3, 4),
-                                  ),
-                                ],
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  return state.listOrderEntity.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: state.listOrderEntity.length,
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            //Order History Component
+                            final List<String> orderCode = state.listOrderEntity[index].orderCode!.split('-');
+                            return InkWell(
+                              onTap: () {
+                                context.router.push(OrderDetailPageRoute(orderId: state.listOrderEntity[index].id));
+                              },
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 8.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '#${orderCode.last}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyle.smallText().copyWith(
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.r),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0XFF000000).withOpacity(0.25),
+                                          blurRadius: 3,
+                                          offset: const Offset(3, 4),
                                         ),
-                                      ),
-                                      SizedBox(width: 5.w),
-                                      Text(
-                                        ParseUtils.formatDateTime(
-                                          state.listOrderEntity[index].publishedDate.toString(),
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTextStyle.smallText().copyWith(
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 6.h),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 8.h),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Icon(
-                                              Icons.verified_user,
-                                              color: Colors.orangeAccent,
-                                              size: 15.w,
-                                            ),
-                                            SizedBox(width: 5.w),
                                             Expanded(
                                               child: Text(
-                                                state.listOrderEntity[index].creatorName!,
+                                                '#${orderCode.last}',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: AppTextStyle.smallText().copyWith(
@@ -147,115 +114,151 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                                 ),
                                               ),
                                             ),
+                                            SizedBox(width: 5.w),
+                                            Text(
+                                              ParseUtils.formatDateTime(
+                                                state.listOrderEntity[index].publishedDate.toString(),
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTextStyle.smallText().copyWith(
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(width: 5.w),
-                                      if (state.listOrderEntity[index].isPaid)
-                                        Text(
-                                          'Complete',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyle.smallText().copyWith(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      else
-                                        Text(
-                                          'Waiting',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyle.smallText().copyWith(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        height: 95.w,
-                                        width: 80.w * 2.52,
-                                        child: ListView.builder(
-                                          itemCount: state.listOrderEntity[index].orderDetails.length,
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, indexDetail) {
-                                            return Padding(
-                                              padding: EdgeInsets.only(right: 10.w),
-                                              child: Column(
+                                        SizedBox(height: 6.h),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Row(
                                                 children: [
-                                                  Flexible(
-                                                    child: SizedBox(
-                                                      width: 70.w,
-                                                      height: 70.w,
-                                                      child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(5.r),
-                                                        child: ImageParse(
-                                                          width: 70.w,
-                                                          height: 70.w,
-                                                          url: state.listOrderEntity[index].orderDetails[indexDetail]!
-                                                              .productImage,
-                                                          type:
-                                                              'order/${state.listOrderEntity[index].orderDetails[indexDetail]!.id}',
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  Icon(
+                                                    Icons.verified_user,
+                                                    color: Colors.orangeAccent,
+                                                    size: 15.w,
                                                   ),
-                                                  SizedBox(height: 3.h),
-                                                  SizedBox(
-                                                    width: 70.w,
+                                                  SizedBox(width: 5.w),
+                                                  Expanded(
                                                     child: Text(
-                                                      state.listOrderEntity[index].orderDetails[indexDetail]!
-                                                          .productName!,
+                                                      state.listOrderEntity[index].creatorName!,
                                                       maxLines: 1,
                                                       overflow: TextOverflow.ellipsis,
                                                       style: AppTextStyle.smallText().copyWith(
-                                                        fontWeight: FontWeight.w400,
+                                                        fontWeight: FontWeight.w500,
                                                       ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            ParseUtils.formatCurrency(
-                                              state.listOrderEntity[index].totalAmount.toDouble(),
                                             ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            '${state.listOrderEntity[index].orderDetails.length} items',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w400),
-                                          ),
-                                          SizedBox(height: 10.h),
-                                        ],
-                                      ),
-                                    ],
+                                            SizedBox(width: 5.w),
+                                            if (state.listOrderEntity[index].isPaid)
+                                              Text(
+                                                'Complete',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyle.smallText().copyWith(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              )
+                                            else
+                                              Text(
+                                                'Waiting',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyle.smallText().copyWith(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8.h),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              height: 95.w,
+                                              width: 80.w * 2.52,
+                                              child: ListView.builder(
+                                                itemCount: state.listOrderEntity[index].orderDetails.length,
+                                                scrollDirection: Axis.horizontal,
+                                                itemBuilder: (context, indexDetail) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(right: 10.w),
+                                                    child: Column(
+                                                      children: [
+                                                        Flexible(
+                                                          child: SizedBox(
+                                                            width: 70.w,
+                                                            height: 70.w,
+                                                            child: ClipRRect(
+                                                              borderRadius: BorderRadius.circular(5.r),
+                                                              child: ImageParse(
+                                                                width: 70.w,
+                                                                height: 70.w,
+                                                                url: state.listOrderEntity[index]
+                                                                    .orderDetails[indexDetail]!.productImage,
+                                                                type:
+                                                                    'order/${state.listOrderEntity[index].orderDetails[indexDetail]!.id}',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 3.h),
+                                                        SizedBox(
+                                                          width: 70.w,
+                                                          child: Text(
+                                                            state.listOrderEntity[index].orderDetails[indexDetail]!
+                                                                .productName!,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: AppTextStyle.smallText().copyWith(
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  ParseUtils.formatCurrency(
+                                                    state.listOrderEntity[index].totalAmount.toDouble(),
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
+                                                ),
+                                                Text(
+                                                  '${state.listOrderEntity[index].orderDetails.length} items',
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w400),
+                                                ),
+                                                SizedBox(height: 10.h),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8.h),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 8.h),
+                                  SizedBox(height: 12.h),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: 12.h),
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                            );
+                          },
+                        )
+                      : const NoDataFound();
                 } else {
                   return const SizedBox();
                 }
