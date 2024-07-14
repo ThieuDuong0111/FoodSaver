@@ -18,6 +18,8 @@ class AuthInitAppErrorState extends AuthState {
 class AuthInitAppFinishedState extends AuthState {
   const AuthInitAppFinishedState({
     required this.userEntity,
+    required this.cartItemsCount,
   });
   final UserEntity userEntity;
+  final int cartItemsCount;
 }

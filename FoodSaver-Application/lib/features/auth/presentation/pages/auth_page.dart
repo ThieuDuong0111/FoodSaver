@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/cart_items_count_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 
@@ -31,6 +32,7 @@ class AuthWrapper extends StatefulWidget {
 
 class _AuthWrapperState extends State<AuthWrapper> {
   late AuthBloc _authBloc;
+
   @override
   void initState() {
     _authBloc = BlocProvider.of<AuthBloc>(context);
@@ -45,10 +47,12 @@ class _AuthWrapperState extends State<AuthWrapper> {
         return BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthInitAppFinishedState) {
-              final notifier = ref.read(UserInfoNotifier.provider);
-              notifier.setUserInfo(state.userEntity);
+              final UserInfoNotifier userInfoNotifier = ref.read(UserInfoNotifier.provider);
+              userInfoNotifier.setUserInfo(state.userEntity);
+              final CartItemsCountNotifier cartItemsCount = ref.read(CartItemsCountNotifier.provider);
+              cartItemsCount.setCartItemsCount(state.cartItemsCount);
               context.router.replace(const InitPageRoute());
-            } else {
+            } else if (state is AuthInitAppErrorState) {
               context.router.replace(const SignInPageRoute());
             }
           },

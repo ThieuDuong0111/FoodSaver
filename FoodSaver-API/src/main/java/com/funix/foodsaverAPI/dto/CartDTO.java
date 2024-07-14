@@ -16,6 +16,8 @@ public class CartDTO {
 	private Boolean isDone;
 
 	private BigDecimal totalAmount;
+	
+	private int itemsCount;
 
 	public int getId() {
 		return id;
@@ -63,5 +65,13 @@ public class CartDTO {
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public int getItemsCount() {
+		return itemsCount;
+	}
+
+	public void setItemsCount(int itemsCount) {
+		this.itemsCount = itemsCount;
 	}
 }

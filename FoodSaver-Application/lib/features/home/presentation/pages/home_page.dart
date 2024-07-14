@@ -10,6 +10,7 @@ import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/bloc/home_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
+import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/cart_items_count_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -100,16 +101,60 @@ class _HomeWrapperState extends State<HomeWrapper> {
                         ),
                       ),
                       SizedBox(width: 5.w),
-                      InkWell(
-                        onTap: () {
-                          context.router.push(const CartPageRoute());
-                        },
-                        child: const Icon(
-                          Icons.shopping_cart,
-                          color: Colors.white,
-                        ),
+                      SizedBox(
+                        child: (ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl))
+                            ? InkWell(
+                                onTap: () {
+                                  context.router.push(const CartPageRoute());
+                                },
+                                child: Consumer(
+                                  builder: (context, ref, child) {
+                                    final int cartItemsCount =
+                                        ref.watch(CartItemsCountNotifier.provider).cartItemsCount;
+                                    return Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        Icon(
+                                          Icons.shopping_cart,
+                                          color: Colors.white,
+                                          size: 22.w,
+                                        ),
+                                        if (cartItemsCount > 0)
+                                          Positioned(
+                                            top: cartItemsCount < 10 ? -11.w : -8.w,
+                                            right: -5.w,
+                                            child: Container(
+                                              decoration:
+                                                  const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+                                              padding: EdgeInsets.all(cartItemsCount < 10 ? 5.w : 3.w),
+                                              child: cartItemsCount < 10
+                                                  ? Text(
+                                                      cartItemsCount.toString(),
+                                                      style: AppTextStyle.smallText()
+                                                          .copyWith(color: Colors.white, fontSize: 11.sp),
+                                                    )
+                                                  : Text(
+                                                      '9+',
+                                                      style: AppTextStyle.smallText()
+                                                          .copyWith(color: Colors.white, fontSize: 10.sp),
+                                                    ),
+                                            ),
+                                          ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {},
+                                child: Icon(
+                                  Icons.shopping_cart,
+                                  color: Colors.white,
+                                  size: 22.w,
+                                ),
+                              ),
                       ),
-                      SizedBox(width: 5.w),
+                      SizedBox(width: 10.w),
                     ],
                   ),
                   SizedBox(

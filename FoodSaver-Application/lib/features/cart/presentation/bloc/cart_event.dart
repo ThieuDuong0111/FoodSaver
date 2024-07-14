@@ -6,3 +6,18 @@ abstract class CartEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CartGetItemsEvent extends CartEvent {
+  const CartGetItemsEvent();
+}
+
+class CartUpdateItemEvent extends CartEvent {
+  const CartUpdateItemEvent({required this.cartUpdateRequest});
+
+  final CartUpdateRequest cartUpdateRequest;
+}
+
+class CartDeleteItemEvent extends CartEvent {
+  const CartDeleteItemEvent({required this.id});
+  final int id;
+}

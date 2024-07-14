@@ -78,6 +78,7 @@ public class CartServiceImpl implements ICartService {
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
 		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
 			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
+		cartDTO.setItemsCount(cartGet.get().getCartItems().size());
 		return cartDTO;
 	}
 
@@ -145,6 +146,7 @@ public class CartServiceImpl implements ICartService {
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
 		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
 			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
+		cartDTO.setItemsCount(cartGet.get().getCartItems().size());
 		return cartDTO;
 
 	}
@@ -162,6 +164,7 @@ public class CartServiceImpl implements ICartService {
 		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
 		cartDTO.getCartItems().stream().map(cartItemDto -> productServiceImpl
 			.convertFromCartItemToProductDTO(cartItemDto)).toList();
+		cartDTO.setItemsCount(cart.get().getCartItems().size());
 		return cartDTO;
 	}
 
