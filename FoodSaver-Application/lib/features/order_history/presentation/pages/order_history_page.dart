@@ -99,20 +99,86 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 8.h),
-                                  Text(
-                                    'Order Code: #${orderCode.last}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTextStyle.smallText().copyWith(
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '#${orderCode.last}',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyle.smallText().copyWith(
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      Text(
+                                        ParseUtils.formatDateTime(
+                                          state.listOrderEntity[index].publishedDate.toString(),
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyle.smallText().copyWith(
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.verified_user,
+                                              color: Colors.orangeAccent,
+                                              size: 15.w,
+                                            ),
+                                            SizedBox(width: 5.w),
+                                            Expanded(
+                                              child: Text(
+                                                state.listOrderEntity[index].creatorName!,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyle.smallText().copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      if (state.listOrderEntity[index].isPaid)
+                                        Text(
+                                          'Complete',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyle.smallText().copyWith(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      else
+                                        Text(
+                                          'Waiting',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyle.smallText().copyWith(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                    ],
                                   ),
                                   SizedBox(height: 8.h),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        height: 90.w,
+                                        height: 95.w,
                                         width: 80.w * 2.52,
                                         child: ListView.builder(
                                           itemCount: state.listOrderEntity[index].orderDetails.length,
@@ -138,7 +204,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(height: 2.h),
+                                                  SizedBox(height: 3.h),
                                                   SizedBox(
                                                     width: 70.w,
                                                     child: Text(

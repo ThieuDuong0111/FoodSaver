@@ -15,6 +15,8 @@ public class OrderDTO {
 	private double totalAmount;
 
 	private Boolean isPaid;
+	
+	private String creatorName;
 
 	public int getId() {
 		return id;
@@ -62,5 +64,13 @@ public class OrderDTO {
 
 	public void setIsPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
 	}
 }

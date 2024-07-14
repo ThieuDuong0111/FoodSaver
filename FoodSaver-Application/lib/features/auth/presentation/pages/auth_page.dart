@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 
@@ -50,7 +53,16 @@ class _AuthWrapperState extends State<AuthWrapper> {
             }
           },
           builder: (context, state) {
-            return Container();
+            return Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+                systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+                toolbarHeight: 90.h,
+              ),
+              body: const LoadingPage(),
+            );
           },
         );
       },

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppSizes {
   static const double designScreenWidth = 360;
   static const double designScreenHeight = 640;
-  static double paddingHorizontal = 18.w;
+  static double paddingHorizontal = 16.w;
   static double paddingBottom = 20.h;
   static double spaceBetweenLabelAndForm = 3.h;
   static double spaceBetweenFormAndForm = 15.h;

@@ -11,6 +11,7 @@ class OrderEntity with _$OrderEntity implements DomainEntity {
     required List<OrderDetailEntity?> orderDetails,
     required DateTime publishedDate,
     required String? orderCode,
+    required String? creatorName,
     required int totalAmount,
     required bool isPaid,
   }) = _OrderEntity;

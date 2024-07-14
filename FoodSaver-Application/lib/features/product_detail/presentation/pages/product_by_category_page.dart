@@ -81,7 +81,7 @@ class _ProductByCategoryWrapperState extends State<ProductByCategoryWrapper> {
                       crossAxisCount: 2,
                       crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
                       mainAxisSpacing: AppSizes.homeMainAxisSpacing,
-                      childAspectRatio: 146 / 201,
+                      childAspectRatio: 150 / 201,
                     ),
                     itemCount: state.listProductEntity.length,
                     itemBuilder: (context, index) {
@@ -125,6 +125,7 @@ class _ProductByCategoryWrapperState extends State<ProductByCategoryWrapper> {
                                           state.listProductEntity[index].name.toString(),
                                           style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
                                           maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                       Text(

@@ -30,6 +30,8 @@ public class Order {
 
 	private int creatorId;
 
+	private String creatorName;
+
 	private Date publishedDate;
 
 	@Column(length = 100)
@@ -101,5 +103,13 @@ public class Order {
 
 	public void setCreatorId(int creatorId) {
 		this.creatorId = creatorId;
+	}
+
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
 	}
 }

@@ -6,7 +6,7 @@ class AppTextStyle {
   static TextStyle bigTitle() {
     return TextStyle(
       color: AppColors.primaryBrand,
-      fontSize: 28.sp,
+      fontSize: 26.sp,
       fontWeight: FontWeight.w500,
     );
   }
@@ -14,7 +14,7 @@ class AppTextStyle {
   static TextStyle mediumTitle() {
     return TextStyle(
       color: Colors.black,
-      fontSize: 18.sp,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w500,
     );
   }
@@ -22,7 +22,7 @@ class AppTextStyle {
   static TextStyle primaryText() {
     return TextStyle(
       color: Colors.black,
-      fontSize: 14.sp,
+      fontSize: 13.sp,
     );
   }
 
@@ -36,21 +36,21 @@ class AppTextStyle {
   static TextStyle labelText() {
     return TextStyle(
       color: AppColors.primaryBrand,
-      fontSize: 14.sp,
+      fontSize: 13.sp,
     );
   }
 
   static TextStyle focusText() {
     return TextStyle(
       color: Colors.black,
-      fontSize: 14.sp,
+      fontSize: 13.sp,
     );
   }
 
   static TextStyle hintText() {
     return TextStyle(
       color: AppColors.greyColor,
-      fontSize: 14.sp,
+      fontSize: 13.sp,
     );
   }
 }

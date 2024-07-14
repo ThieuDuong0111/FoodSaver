@@ -12,6 +12,7 @@ class OrderModel with _$OrderModel implements DataModel {
     required List<OrderDetailModel> orderDetails,
     required DateTime publishedDate,
     required String? orderCode,
+    required String? creatorName,
     required int totalAmount,
     required bool isPaid,
   }) = _OrderModel;

@@ -29,6 +29,8 @@ public class Order {
 	private MyUser userOrders;
 
 	private int creatorId;
+	
+	private String creatorName;
 
 	private Date publishedDate;
 
@@ -44,13 +46,14 @@ public class Order {
 	}
 
 	public Order(MyUser userOrders, Date publishedDate, String orderCode,
-		Boolean isPaid, int creatorId) {
+		Boolean isPaid, int creatorId, String creatorName) {
 		super();
 		this.userOrders = userOrders;
 		this.publishedDate = publishedDate;
 		this.orderCode = orderCode;
 		this.isPaid = isPaid;
 		this.creatorId = creatorId;
+		this.creatorName = creatorName;
 	}
 
 	public int getId() {
@@ -117,4 +120,11 @@ public class Order {
 		this.creatorId = creatorId;
 	}
 
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
 }

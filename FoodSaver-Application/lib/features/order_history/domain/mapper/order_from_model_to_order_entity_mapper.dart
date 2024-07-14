@@ -22,6 +22,7 @@ class OrderFromModelToEntityMapperImpl extends OrderFromModelToEntityMapper {
       orderDetails: model.orderDetails.map(_orderDetailFromModelToEntityMapper.fromModel).toList(),
       publishedDate: model.publishedDate,
       orderCode: model.orderCode,
+      creatorName: model.creatorName,
       totalAmount: model.totalAmount,
       isPaid: model.isPaid,
     );
