@@ -15,9 +15,22 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 	private IOrderDetailRepository orderDetailRepository;
 	
 	@Override
-	public OrderDetail getOrderByImageUrl(String url) {
+	public OrderDetail getOrderDetailByImageUrl(String url) {
 		Optional<OrderDetail> optionalOrderDetail = orderDetailRepository
 			.findByProductImage(url);
+		OrderDetail orderDetail = null;
+		if (optionalOrderDetail.isPresent()) {
+			orderDetail = optionalOrderDetail.get();
+			return orderDetail;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public OrderDetail getOrderDetailById(int id) {
+		Optional<OrderDetail> optionalOrderDetail = orderDetailRepository
+			.findById(id);
 		OrderDetail orderDetail = null;
 		if (optionalOrderDetail.isPresent()) {
 			orderDetail = optionalOrderDetail.get();

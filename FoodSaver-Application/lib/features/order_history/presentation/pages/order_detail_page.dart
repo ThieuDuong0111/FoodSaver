@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/bloc/order_history_bloc.dart';
-import 'package:funix_thieudvfx_foodsaver/resources/assets.gen.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_component.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -33,8 +35,11 @@ class OrderDetailWrapper extends StatefulWidget {
 }
 
 class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
+  late OrderHistoryBloc _orderHistoryBloc;
   @override
   void initState() {
+    _orderHistoryBloc = BlocProvider.of<OrderHistoryBloc>(context);
+    _orderHistoryBloc.add(OrderDetailPageEvent(orderId: widget.orderId));
     super.initState();
   }
 
@@ -52,234 +57,170 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-        child: Column(
-          children: [
-            SizedBox(height: 12.h),
-            Text(
-              'OrderID: 11055515072024',
-              style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: 16.h),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0XFF000000).withOpacity(0.25),
-                    blurRadius: 3,
-                    offset: const Offset(3, 4),
-                  ),
-                ],
-              ),
-              child: Column(
+        child: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
+          builder: (context, state) {
+            if (state is OrderDetailPageLoadingState) {
+              return const LoadingPage();
+            } else if (state is OrderDetailPageFinishedState) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 12.h),
+                  Text(
+                    'Code: ${state.orderEntity.orderCode!}',
+                    style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 10.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Row(
                           children: [
-                            ClipRRect(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12.r),
-                                  bottomLeft: Radius.circular(12.r),
-                                ),
-                                child: Image.asset(
-                                  Assets.images.foodImage.path,
-                                  height: 100.w,
-                                  width: 100.w,
-                                ),
-                              ),
+                            Icon(
+                              Icons.verified_user,
+                              color: Colors.orangeAccent,
+                              size: 15.w,
                             ),
-                            SizedBox(width: 8.w),
+                            SizedBox(width: 5.w),
                             Expanded(
-                              child: SizedBox(
-                                height: 100.w,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(height: 6.h),
-                                    Expanded(
-                                      child: Text(
-                                        'Hamburger Cheese',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        'Jul 15, 2024 - 11:05 AM',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppTextStyle.primaryText().copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.greyColor,
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'Delivered',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.primaryText().copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0xFF03A33A),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 5.w),
-                                        Expanded(
-                                          child: Text(
-                                            '235,000VND',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: AppTextStyle.primaryText().copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 6.h),
-                                  ],
+                              child: Text(
+                                state.orderEntity.creatorName!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      Text(
+                        ParseUtils.formatDateTime(
+                          state.orderEntity.publishedDate.toString(),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.smallText().copyWith(
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 10.h),
+                  Column(
+                    children: state.orderEntity.orderDetails
+                        .map(
+                          (e) => Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.r),
+                                    child: ImageParse(
+                                      width: 45.w,
+                                      height: 45.w,
+                                      url: e!.productImage.toString(),
+                                      type: 'order/${e.id}',
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(e.productName!, style: AppTextStyle.smallText()),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Expanded(
+                                    child: Text('x${e.unitQuantity}', style: AppTextStyle.smallText()),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      ParseUtils.formatCurrencyWithoutSymbol(e.unitPrice.toDouble()),
+                                      style: AppTextStyle.smallText(),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      ParseUtils.formatCurrencyWithoutSymbol((e.unitPrice * e.unitQuantity).toDouble()),
+                                      style: AppTextStyle.smallText(),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5.h),
+                              Container(
+                                width: double.infinity,
+                                height: 1.h,
+                                color: const Color(0xFFCACACA),
+                              ),
+                              SizedBox(height: 8.h),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (state.orderEntity.isPaid)
+                        Text(
+                          'Complete',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.smallText().copyWith(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )
+                      else
+                        Text(
+                          'Waiting',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.smallText().copyWith(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      SizedBox(width: 5.w),
+                      Text(
+                        ParseUtils.formatCurrency(
+                          state.orderEntity.totalAmount.toDouble(),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
                 ],
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text.rich(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Chese Ring Burger ' 'x',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    Text(
-                      '120,000VND',
-                      style: AppTextStyle.primaryText().copyWith(
-                        color: AppColors.greyColor,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text.rich(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Chese Ring Burger ' 'x',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    Text(
-                      '120,000VND',
-                      style: AppTextStyle.primaryText().copyWith(
-                        color: AppColors.greyColor,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text.rich(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Chese Ring Burger ' 'x',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '1',
-                              style: AppTextStyle.primaryText().copyWith(
-                                color: AppColors.greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                    Text(
-                      '120,000VND',
-                      style: AppTextStyle.primaryText().copyWith(
-                        color: AppColors.greyColor,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-              ],
-            ),
-          ],
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
         ),
       ),
     );

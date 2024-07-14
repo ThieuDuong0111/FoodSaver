@@ -65,10 +65,11 @@ public class ImageController {
 			.body(image);
 	}
 	
-	@GetMapping("/order/{url}")
+	@GetMapping("/order/{id}/{url}")
 	public ResponseEntity<?> getImageOrderById(
-		@PathVariable("url") String url) {
-		OrderDetail orderDetail = orderDetailServiceImpl.getOrderByImageUrl(url);
+		@PathVariable("url") String url,
+		@PathVariable("id") int id) {
+		OrderDetail orderDetail = orderDetailServiceImpl.getOrderDetailById(id);
 		byte[] image = Base64.getDecoder()
 			.decode(orderDetail.getImage());
 		return ResponseEntity.status(HttpStatus.OK)

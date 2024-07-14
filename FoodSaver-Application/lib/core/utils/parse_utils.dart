@@ -6,6 +6,11 @@ class ParseUtils {
     return formatter.format(amount);
   }
 
+  static String formatCurrencyWithoutSymbol(double amount) {
+    final NumberFormat formatter = NumberFormat.currency(locale: 'vi_VN', symbol: '');
+    return formatter.format(amount);
+  }
+
   static String formatDateTime(String originalDateTime) {
     final DateFormat originalFormat = DateFormat('yyyy-MM-dd HH:mm:ss.S');
 

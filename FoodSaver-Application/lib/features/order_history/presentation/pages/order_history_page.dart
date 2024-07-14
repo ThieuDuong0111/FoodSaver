@@ -199,7 +199,8 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                                           height: 70.w,
                                                           url: state.listOrderEntity[index].orderDetails[indexDetail]!
                                                               .productImage,
-                                                          type: 'order',
+                                                          type:
+                                                              'order/${state.listOrderEntity[index].orderDetails[indexDetail]!.id}',
                                                         ),
                                                       ),
                                                     ),
