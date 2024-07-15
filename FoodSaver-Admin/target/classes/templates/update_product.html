@@ -72,10 +72,10 @@
 								<div class="card-body">
 									<form action="#" th:action="@{/food_creator/products/update}"
 										th:object="${productDTO}" enctype="multipart/form-data" method="POST">
-										
+
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-image">Image</label>
+											<label class="form-label" for="basic-default-image">Hình ảnh</label>
 											<input type="file" class="form-control" id="basic-default-image"
 												th:field="*{imageFile}" />
 											<p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger"
@@ -83,15 +83,15 @@
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-name">Name</label>
+											<label class="form-label" for="basic-default-name">Tên</label>
 											<input type="text" class="form-control" id="basic-default-name"
-												placeholder="Enter product name" th:field="*{name}" />
+												placeholder="Tên sản phẩm" th:field="*{name}" />
 											<p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger"
 												th:errors="*{name}" />
 										</div>
 
 										<div class="mb-3">
-											<label for="selectCategory" class="form-label">Category</label>
+											<label for="selectCategory" class="form-label">Danh mục</label>
 											<select th:field="${productDTO.category.id}" th:attr="name='creator.id'"
 												id="selectCategory" class="form-select">
 												<option th:each="category : ${productDTO.categories}"
@@ -100,36 +100,35 @@
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-price">Price</label>
+											<label class="form-label" for="basic-default-price">Giá</label>
 											<input type="number" class="form-control" id="basic-default-price"
-												placeholder="Enter product price" th:field="*{price}" min="0" />
+												placeholder="Giá sản phẩm" th:field="*{price}" min="0" />
 											<p th:if="${#fields.hasErrors('price')}" th:errorclass="text-danger"
 												th:errors="*{price}" />
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-discountPrice">Discount
-												Price</label>
+											<label class="form-label" for="basic-default-discountPrice">Giá khuyến mãi
+											</label>
 											<input type="number" class="form-control" id="basic-default-discountPrice"
-												placeholder="Enter product discountPrice" th:field="*{discountPrice}"
-												min="0" />
+												placeholder="Giá khuyến mãi" th:field="*{discountPrice}" min="0" />
 											<p th:if="${#fields.hasErrors('discountPrice')}" th:errorclass="text-danger"
 												th:errors="*{discountPrice}" />
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-quantity">Quantity</label>
+											<label class="form-label" for="basic-default-quantity">Số lượng</label>
 											<input type="number" class="form-control" id="basic-default-quantity"
-												placeholder="Enter product quantity" th:field="*{quantity}" min="0" />
+												placeholder="Số lượng" th:field="*{quantity}" min="0" />
 											<p th:if="${#fields.hasErrors('quantity')}" th:errorclass="text-danger"
 												th:errors="*{quantity}" />
 										</div>
 
 										<div class="mb-3">
 											<label class="form-label"
-												for="basic-default-description">Description</label>
+												for="basic-default-description">Mô tả</label>
 											<textarea rows="5" class="form-control" id="basic-default-description"
-												placeholder="Enter product description"
+												placeholder="Mô tả sản phẩm"
 												th:field="*{description}" /></textarea>
 											<p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger"
 												th:errors="*{description}"></p>
@@ -140,9 +139,9 @@
 										<input type="hidden" th:value="${creator_id}" th:attr="name='creator.id'" />
 										</p>
 										<div class="demo-inline-spacing">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary">Xác nhận</button>
 											<a th:href="@{'/food_creator/products/page/1?sortField=id&sortDir=desc'}"
-												class="btn btn-secondary">Back</a>
+												class="btn btn-secondary">Quay lại</a>
 										</div>
 									</form>
 								</div>

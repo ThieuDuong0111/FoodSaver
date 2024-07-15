@@ -9,7 +9,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>Order Detail - Food Saver Admin</title>
+	<title>Chi tiết đơn hàng - Food Saver Admin</title>
 
 	<meta name="description" content="" />
 
@@ -68,12 +68,12 @@
 							<div class="col-12 col-lg-8">
 								<div class="card mb-4">
 									<div class="card-header">
-										<h5 class="mb-0">Order details</h5>
+										<h5 class="mb-0">Chi tiết đơn hàng</h5>
 										<br>
-										<div class="d-flex flex-column"> <span
-												th:text="'Code: ' + ${orderDTO.orderCode}"> </span></div>
+										<div class="d-flex flex-column"> <span th:text="'Mã: ' + ${orderDTO.orderCode}">
+											</span></div>
 										<br>
-										<span>Status: </span>
+										<span>Trạng thái: </span>
 										<span th:if="${orderDTO.isPaid == true}" class="badge
 													bg-label-success me-1" th:text="Complete"></span>
 										<span th:unless="${orderDTO.isPaid == true}" class="badge
@@ -84,11 +84,11 @@
 											<thead>
 												<tr>
 													<th>Id</th>
-													<th>Image</th>
-													<th>Name</th>
-													<th>Quantity</th>
-													<th>Price</th>
-													<th>Total</th>
+													<th>Hình ảnh</th>
+													<th>Tên</th>
+													<th>Số lượng</th>
+													<th>Giá</th>
+													<th>Tổng tiền</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -120,7 +120,7 @@
 													<td>
 														<div class="d-flex"
 															style="padding-top: 10px; padding-bottom: 10px;">
-															<h6 class="w-px-50 mb-0">Total:</h6>
+															<h6 class="w-px-50 mb-0">Tổng:</h6>
 															<h6 class="mb-0"
 																th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(orderDTO.totalAmount)}">
 															</h6>
@@ -137,7 +137,7 @@
 							<div class="col-12 col-lg-4">
 								<div class="card mb-4">
 									<div class="card-header">
-										<h6 class="mb-0">Customer details</h6>
+										<h6 class="mb-0">Thông tin người mua</h6>
 									</div>
 									<div class="card-body">
 										<div class="d-flex justify-content-start align-items-center mb-4">
@@ -154,16 +154,16 @@
 												<h6 class="mb-0" th:text="${orderDTO.userOrders.name}"></h6>
 
 												<small class="text-muted"
-													th:text="'Customer ID: #' + ${orderDTO.userOrders.id}"></small>
+													th:text="'ID: #' + ${orderDTO.userOrders.id}"></small>
 											</div>
 										</div>
 										<div class="d-flex flex-column">
-											<h6 class="mb-0">Contact Info</h6>
+											<h6 class="mb-0">Thông tin liên lạc</h6>
 										</div>
 										<br>
 										<p class=" mb-1" th:text="'Email: ' + ${orderDTO.userOrders.email}"></p>
-										<p class=" mb-1" th:text="'Phone: ' + ${orderDTO.userOrders.phone}"></p>
-										<p class=" mb-1" th:text="'Address: ' + ${orderDTO.userOrders.address}"></p>
+										<p class=" mb-1" th:text="'Số điện thoại: ' + ${orderDTO.userOrders.phone}"></p>
+										<p class=" mb-1" th:text="'Địa chỉ: ' + ${orderDTO.userOrders.address}"></p>
 									</div>
 								</div>
 

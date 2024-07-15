@@ -9,8 +9,8 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title th:if="${role_id == 3}">User - Food Saver Admin</title>
-	<title th:if="${role_id == 2}">Food Creator - Food Saver Admin</title>
+	<title th:if="${role_id == 3}">Người dùng - Food Saver Admin</title>
+	<title th:if="${role_id == 2}">Người bán - Food Saver Admin</title>
 
 	<meta name="description" content="" />
 
@@ -64,10 +64,10 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="card">
 							<div class="table-header">
-								<h5 th:if="${role_id == 3}" class="card-header">User</h5>
-								<h5 th:if="${role_id == 2}" class="card-header">Food Creator</h5>
+								<h5 th:if="${role_id == 3}" class="card-header">Người dùng</h5>
+								<h5 th:if="${role_id == 2}" class="card-header">Người bán</h5>
 								<div style="padding: 15px;"><a th:href="@{'/admin/users/add?role_id='+${role_id}}"
-										class="btn btn-success">Add</a>
+										class="btn btn-success">Tạo</a>
 								</div>
 							</div>
 
@@ -76,12 +76,12 @@
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Avatar</th>
-											<th>Name</th>
+											<th>Hình đại diện</th>
+											<th>Tên</th>
 											<th>Email</th>
-											<th>Phone</th>
-											<th>Address</th>
-											<th>Actions</th>
+											<th>Số điện thoại</th>
+											<th>Địa chỉ</th>
+											<th>Thao tác</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -103,11 +103,11 @@
 													<a class="btn btn-info"
 														th:href="@{/admin/users/update/{id}(id=${user.id})}"
 														style="text-decoration: none; color: white;">
-														Edit</a>
+														Sửa</a>
 
 													<button class="btn btn-danger" data-bs-toggle="modal"
 														data-bs-target="#modalDelete"
-														th:attr="data-id=${user.id}">Delete</button>
+														th:attr="data-id=${user.id}">Xóa</button>
 												</div>
 											</td>
 										</tr>
@@ -117,7 +117,7 @@
 								<div th:if="${totalPages > 1}" style="padding: 15px;">
 									<div class="table-pagination">
 										<div>
-											Total Rows: [[${totalItems}]]
+											Tổng số hàng: [[${totalItems}]]
 										</div>
 										<nav aria-label="Page navigation">
 											<ul class="pagination">
@@ -166,18 +166,17 @@
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="modalToggleLabel">Delete
+									<h5 class="modal-title" id="modalToggleLabel">Xóa
 									</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">Are you sure to want to delete
-									this record</span>?</div>
+								<div class="modal-body">Bạn có chắc chắn muốn xóa người này</span>?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-										Close
+										Đóng
 									</button>
-									<button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+									<button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
 								</div>
 							</div>
 						</div>

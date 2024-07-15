@@ -34,7 +34,7 @@ public class OrderControllerAdmin {
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
 		OrderDTO orderDTO = orderServiceImpl.getOrderById(id);
-		UserDTO userDTO = userServiceImpl.getUserById(orderDTO.getId());
+		UserDTO userDTO = userServiceImpl.getUserById(orderDTO.getUserOrders().getId());
 		model.addAttribute("userDTO", userDTO);
 		model.addAttribute("orderDTO", orderDTO);
 		return "order_detail_admin";

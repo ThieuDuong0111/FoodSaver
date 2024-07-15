@@ -9,8 +9,8 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title th:if="${role_id == 3}">Edit User - Food Saver Admin</title>
-	<title th:if="${role_id == 2}">Edit Food Creator - Food Saver Admin</title>
+	<title th:if="${role_id == 3}">Sửa người dùng - Food Saver Admin</title>
+	<title th:if="${role_id == 2}">Sửa người bán - Food Saver Admin</title>
 
 	<meta name="description" content="" />
 
@@ -67,8 +67,8 @@
 						<div class="col-xl">
 							<div class="card mb-4">
 								<div class="card-header d-flex justify-content-between align-items-center">
-									<h5 th:if="${role_id == 3}" class="mb-0">Edit User</h5>
-									<h5 th:if="${role_id == 2}" class="mb-0">Edit Food Creator</h5>
+									<h5 th:if="${role_id == 3}" class="mb-0">Sửa người dùng</h5>
+									<h5 th:if="${role_id == 2}" class="mb-0">Sửa người bán</h5>
 								</div>
 								<div class="card-body">
 									<form action="#" th:action="@{/admin/users/update}" th:object="${userDTO}"
@@ -76,7 +76,7 @@
 										<!--<img th:src="@{'data:image/jpeg;base64,' + ${userDTO.avatar}}" ,
 											style="border-radius: 50%;" />-->
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-avatar">Avatar</label>
+											<label class="form-label" for="basic-default-avatar">Hình đại diện</label>
 											<input type="file" class="form-control" id="basic-default-avatar"
 												th:field="*{imageFile}" />
 											<p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger"
@@ -84,9 +84,9 @@
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-username">Username</label>
+											<label class="form-label" for="basic-default-username">Tên</label>
 											<input type="text" class="form-control" id="basic-default-username"
-												placeholder="Enter your username" th:field="*{name}" />
+												placeholder="Nhập tên" th:field="*{name}" />
 											<p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger"
 												th:errors="*{name}" />
 										</div>
@@ -110,19 +110,19 @@
 											<label class="form-label" for="basic-default-email">Email</label>
 											<div class="input-group input-group-merge">
 												<input type="text" id="basic-default-email" class="form-control"
-													placeholder="Enter your email" aria-label="john.doe"
+													placeholder="Nhập email" aria-label="john.doe"
 													aria-describedby="basic-default-email2" th:field="*{email}" />
 
 											</div>
-											<div class="form-text">You can use letters, numbers & periods</div>
+											<!--<div class="form-text">You can use letters, numbers & periods</div>-->
 											<p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger"
 												th:errors="*{email}"></p>
 										</div>
 
 										<div class="mb-3">
-											<label class="form-label" for="basic-default-phone">Phone Number</label>
+											<label class="form-label" for="basic-default-phone">Số điện thoại</label>
 											<input type="text" id="basic-default-phone" class="form-control phone-mask"
-												placeholder="Enter your phone number" th:field="*{phone}" />
+												placeholder="Nhập số điện thoại" th:field="*{phone}" />
 											<p th:if="${#fields.hasErrors('phone')}" th:errorclass="text-danger"
 												th:errors="*{phone}"></p>
 										</div>
@@ -140,9 +140,9 @@
 										<input type="hidden" th:value="${role_id}" th:attr="name='role.id'" />
 
 										<div class="demo-inline-spacing">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary">Xác nhận</button>
 											<a th:href="@{'/admin/users/page/1?sortField=id&sortDir=desc&role_id=' + ${role_id}}"
-												class="btn btn-secondary">Back</a>
+												class="btn btn-secondary">Quay lại</a>
 										</div>
 									</form>
 								</div>

@@ -21,24 +21,24 @@
 			<li th:class="${role_id == 1} ? 'menu-item active' : 'menu-item'">
 				<a href="/food_creator/dashboard" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-home-circle"></i>
-					<div data-i18n="Dashboards">Dashboards</div>
+					<div data-i18n="Dashboards">Bảng điều khiển</div>
 				</a>
 			</li>
 
 			<li class="menu-header small text-uppercase">
-				<span class="menu-header-text">Features</span>
+				<span class="menu-header-text">Tính năng</span>
 			</li>
 			<!-- Apps -->
 			<li th:class="${role_id == 5} ? 'menu-item active' : 'menu-item'">
 				<a href="/food_creator/products/page/1?sortField=id&sortDir=desc" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-food-menu"></i>
-					<div data-i18n="Product">Product</div>
+					<div data-i18n="Product">Sản phẩm</div>
 				</a>
 			</li>
 			<li th:class="${role_id == 6} ? 'menu-item active' : 'menu-item'">
 				<a href="/food_creator/orders/page/1?sortField=id&sortDir=desc" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-cube"></i>
-					<div data-i18n="Order">Order</div>
+					<div data-i18n="Order">Đơn hàng</div>
 				</a>
 			</li>
 		</ul>

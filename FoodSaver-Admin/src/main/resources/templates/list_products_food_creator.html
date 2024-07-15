@@ -66,7 +66,7 @@
 								<h5 class="card-header">Product</h5>
 
 								<div style="padding: 15px;"><a th:href="@{'/food_creator/products/add'}"
-										class="btn btn-success">Add</a>
+										class="btn btn-success">Tạo</a>
 								</div>
 							</div>
 
@@ -75,13 +75,13 @@
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Image</th>
-											<th>Name</th>
-											<th>Category</th>
-											<th>Description</th>
-											<th>Price</th>
-											<th>Discount Price</th>
-											<th>Actions</th>
+											<th>Hình ảnh</th>
+											<th>Tên</th>
+											<th>Danh mục</th>
+											<th>Mô tả</th>
+											<th>Giá</th>
+											<th>Giá khuyến mãi</th>
+											<th>Thao tác</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -89,7 +89,8 @@
 											<td th:text="${product.id}"></td>
 
 											<td th:if="${product.image == null || product.image == ''}"><img
-													th:src="@{'/images/none_image_product.jpg'} " height="40px" , /></td>
+													th:src="@{'/images/none_image_product.jpg'} " height="40px" , />
+											</td>
 											<td th:unless="${product.image == null || product.image == ''}"><img
 													th:src="@{'data:image/jpeg;base64,' + ${product.image}}"
 													height="40px" />
@@ -113,10 +114,10 @@
 													<a class="btn btn-info"
 														th:href="@{/food_creator/products/update/{id}(id=${product.id})}"
 														style="text-decoration: none; color: white;">
-														Edit</a>
+														Sửa</a>
 													<button class="btn btn-danger" data-bs-toggle="modal"
 														data-bs-target="#modalDelete"
-														th:attr="data-id=${product.id}">Delete</button>
+														th:attr="data-id=${product.id}">Xóa</button>
 												</div>
 											</td>
 										</tr>
@@ -126,7 +127,7 @@
 								<div th:if="${totalPages > 1}" style="padding: 15px;">
 									<div class="table-pagination">
 										<div>
-											Total Rows: [[${totalItems}]]
+											Tổng số hàng: [[${totalItems}]]
 										</div>
 										<nav aria-label="Page navigation">
 											<ul class="pagination">
@@ -174,18 +175,17 @@
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="modalToggleLabel">Delete
+									<h5 class="modal-title" id="modalToggleLabel">Xóa
 									</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">Are you sure to want to delete
-									this record</span>?</div>
+								<div class="modal-body">Bạn có chắc chán muốn xóa sản phẩm này</span>?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-										Close
+										Đóng
 									</button>
-									<button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+									<button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
 								</div>
 							</div>
 						</div>
