@@ -99,7 +99,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
               if (state is CartPageFinishedState) {
                 final CartItemsCountNotifier cartItemsCount = ref.read(CartItemsCountNotifier.provider);
                 cartItemsCount.setCartItemsCount(state.cartEntity.itemsCount);
-                fToast.showToast(child: const ToastWidget(message: 'Add to cart successfully'));
+                fToast.showToast(child: const ToastWidget(message: 'Thêm vào giỏ hàng thành công'));
               }
             },
             child: Stack(
@@ -153,7 +153,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'by ',
+                                          text: 'bởi ',
                                           style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                         ),
                                         TextSpan(
@@ -256,8 +256,8 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                         } else {
                           AppDialog.showAppDialog(
                             context: context,
-                            content: 'You need to login to see your cart items. Do you you want to log in?',
-                            buttonName: 'Yes',
+                            content: 'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
+                            buttonName: 'Đồng ý',
                             action: () {
                               context.router.pushAndPopUntil(
                                 const SignInPageRoute(),
@@ -275,7 +275,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                           ),
                         ),
                       ),
-                      child: Text('ADD TO CART', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
+                      child: Text('THÊM VÀO GIỎ HÀNG', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                     ),
                   ),
                 ),

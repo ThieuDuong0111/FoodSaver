@@ -7,10 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 public class CategoryDTO {
 	private int id;
 
-	@NotEmpty(message = "Name is required.")
+	@NotEmpty(message = "Tên không được bỏ trống.")
 	private String name;
 
-	@NotEmpty(message = "Description is required.")
+	@NotEmpty(message = "Mô tả không được bỏ trống.")
 	private String description;
 
 	private String image;

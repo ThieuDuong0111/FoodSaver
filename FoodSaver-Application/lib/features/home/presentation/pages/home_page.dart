@@ -90,7 +90,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Welcome to FoodSaver',
+                                    'Chào mừng đến với FoodSaver',
                                     style: AppTextStyle.primaryText()
                                         .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
@@ -154,8 +154,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                 onTap: () {
                                   AppDialog.showAppDialog(
                                     context: context,
-                                    content: 'You need to login to see your cart items. Do you you want to log in?',
-                                    buttonName: 'Yes',
+                                    content: 'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
+                                    buttonName: 'Đồng ý',
                                     action: () {
                                       context.router.replace(const SignInPageRoute());
                                     },
@@ -191,7 +191,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                             color: AppColors.primaryBrand,
                           ),
                           SizedBox(width: 8.w),
-                          Expanded(child: Text('Search for foods you like', style: AppTextStyle.hintText())),
+                          Expanded(child: Text('Tìm sản phẩm', style: AppTextStyle.hintText())),
                         ],
                       ),
                     ),
@@ -216,7 +216,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                       child: Text(
-                        'Categories',
+                        'Danh mục',
                         style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -269,7 +269,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                       child: Text(
-                        'Top Products',
+                        'Sản phẩm gần đây',
                         style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
                       ),
                     ),

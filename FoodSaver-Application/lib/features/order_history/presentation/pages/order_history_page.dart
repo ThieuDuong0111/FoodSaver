@@ -54,7 +54,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Order History', context),
+        title: AppComponent.customAppBar(Colors.white, 'Danh sách đơn hàng', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -155,7 +155,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                             SizedBox(width: 5.w),
                                             if (state.listOrderEntity[index].isPaid)
                                               Text(
-                                                'Complete',
+                                                'Hoàn thành',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: AppTextStyle.smallText().copyWith(
@@ -165,7 +165,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                               )
                                             else
                                               Text(
-                                                'Waiting',
+                                                'Đang chờ',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: AppTextStyle.smallText().copyWith(
@@ -238,7 +238,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                                   style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
                                                 ),
                                                 Text(
-                                                  '${state.listOrderEntity[index].orderDetails.length} items',
+                                                  '${state.listOrderEntity[index].orderDetails.length} sản phẩm',
                                                   maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w400),

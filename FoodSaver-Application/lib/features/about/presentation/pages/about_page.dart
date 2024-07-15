@@ -42,7 +42,7 @@ class _AboutWrapperState extends State<AboutWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'About this app', context),
+        title: AppComponent.customAppBar(Colors.white, 'Về Food Saver', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -57,8 +57,8 @@ class _AboutWrapperState extends State<AboutWrapper> {
             ),
             SizedBox(height: 10.h),
             Text(
-              'FoodSaver is committed to reducing food waste by providing a convenient platform for businesses to sell surplus food items at discounted prices, while simultaneously offering consumers access to affordable and high-quality food options. Our vision is to create a sustainable future where food waste is minimized, and everyone has access to fresh and nutritious food. We envision FoodSaver as the go-to platform for businesses to redistribute surplus food items, and for consumers to discover great deals while contributing to the fight against food waste.',
-              style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+              'FoodSaver cam kết giảm thiểu lãng phí thực phẩm bằng cách cung cấp một nền tảng tiện lợi cho các doanh nghiệp bán các mặt hàng thực phẩm dư thừa với giá chiết khấu, đồng thời mang đến cho người tiêu dùng cơ hội tiếp cận các thực phẩm chất lượng cao và giá cả phải chăng. Tầm nhìn của chúng tôi là tạo ra một tương lai bền vững, nơi lãng phí thực phẩm được giảm thiểu và mọi người đều có thể tiếp cận thực phẩm tươi ngon và bổ dưỡng. Chúng tôi hình dung FoodSaver là nền tảng hàng đầu cho các doanh nghiệp phân phối lại các mặt hàng thực phẩm dư thừa, và cho người tiêu dùng khám phá các ưu đãi tuyệt vời trong khi góp phần chống lại lãng phí thực phẩm.',
+              style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
             ),
             SizedBox(height: AppSizes.paddingBottom),
           ],

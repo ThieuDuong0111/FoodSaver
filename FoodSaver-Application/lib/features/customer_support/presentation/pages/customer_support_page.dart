@@ -42,7 +42,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Customer support', context),
+        title: AppComponent.customAppBar(Colors.white, 'Hỗ trợ khách hàng', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -58,11 +58,11 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi thieuduong01526',
+                        'Chào bạn',
                         style: TextStyle(color: AppColors.primaryBrand, fontSize: 20.sp, fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        'How can we help?',
+                        'Chúng tôi có thể giúp gì?',
                         style: TextStyle(color: AppColors.primaryBrand, fontSize: 20.sp, fontWeight: FontWeight.w500),
                       ),
                     ],
@@ -92,7 +92,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'Messages',
+                              'Tin nhắn',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                             ),
@@ -120,7 +120,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'Help',
+                              'Hỗ trợ',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                             ),
@@ -139,7 +139,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
             ),
             SizedBox(height: 12.h),
             Text(
-              'Frequently Q&A',
+              'Câu hỏi và trả lời',
               style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand, fontWeight: FontWeight.w500),
             ),
             SizedBox(height: 6.h),
@@ -158,7 +158,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'How to use Food Saver',
+                              'Làm sao sử dụng Food Saver',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
                             ),
@@ -186,7 +186,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'How can I order foods',
+                              'Làm sao để đặt thức ăn',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
                             ),
@@ -214,7 +214,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'Can someone else pick up my order for me',
+                              'Những người khác có thể đặt hàng cho tôi không',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
                             ),
@@ -242,7 +242,7 @@ class _CustomerSupportWrapperState extends State<CustomerSupportWrapper> {
                         children: [
                           Flexible(
                             child: Text(
-                              'How to send feedback',
+                              'Làm sao để gửi phản hồi',
                               maxLines: 1,
                               style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
                             ),

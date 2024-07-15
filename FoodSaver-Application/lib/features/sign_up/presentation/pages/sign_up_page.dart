@@ -113,7 +113,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
               hasPhoneError = false;
               hasAddressError = false;
             });
-            fToast.showToast(child: const ToastWidget(message: 'Sign Up Successfully'));
+            fToast.showToast(child: const ToastWidget(message: 'Đăng ký thành công'));
             context.router.replace(const SignInPageRoute());
           }
         },
@@ -125,12 +125,12 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Sign Up',
+                  'Đăng ký',
                   style: AppTextStyle.bigTitle(),
                 ),
                 SizedBox(height: 24.h),
                 Text(
-                  'Username',
+                  'Tên',
                   style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
@@ -141,7 +141,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _usernameController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasUsernameError,
-                    hintText: 'Enter your username',
+                    hintText: 'Nhập tên người dùng',
                   ),
                 ),
                 if (hasUsernameError)
@@ -152,7 +152,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
                 Text(
-                  'Password',
+                  'Mật khẩu',
                   style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
@@ -164,7 +164,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _passwordController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasPasswordError,
-                    hintText: 'Enter your password',
+                    hintText: 'Nhập mật khẩu',
                     isPassword: true,
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -187,7 +187,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
                 Text(
-                  'Confirm Password',
+                  'Xác nhận mật khẩu',
                   style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
@@ -199,7 +199,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _rePasswordController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasRePasswordError,
-                    hintText: 'Enter your confirm password',
+                    hintText: 'Nhập xác nhận mật khẩu',
                     isPassword: true,
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -233,7 +233,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _emailController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasEmailError,
-                    hintText: 'Enter your email',
+                    hintText: 'Nhập email',
                   ),
                 ),
                 if (hasEmailError)
@@ -244,7 +244,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
                 Text(
-                  'Phone Number',
+                  'Số điện thoại',
                   style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
@@ -255,7 +255,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _phoneController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasPhoneError,
-                    hintText: 'Enter your phone number',
+                    hintText: 'Nhập số điện thoại',
                   ),
                 ),
                 if (hasPhoneError)
@@ -266,7 +266,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   height: AppSizes.spaceBetweenFormAndForm,
                 ),
                 Text(
-                  'Address',
+                  'Địa chỉ',
                   style: AppTextStyle.labelText().copyWith(color: Colors.black),
                 ),
                 SizedBox(
@@ -277,7 +277,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                   controller: _addressController,
                   decoration: AppCommonStyle.textFieldStyle(
                     hasError: hasAddressError,
-                    hintText: 'Enter your address',
+                    hintText: 'Nhập địa chỉ',
                   ),
                 ),
                 if (hasAddressError)
@@ -316,7 +316,7 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                         ),
                       ),
                     ),
-                    child: Text('SIGN UP', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
+                    child: Text('ĐĂNG KÝ', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                   ),
                 ),
                 SizedBox(
@@ -325,13 +325,13 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
                 Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text: 'Already have an account? ', style: AppTextStyle.primaryText()),
+                      TextSpan(text: 'Đã có tài khoản? ', style: AppTextStyle.primaryText()),
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             context.router.replace(const SignInPageRoute());
                           },
-                        text: 'Sign in',
+                        text: 'Đăng nhập',
                         style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
                       ),
                     ],

@@ -19,10 +19,10 @@ public class ProductDTO {
 
 	private List<Category> categories;
 
-	@NotEmpty(message = "Name is required.")
+	@NotEmpty(message = "Tên không được bỏ trống.")
 	private String name;
 
-	@NotEmpty(message = "Description is required.")
+	@NotEmpty(message = "Mô tả không được bỏ trống.")
 	private String description;
 
 	private String image;
@@ -33,13 +33,13 @@ public class ProductDTO {
 
 	private MultipartFile imageFile;
 
-	@Min(value = 1, message = "Price must not be greater than 0")
+	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double price;
 
-	@Min(value = 1, message = "Discount price must not be greater than 0")
+	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double discountPrice;
 
-	@Min(value = 1, message = "Quantity must not be greater than 0")
+	@Min(value = 1, message = "Số lượng phải lớn hơn 0")
 	private int quantity;
 
 	public int getId() {

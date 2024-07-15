@@ -52,7 +52,7 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Order Detail', context),
+        title: AppComponent.customAppBar(Colors.white, 'Chi tiết đơn hàng', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -67,7 +67,7 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                 children: [
                   SizedBox(height: 12.h),
                   Text(
-                    'Code: ${state.orderEntity.orderCode!}',
+                    'Mã: ${state.orderEntity.orderCode!}',
                     style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 10.h),

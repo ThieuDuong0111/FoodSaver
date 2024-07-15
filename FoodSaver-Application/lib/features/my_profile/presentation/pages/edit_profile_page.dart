@@ -111,7 +111,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                     _addressController.text = userinfo.address!;
                     _imageFile = null;
                   });
-                  fToast.showToast(child: const ToastWidget(message: 'Something went wrong. Please try again!'));
+                  fToast.showToast(child: const ToastWidget(message: 'Đã có lỗi xảy ra. Vui lòng thử lại!'));
                 }
               },
               builder: (context, state) {

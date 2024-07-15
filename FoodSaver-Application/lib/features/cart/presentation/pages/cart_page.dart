@@ -63,7 +63,7 @@ class _CartWrapperState extends State<CartWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'My Cart', context),
+        title: AppComponent.customAppBar(Colors.white, 'Giỏ hàng', context),
         toolbarHeight: 50.h,
       ),
       body: Consumer(
@@ -81,10 +81,10 @@ class _CartWrapperState extends State<CartWrapper> {
                     name: userInfo.name.toString(),
                   ),
                 );
-                fToast.showToast(child: const ToastWidget(message: 'Checkout successfully'));
+                fToast.showToast(child: const ToastWidget(message: 'Xác nhận đơn hàng thành công'));
               }
               if (state is CartCheckoutErrorState) {
-                fToast.showToast(child: const ToastWidget(message: 'Something went wrong. Please try again!'));
+                fToast.showToast(child: const ToastWidget(message: 'Đã có lỗi xảy ra. Vui lòng thử lại!'));
               }
             },
             child: BlocConsumer<CartBloc, CartState>(
@@ -163,8 +163,8 @@ class _CartWrapperState extends State<CartWrapper> {
                                                                     AppDialog.showAppDialog(
                                                                       context: context,
                                                                       content:
-                                                                          'Are you sure you want to remove this item from your cart?',
-                                                                      buttonName: 'Delete',
+                                                                          'Bạn có chắc chắn muốn xóa sản phẩm này?',
+                                                                      buttonName: 'Xóa',
                                                                       action: () {
                                                                         _cartBloc.add(
                                                                           CartDeleteItemEvent(
@@ -190,7 +190,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                                 TextSpan(
                                                                   children: [
                                                                     TextSpan(
-                                                                      text: 'by ',
+                                                                      text: 'bởi ',
                                                                       style: AppTextStyle.primaryText()
                                                                           .copyWith(fontWeight: FontWeight.w500),
                                                                     ),
@@ -338,11 +338,11 @@ class _CartWrapperState extends State<CartWrapper> {
                                     size: 200.w,
                                   ),
                                   Text(
-                                    'Your cart is empty.',
+                                    'Giỏ hàng trống.',
                                     style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
                                   ),
                                   Text(
-                                    'Please add some products.',
+                                    'Bạn hãy thêm sản phẩm nhé.',
                                     style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
                                   ),
                                 ],
@@ -375,7 +375,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Total:',
+                                      'Tổng:',
                                       style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     Text(
@@ -393,8 +393,8 @@ class _CartWrapperState extends State<CartWrapper> {
                                     onPressed: () {
                                       AppDialog.showAppDialog(
                                         context: context,
-                                        content: 'Are you sure to want to checkout?',
-                                        buttonName: 'Yes',
+                                        content: 'Bạn có muốn hoàn thành đơn hàng?',
+                                        buttonName: 'Đồng ý',
                                         action: () {
                                           context.router.pop();
                                           _cartBlocAction.add(const CartCheckoutEvent());
@@ -410,7 +410,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                       ),
                                     ),
                                     child: Text(
-                                      'CHECKOUT',
+                                      'XÁC NHẬN',
                                       style: AppTextStyle.primaryText().copyWith(color: Colors.white),
                                     ),
                                   ),

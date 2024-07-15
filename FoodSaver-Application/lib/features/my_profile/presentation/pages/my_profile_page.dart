@@ -73,7 +73,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                     ),
                     width: double.infinity,
                     color: AppColors.primaryBrand,
-                    child: Text('My Profile', style: AppTextStyle.bigTitle().copyWith(color: Colors.white)),
+                    child: Text('Thông tin', style: AppTextStyle.bigTitle().copyWith(color: Colors.white)),
                   ),
                   SizedBox(height: 62.h),
                   Padding(
@@ -106,7 +106,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                                   fit: BoxFit.fitWidth,
                                                 ),
                                                 SizedBox(width: 10.w),
-                                                Text('Order History', style: AppTextStyle.primaryText()),
+                                                Text('Danh sách đơn hàng', style: AppTextStyle.primaryText()),
                                               ],
                                             ),
                                           ),
@@ -149,7 +149,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                                 fit: BoxFit.fitWidth,
                                               ),
                                               SizedBox(width: 10.w),
-                                              Text('Customer support', style: AppTextStyle.primaryText()),
+                                              Text('Hỗ trợ khách hàng', style: AppTextStyle.primaryText()),
                                             ],
                                           ),
                                         ),
@@ -192,7 +192,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                                 fit: BoxFit.fitWidth,
                                               ),
                                               SizedBox(width: 10.w),
-                                              Text('About this app', style: AppTextStyle.primaryText()),
+                                              Text('Về ứng dụng này', style: AppTextStyle.primaryText()),
                                             ],
                                           ),
                                         ),
@@ -220,8 +220,8 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                 onTap: () {
                                   AppDialog.showAppDialog(
                                     context: context,
-                                    content: 'Are you sure you want to sign out?',
-                                    buttonName: 'Yes',
+                                    content: 'Bạn có chắc chắn muốn đăng xuất?',
+                                    buttonName: 'Đồng ý',
                                     action: () {
                                       BlocProvider.of<MyProfileBloc>(context).add(const SignOutEvent());
                                     },
@@ -243,7 +243,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                                   fit: BoxFit.fitWidth,
                                                 ),
                                                 SizedBox(width: 10.w),
-                                                Text('Sign out', style: AppTextStyle.primaryText()),
+                                                Text('Đăng xuất', style: AppTextStyle.primaryText()),
                                               ],
                                             ),
                                           ),
@@ -270,8 +270,8 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                 onTap: () {
                                   AppDialog.showAppDialog(
                                     context: context,
-                                    content: 'Are you sure you want to log in?',
-                                    buttonName: 'Yes',
+                                    content: 'Bạn có chắc chắn muốn đăng nhập?',
+                                    buttonName: 'Đồng ý',
                                     action: () {
                                       context.router.replace(const SignInPageRoute());
                                     },
@@ -293,7 +293,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                                   color: AppColors.greyColor,
                                                 ),
                                                 SizedBox(width: 10.w),
-                                                Text('Login', style: AppTextStyle.primaryText()),
+                                                Text('Đăng nhập', style: AppTextStyle.primaryText()),
                                               ],
                                             ),
                                           ),
@@ -383,14 +383,14 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ValidateUtils.isLogined(userinfo) ? userinfo.name! : 'Your name',
+                                      ValidateUtils.isLogined(userinfo) ? userinfo.name! : 'Tên người dùng',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle.mediumTitle().copyWith(),
                                     ),
                                     SizedBox(height: 1.h),
                                     Text(
-                                      ValidateUtils.isLogined(userinfo) ? userinfo.email! : 'Your email',
+                                      ValidateUtils.isLogined(userinfo) ? userinfo.email! : 'Email người dùng',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle.primaryText().copyWith(color: AppColors.greyColor),

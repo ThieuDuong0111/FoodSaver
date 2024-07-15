@@ -102,7 +102,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                   setState(() {
                     hasUsernameError = false;
                     hasPasswordError = false;
-                    fToast.showToast(child: const ToastWidget(message: 'Sign In Successfully'));
+                    fToast.showToast(child: const ToastWidget(message: 'Đăng nhập thành công'));
                   });
                   BlocProvider.of<AuthBloc>(context).add(const AuthInitAppEvent());
                 }
@@ -124,12 +124,12 @@ class _SignInWrapperState extends State<SignInWrapper> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Sign In',
+                            'Đăng nhập',
                             style: AppTextStyle.bigTitle(),
                           ),
                           SizedBox(height: 24.h),
                           Text(
-                            'Username',
+                            'Tên',
                             style: AppTextStyle.labelText().copyWith(color: Colors.black),
                           ),
                           SizedBox(
@@ -140,7 +140,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                             controller: _usernameController,
                             decoration: AppCommonStyle.textFieldStyle(
                               hasError: hasUsernameError,
-                              hintText: 'Enter your username',
+                              hintText: 'Nhập tên người dùng',
                             ),
                           ),
                           if (hasUsernameError)
@@ -151,7 +151,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                             height: AppSizes.spaceBetweenFormAndForm,
                           ),
                           Text(
-                            'Password',
+                            'Mật khẩu',
                             style: AppTextStyle.labelText().copyWith(color: Colors.black),
                           ),
                           SizedBox(
@@ -163,7 +163,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                             controller: _passwordController,
                             decoration: AppCommonStyle.textFieldStyle(
                               hasError: hasPasswordError,
-                              hintText: 'Enter your password',
+                              hintText: 'Nhập mật khẩu',
                               isPassword: true,
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -213,7 +213,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                                   ),
                                 ),
                               ),
-                              child: Text('SIGN IN', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
+                              child: Text('ĐĂNG NHẬP', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                             ),
                           ),
                           SizedBox(
@@ -222,13 +222,13 @@ class _SignInWrapperState extends State<SignInWrapper> {
                           Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(text: 'Don’t have an account? ', style: AppTextStyle.primaryText()),
+                                TextSpan(text: 'Chưa có tài khoản? ', style: AppTextStyle.primaryText()),
                                 TextSpan(
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
                                       context.router.replace(const SignUpPageRoute());
                                     },
-                                  text: 'Sign up',
+                                  text: 'Đăng ký',
                                   style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
                                 ),
                               ],
@@ -243,7 +243,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
                                     ..onTap = () async {
                                       BlocProvider.of<SignInBloc>(context).add(const ContinueWithoutSignInEvent());
                                     },
-                                  text: 'Continue without sign in',
+                                  text: 'Tiếp tục không cần đăng nhập',
                                   style: AppTextStyle.primaryText().copyWith(color: AppColors.primaryBrand),
                                 ),
                               ],

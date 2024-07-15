@@ -73,7 +73,7 @@ class _SearchWrapperState extends State<SearchWrapper> {
                         style: AppTextStyle.focusText(),
                         controller: _searchController,
                         decoration: AppCommonStyle.textFieldStyle(
-                          hintText: 'Search foods you want',
+                          hintText: 'Tìm sản phẩm',
                         ),
                       ),
                     ),
@@ -84,7 +84,7 @@ class _SearchWrapperState extends State<SearchWrapper> {
                       _searchBloc.add(SearchByNamePageEvent(_searchController.text));
                     },
                     child: Text(
-                      'Search',
+                      'Tìm',
                       style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),

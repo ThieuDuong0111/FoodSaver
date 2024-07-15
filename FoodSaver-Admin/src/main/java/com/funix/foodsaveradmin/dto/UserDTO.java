@@ -10,7 +10,7 @@ public class UserDTO {
 
 	private int id;
 
-	@NotEmpty(message = "Name is required.")
+	@NotEmpty(message = "Tên không được bỏ trống.")
 	private String name;
 
 	private String avatar;
@@ -19,16 +19,16 @@ public class UserDTO {
 
 	private String imageType;
 
-	@NotEmpty(message = "Password is required.")
+	@NotEmpty(message = "Mật khẩu không được bỏ trống.")
 	private String password;
 
-	@NotEmpty(message = "Email is required.")
+	@NotEmpty(message = "Email không được bỏ trống.")
 	private String email;
 
-	@NotEmpty(message = "Phone is required.")
+	@NotEmpty(message = "Số điện thoại không được bỏ trống.")
 	private String phone;
 
-	@NotEmpty(message = "Address is required.")
+	@NotEmpty(message = "Địa chỉ không được bỏ trống.")
 	private String address;
 
 	private Role role;

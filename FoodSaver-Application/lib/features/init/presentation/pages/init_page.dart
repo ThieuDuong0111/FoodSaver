@@ -87,13 +87,13 @@ class _InitwrapperState extends State<Initwrapper> {
                   icon: Icon(
                     Icons.home,
                   ),
-                  label: 'Home',
+                  label: 'Trang chủ',
                 ),
                 const BottomNavigationBarItem(
                   icon: Icon(
                     Icons.category_outlined,
                   ),
-                  label: 'Category',
+                  label: 'Danh mục',
                 ),
                 BottomNavigationBarItem(
                   icon: ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl)
@@ -104,7 +104,7 @@ class _InitwrapperState extends State<Initwrapper> {
                       : const Icon(
                           Icons.account_circle,
                         ),
-                  label: 'Profile',
+                  label: 'Hồ sơ',
                 ),
               ],
             );

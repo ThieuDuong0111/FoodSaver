@@ -53,7 +53,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Order Confirmation', context),
+        title: AppComponent.customAppBar(Colors.white, 'Xác nhận đơn hàng', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -70,7 +70,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
             ),
             SizedBox(height: 10.h),
             Text(
-              'Order Payment Successful',
+              'Xác nhận đơn hàng thành công',
               style: AppTextStyle.mediumTitle().copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 5.h),
@@ -86,7 +86,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Total Amount: ',
+                    text: 'Tổng: ',
                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
@@ -106,7 +106,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'User order: ',
+                    text: 'Người đặt hàng: ',
                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w600),
                   ),
                   TextSpan(

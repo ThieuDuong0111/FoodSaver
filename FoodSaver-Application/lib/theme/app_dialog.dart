@@ -68,7 +68,7 @@ class AppDialog {
                             ),
                           ),
                         ),
-                        child: Text('Cancel', style: AppTextStyle.primaryText().copyWith(color: Colors.black)),
+                        child: Text('Quay lại', style: AppTextStyle.primaryText().copyWith(color: Colors.black)),
                       ),
                     ),
                   ],

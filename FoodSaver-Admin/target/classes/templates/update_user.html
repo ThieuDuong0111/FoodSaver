@@ -135,6 +135,8 @@
 												th:errors="*{address}"></p>
 										</div>
 										<input type="hidden" th:value="*{id}" th:attr="name='id'" />
+										<input type="hidden" th:value="*{imageUrl}" th:attr="name='imageUrl'" />
+										<input type="hidden" th:value="*{imageType}" th:attr="name='imageType'" />
 										<input type="hidden" th:value="*{avatar}" th:attr="name='avatar'" />
 										<input type="hidden" th:value="*{password}" th:attr="name='password'" />
 										<input type="hidden" th:value="${role_id}" th:attr="name='role.id'" />
@@ -148,8 +150,6 @@
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 					<!-- / Content -->
 					<!-- Footer -->
