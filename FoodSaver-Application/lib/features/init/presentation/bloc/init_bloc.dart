@@ -6,8 +6,6 @@ part 'init_state.dart';
 
 class InitBloc extends Bloc<InitEvent, InitState> {
   InitBloc() : super(InitInitial()) {
-    on<InitEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<InitEvent>((event, emit) {});
   }
 }

@@ -10,3 +10,8 @@ abstract class MyProfileEvent extends Equatable {
 class SignOutEvent extends MyProfileEvent {
   const SignOutEvent();
 }
+
+class EditInfoEvent extends MyProfileEvent {
+  const EditInfoEvent({required this.userUpdatePrams});
+  final UserUpdatePrams userUpdatePrams;
+}

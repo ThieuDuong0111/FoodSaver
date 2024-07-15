@@ -18,6 +18,8 @@ public interface IUserService {
 	List<MyUser> getAllUsers();
 
 	UserDTO updateUserInfo(HttpServletRequest request, UserDTO userDTO);
+	
+	UserDTO updateUserInfoMobile(HttpServletRequest request, UserDTO userDTO);
 
 	MyUser getUserById(int id);
 

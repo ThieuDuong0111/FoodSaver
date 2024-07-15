@@ -95,7 +95,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                         .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl) ? userinfo.name! : 'User',
+                                    ValidateUtils.isNotNullOrEmpty(userinfo.name) ? userinfo.name! : 'User',
                                     style: AppTextStyle.primaryText()
                                         .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
                                   ),
@@ -107,7 +107,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                       ),
                       SizedBox(width: 5.w),
                       SizedBox(
-                        child: (ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl))
+                        child: (ValidateUtils.isLogined(userinfo))
                             ? InkWell(
                                 onTap: () {
                                   context.router.push(const CartPageRoute());

@@ -33,7 +33,7 @@ public class UserController {
 		MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<?> updateUserInfo(HttpServletRequest request,
 		@ModelAttribute UserDTO userDTO) {
-		UserDTO responseUserDTO = userServiceImpl.updateUserInfo(request,
+		UserDTO responseUserDTO = userServiceImpl.updateUserInfoMobile(request,
 			userDTO);
 		return ResponseEntity.ok(responseUserDTO);
 	}

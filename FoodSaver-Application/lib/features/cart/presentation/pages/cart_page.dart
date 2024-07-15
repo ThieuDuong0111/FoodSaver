@@ -129,8 +129,8 @@ class _CartWrapperState extends State<CartWrapper> {
                                                       child: ClipRRect(
                                                         borderRadius: BorderRadius.circular(10.r),
                                                         child: ImageParse(
-                                                          width: 80.w,
-                                                          height: 80.w,
+                                                          width: 75.w,
+                                                          height: 75.w,
                                                           url: state.cartEntity.cartItems[index]!.cartProduct.imageUrl,
                                                           type: 'product',
                                                         ),
@@ -139,7 +139,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                     SizedBox(width: 8.w),
                                                     Expanded(
                                                       child: SizedBox(
-                                                        height: 80.w,
+                                                        height: 75.w,
                                                         child: Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -210,71 +210,93 @@ class _CartWrapperState extends State<CartWrapper> {
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Expanded(
-                                                                  child: Text(
-                                                                    ParseUtils.formatCurrency(
-                                                                      state.cartEntity.cartItems[index]!.cartProduct
-                                                                          .price
-                                                                          .toDouble(),
-                                                                    ),
-                                                                    maxLines: 1,
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    style: AppTextStyle.primaryText().copyWith(
-                                                                      fontWeight: FontWeight.w500,
-                                                                      color: AppColors.primaryBrand,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(width: 5.w),
-                                                                Expanded(
                                                                   child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.end,
                                                                     children: [
-                                                                      InkWell(
-                                                                        onTap: () {
-                                                                          _cartBloc.add(
-                                                                            CartUpdateItemEvent(
-                                                                              cartUpdateRequest: CartUpdateRequest(
-                                                                                id: state.cartEntity.cartItems[index]!
-                                                                                    .cartProduct.id,
-                                                                                quantity: -1,
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                        child: Icon(
-                                                                          Icons.remove_circle_outline,
-                                                                          color: AppColors.primaryBrand,
-                                                                          size: 20.w,
+                                                                      Flexible(
+                                                                        child: Text(
+                                                                          ParseUtils.formatCurrencyWithoutSymbol(
+                                                                            state.cartEntity.cartItems[index]!
+                                                                                .cartProduct.price
+                                                                                .toDouble(),
+                                                                          ),
+                                                                          maxLines: 1,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          style: AppTextStyle.primaryText().copyWith(
+                                                                            fontWeight: FontWeight.w500,
+                                                                            color: Colors.black,
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                      SizedBox(width: 8.w),
-                                                                      Text(
-                                                                        state.cartEntity.cartItems[index]!.unitQuantity
-                                                                            .toString(),
-                                                                        style: AppTextStyle.primaryText()
-                                                                            .copyWith(fontWeight: FontWeight.w500),
-                                                                      ),
-                                                                      SizedBox(width: 8.w),
-                                                                      InkWell(
-                                                                        onTap: () {
-                                                                          _cartBloc.add(
-                                                                            CartUpdateItemEvent(
-                                                                              cartUpdateRequest: CartUpdateRequest(
-                                                                                id: state.cartEntity.cartItems[index]!
-                                                                                    .cartProduct.id,
-                                                                                quantity: 1,
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                        child: Icon(
-                                                                          Icons.add_circle_outline,
-                                                                          color: AppColors.primaryBrand,
-                                                                          size: 20.w,
+                                                                      SizedBox(width: 5.w),
+                                                                      Expanded(
+                                                                        child: Text(
+                                                                          ParseUtils.formatCurrency(
+                                                                            state.cartEntity.cartItems[index]!
+                                                                                    .unitQuantity *
+                                                                                state.cartEntity.cartItems[index]!
+                                                                                    .cartProduct.price
+                                                                                    .toDouble(),
+                                                                          ),
+                                                                          maxLines: 1,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          style: AppTextStyle.primaryText().copyWith(
+                                                                            fontWeight: FontWeight.w700,
+                                                                            color: AppColors.primaryBrand,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
+                                                                ),
+                                                                SizedBox(width: 2.w),
+                                                                Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                  children: [
+                                                                    InkWell(
+                                                                      onTap: () {
+                                                                        _cartBloc.add(
+                                                                          CartUpdateItemEvent(
+                                                                            cartUpdateRequest: CartUpdateRequest(
+                                                                              id: state.cartEntity.cartItems[index]!
+                                                                                  .cartProduct.id,
+                                                                              quantity: -1,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                      child: Icon(
+                                                                        Icons.remove_circle_outline,
+                                                                        color: AppColors.primaryBrand,
+                                                                        size: 20.w,
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(width: 8.w),
+                                                                    Text(
+                                                                      state.cartEntity.cartItems[index]!.unitQuantity
+                                                                          .toString(),
+                                                                      style: AppTextStyle.primaryText()
+                                                                          .copyWith(fontWeight: FontWeight.w500),
+                                                                    ),
+                                                                    SizedBox(width: 8.w),
+                                                                    InkWell(
+                                                                      onTap: () {
+                                                                        _cartBloc.add(
+                                                                          CartUpdateItemEvent(
+                                                                            cartUpdateRequest: CartUpdateRequest(
+                                                                              id: state.cartEntity.cartItems[index]!
+                                                                                  .cartProduct.id,
+                                                                              quantity: 1,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                      child: Icon(
+                                                                        Icons.add_circle_outline,
+                                                                        color: AppColors.primaryBrand,
+                                                                        size: 20.w,
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),

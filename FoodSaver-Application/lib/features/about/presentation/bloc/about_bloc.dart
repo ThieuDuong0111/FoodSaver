@@ -6,8 +6,6 @@ part 'about_state.dart';
 
 class AboutBloc extends Bloc<AboutEvent, AboutState> {
   AboutBloc() : super(AboutInitial()) {
-    on<AboutEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<AboutEvent>((event, emit) {});
   }
 }

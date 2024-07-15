@@ -26,10 +26,14 @@ class ImageParse extends StatelessWidget {
       );
     }
     // debugPrint('$url');
-    return Image.network(
-      '${ApiEndpoints.baseUrl}/image/$type/$url',
+    return SizedBox(
       width: width,
-      fit: BoxFit.fitWidth,
+      height: height,
+      child: Image.network(
+        '${ApiEndpoints.baseUrl}/image/$type/$url',
+        width: width,
+        fit: BoxFit.fitWidth,
+      ),
     );
   }
 }

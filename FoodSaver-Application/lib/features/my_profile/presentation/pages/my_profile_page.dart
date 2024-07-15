@@ -383,16 +383,14 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl) ? userinfo.name! : 'Your name',
+                                      ValidateUtils.isLogined(userinfo) ? userinfo.name! : 'Your name',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle.mediumTitle().copyWith(),
                                     ),
                                     SizedBox(height: 1.h),
                                     Text(
-                                      ValidateUtils.isNotNullOrEmpty(userinfo.imageUrl)
-                                          ? userinfo.email!
-                                          : 'Your email',
+                                      ValidateUtils.isLogined(userinfo) ? userinfo.email! : 'Your email',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyle.primaryText().copyWith(color: AppColors.greyColor),

@@ -18,3 +18,15 @@ class SignOutErrorState extends MyProfileState {
 class SignOutFinishedState extends MyProfileState {
   const SignOutFinishedState();
 }
+
+class EditInfoLoadingState extends MyProfileState {}
+
+class EditInfoErrorState extends MyProfileState {
+  const EditInfoErrorState({required this.failure});
+  final Failure failure;
+}
+
+class EditInfoFinishedState extends MyProfileState {
+  const EditInfoFinishedState({required this.userEntity});
+  final UserEntity userEntity;
+}

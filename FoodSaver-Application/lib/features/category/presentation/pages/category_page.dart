@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:funix_thieudvfx_foodsaver/core/constants/api_endpoints.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/bloc/category_bloc.dart';
-import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -90,14 +90,20 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                               borderRadius: BorderRadius.circular(
                                 15.r,
                               ),
-                              child: ImageParse(
+                              child: Image.network(
+                                '${ApiEndpoints.baseUrl}/image/category/${state.listCategories[index].imageUrl}',
                                 width: AppSizes.homeProductImageSize(context),
-                                height: AppSizes.homeProductImageSize(context),
-                                url: state.listCategories[index].imageUrl,
-                                type: 'category',
+                                // height: AppSizes.homeProductImageSize(context),
+                                fit: BoxFit.fitWidth,
                               ),
+                              // ImageParse(
+                              //   width: AppSizes.homeProductImageSize(context),
+                              //   height: AppSizes.homeProductImageSize(context),
+                              //   url: state.listCategories[index].imageUrl,
+                              //   type: 'category',
+                              // ),
                             ),
-                            Expanded(
+                            Flexible(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
                                 child: Column(

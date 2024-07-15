@@ -97,6 +97,50 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public UserDTO updateUserInfoMobile(HttpServletRequest request,
+		UserDTO userDTO) {
+		MyUser user = getUserByToken(request);
+		// update Image
+		if (userDTO.getImageFile() != null) {
+			MultipartFile image = userDTO.getImageFile();
+			try {
+				user.setAvatar(
+					Base64.getEncoder().encodeToString(
+						ImageUtils.resizeImage(image.getBytes(), 500, 500)));
+				user.setImageType("image/jpeg");
+				user.setImageUrl(ParseUtils.parseImageUrl(image.getBytes()) + ".jpeg");
+//				String array0[] = image.getOriginalFilename().split("/");
+//				String fileName = array0[array0.length - 1];
+//				String array1[] = fileName.split(".");
+//				String imageType = array1[1];
+//				System.out.println("------------" + fileName);
+//				System.out.println("------------" + imageType);
+//				user.setImageType("image/" + imageType);
+////				String array[] = image.getContentType().split("/");
+//				String imageUrl = ParseUtils.parseImageUrl(image.getBytes());
+//				user.setImageUrl(
+//					imageUrl + "." + imageType);
+			} catch (Exception e) {
+				System.out.println("Upload Image Exception: " + e.getMessage());
+			}
+		}
+		// update email
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getEmail())) {
+			user.setEmail(userDTO.getEmail());
+		}
+		// update phone
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getPhone())) {
+			user.setPhone(userDTO.getPhone());
+		}
+		// update address
+		if (!ValidationUtils.isNullOrEmpty(userDTO.getAddress())) {
+			user.setAddress(userDTO.getAddress());
+		}
+		this.userRepository.save(user);
+		return convertToDto(getUserById(user.getId()));
+	}
+
+	@Override
 	public MyUser getUserById(int id) {
 		Optional<MyUser> optionalUser = userRepository.findById(id);
 		MyUser user = null;
