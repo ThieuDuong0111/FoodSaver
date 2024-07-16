@@ -25,4 +25,6 @@ public interface IProductService {
 	List<ProductDTO> findByCategoryId(int categoryId);
 
 	List<ProductDTO> searchByName(String name);
+	
+	Double calculateRating(int productId);
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.ProductDTO;
 import com.funix.foodsaverAPI.models.Product;
+import com.funix.foodsaverAPI.repositories.IFeedBackRepository;
 import com.funix.foodsaverAPI.repositories.IProductRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class ProductServiceImpl implements IProductService {
 
 	@Autowired
 	private IProductRepository productRepository;
+
+	@Autowired
+	private IFeedBackRepository feedBackRepository;
 
 	@Autowired
 	private ICategoryService categoryService;
@@ -35,6 +39,7 @@ public class ProductServiceImpl implements IProductService {
 //			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
 //				+ product.getImageUrl());
 //		}
+		productDTO.setRating(calculateRating(product.getId()));
 		productDTO
 			.setCategory(categoryService.convertToDto(product.getCategory()));
 		productDTO
@@ -109,6 +114,13 @@ public class ProductServiceImpl implements IProductService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public Double calculateRating(int productId) {
+		return feedBackRepository
+			.findAverageRatingByProductId(productId) == null ? 5.0
+				: feedBackRepository.findAverageRatingByProductId(productId);
 	}
 
 }

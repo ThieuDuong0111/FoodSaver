@@ -17,6 +17,7 @@ class ProductModel with _$ProductModel implements DataModel {
     required int price,
     required int discountPrice,
     required int quantity,
+    required double? rating,
     required String? imageUrl,
   }) = _ProductModel;
 

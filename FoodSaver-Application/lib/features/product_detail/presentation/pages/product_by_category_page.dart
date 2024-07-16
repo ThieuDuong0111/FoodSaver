@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,7 +84,7 @@ class _ProductByCategoryWrapperState extends State<ProductByCategoryWrapper> {
                             crossAxisCount: 2,
                             crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
                             mainAxisSpacing: AppSizes.homeMainAxisSpacing,
-                            childAspectRatio: 150 / 201,
+                            childAspectRatio: 138 / 201,
                           ),
                           itemCount: state.listProductEntity.length,
                           itemBuilder: (context, index) {
@@ -130,6 +131,17 @@ class _ProductByCategoryWrapperState extends State<ProductByCategoryWrapper> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
+                                            IgnorePointer(
+                                              child: RatingBar(
+                                                alignment: Alignment.center,
+                                                size: 15.w,
+                                                filledIcon: Icons.star,
+                                                emptyIcon: Icons.star_border,
+                                                onRatingChanged: (value) {},
+                                                initialRating: state.listProductEntity[index].rating!,
+                                              ),
+                                            ),
+                                            SizedBox(height: 2.h),
                                             Text(
                                               ParseUtils.formatCurrency(
                                                 state.listProductEntity[index].price.toDouble(),

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -269,7 +270,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                       child: Text(
-                        'Sản phẩm gần đây',
+                        'Sản phẩm mới nhất',
                         style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -282,7 +283,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                         crossAxisCount: 2,
                         crossAxisSpacing: AppSizes.homeCrossAxisSpacing,
                         mainAxisSpacing: AppSizes.homeMainAxisSpacing,
-                        childAspectRatio: 150 / 201,
+                        childAspectRatio: 138 / 201,
                       ),
                       itemCount: state.homeEntity.products.length,
                       itemBuilder: (context, index) {
@@ -329,6 +330,17 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
+                                        IgnorePointer(
+                                          child: RatingBar(
+                                            alignment: Alignment.center,
+                                            size: 15.w,
+                                            filledIcon: Icons.star,
+                                            emptyIcon: Icons.star_border,
+                                            onRatingChanged: (value) {},
+                                            initialRating: state.homeEntity.products[index]!.rating!,
+                                          ),
+                                        ),
+                                        SizedBox(height: 2.h),
                                         Text(
                                           ParseUtils.formatCurrency(state.homeEntity.products[index]!.price.toDouble()),
                                           style: AppTextStyle.primaryText()

@@ -27,6 +27,7 @@ class ProductFromModelToEntityMapperImpl extends ProductFromModelToEntityMapper 
       discountPrice: model.discountPrice,
       quantity: model.quantity,
       imageUrl: model.imageUrl,
+      rating: model.rating,
     );
     return productentity;
   }

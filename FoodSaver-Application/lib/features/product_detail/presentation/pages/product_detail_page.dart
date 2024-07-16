@@ -224,7 +224,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                 context.router.push(ProductGetFeedBacksPageRoute(productId: state.productEntity.id));
                               },
                               child: Text(
-                                'Xem phản hồi về sản phẩm',
+                                'Xem phản hồi và đánh giá về sản phẩm',
                                 style: AppTextStyle.primaryText().copyWith(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,

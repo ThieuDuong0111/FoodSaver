@@ -31,7 +31,9 @@ public class FeedBackServiceImpl implements IFeedBackService {
 
 	@Override
 	public FeedBackDTO convertToDto(FeedBack feedBack) {
-		return modelMapper.map(feedBack, FeedBackDTO.class);
+		FeedBackDTO feedBackDTO = modelMapper.map(feedBack, FeedBackDTO.class);
+		feedBackDTO.getProductFeedBacks().setRating(0.0);
+		return feedBackDTO;
 	}
 
 	@Override

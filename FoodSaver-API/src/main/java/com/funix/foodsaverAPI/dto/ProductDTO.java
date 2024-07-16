@@ -25,6 +25,8 @@ public class ProductDTO {
 	@Min(value = 1, message = "Quantity must not be greater than 0")
 	private int quantity;
 
+	private Double rating;
+
 	private String imageUrl;
 
 	public int getId() {
@@ -99,4 +101,11 @@ public class ProductDTO {
 		this.imageUrl = imageUrl;
 	}
 
+	public Double getRating() {
+		return rating;
+	}
+
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
 }

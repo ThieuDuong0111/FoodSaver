@@ -16,6 +16,7 @@ class ProductEntity with _$ProductEntity implements DomainEntity {
     required int price,
     required int discountPrice,
     required int quantity,
+    required double? rating,
     required String? imageUrl,
   }) = _ProductEntity;
   ProductEntity._();

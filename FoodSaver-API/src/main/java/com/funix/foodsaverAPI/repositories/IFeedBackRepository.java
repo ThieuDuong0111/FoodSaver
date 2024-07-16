@@ -13,4 +13,7 @@ import com.funix.foodsaverAPI.models.FeedBack;
 public interface IFeedBackRepository extends JpaRepository<FeedBack, Integer> {
 	@Query(value = "SELECT * FROM feed_back f WHERE f.product_id = :product_id ORDER BY f.id DESC", nativeQuery = true)
 	List<FeedBack> findByProductId(@Param("product_id") int productId);
+
+	@Query(value = "SELECT AVG(f.rating) FROM feed_back f WHERE f.product_id = :product_id", nativeQuery = true)
+	Double findAverageRatingByProductId(@Param("product_id") int productId);
 }
