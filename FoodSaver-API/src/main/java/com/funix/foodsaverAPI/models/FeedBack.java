@@ -27,6 +27,19 @@ public class FeedBack {
 
 	private Date publishedDate;
 
+	public FeedBack() {
+		super();
+	}
+
+	public FeedBack(MyUser userFeedBacks, Product productFeedBacks,
+		String comment, Date publishedDate) {
+		super();
+		this.userFeedBacks = userFeedBacks;
+		this.productFeedBacks = productFeedBacks;
+		this.comment = comment;
+		this.publishedDate = publishedDate;
+	}
+
 	public int getId() {
 		return id;
 	}

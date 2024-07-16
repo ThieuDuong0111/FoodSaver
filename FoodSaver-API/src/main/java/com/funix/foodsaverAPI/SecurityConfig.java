@@ -38,6 +38,7 @@ public class SecurityConfig {
 				.requestMatchers("/api/product/**").permitAll()
 				.requestMatchers("/api/products/**").permitAll()
 				.requestMatchers("/api/image/**").permitAll()
+				.requestMatchers("/api/feedback/get-feedbacks/**").permitAll()
 				.anyRequest().authenticated())
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
