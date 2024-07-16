@@ -8,6 +8,8 @@ public class AddFeedBackDTO {
 
 	private String comment;
 
+	private int rating;
+
 	public int getUserId() {
 		return userId;
 	}
@@ -32,4 +34,11 @@ public class AddFeedBackDTO {
 		this.comment = comment;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 }

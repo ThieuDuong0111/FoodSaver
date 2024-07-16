@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +54,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
   late TextEditingController _feedBackController;
   late ProductDetailBloc _productDetailBloc;
   late FToast fToast;
+  double rating = 0;
 
   @override
   void initState() {
@@ -98,136 +100,147 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
               bloc: _productDetailBloc,
               builder: (context, state) {
                 if (state is ProductGetFeedBacksFinishedState) {
-                  return state.listFeedBacksEntity.isNotEmpty
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 15.h),
-                            InkWell(
-                              onTap: () {
-                                if (ValidateUtils.isLogined(userinfo)) {
-                                  final AlertDialog alert = AlertDialog(
-                                    insetPadding: EdgeInsets.zero,
-                                    titlePadding: EdgeInsets.zero,
-                                    buttonPadding: EdgeInsets.zero,
-                                    actionsPadding: EdgeInsets.zero,
-                                    contentPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    content: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20.r),
-                                        ),
-                                        padding: EdgeInsets.all(20.w),
+                  return Column(
+                    children: [
+                      SizedBox(height: 15.h),
+                      InkWell(
+                        onTap: () {
+                          if (ValidateUtils.isLogined(userinfo)) {
+                            final AlertDialog alert = AlertDialog(
+                              insetPadding: EdgeInsets.zero,
+                              titlePadding: EdgeInsets.zero,
+                              buttonPadding: EdgeInsets.zero,
+                              actionsPadding: EdgeInsets.zero,
+                              contentPadding: EdgeInsets.zero,
+                              backgroundColor: Colors.transparent,
+                              content: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  padding: EdgeInsets.all(20.w),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: _feedBackController,
+                                      ),
+                                      SizedBox(height: 18.h),
+                                      RatingBar(
+                                        size: 20.w,
+                                        filledIcon: Icons.star,
+                                        emptyIcon: Icons.star_border,
+                                        onRatingChanged: (value) {
+                                          rating = value;
+                                        },
+                                        initialRating: rating,
+                                      ),
+                                      SizedBox(height: 18.h),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 12.w),
                                         child: Column(
-                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            TextField(
-                                              controller: _feedBackController,
+                                            SizedBox(
+                                              width: double.infinity,
+                                              height: 30.h,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  _productDetailBloc.add(
+                                                    ProductAddFeedBackEvent(
+                                                      AddFeedBackRequest(
+                                                        userId: userinfo.id,
+                                                        productId: widget.productId,
+                                                        comment: _feedBackController.text,
+                                                        rating: rating.toInt(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      WidgetStateProperty.all<Color>(AppColors.primaryBrand),
+                                                  shape: WidgetStateProperty.all<OutlinedBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  'Xác nhận',
+                                                  style: AppTextStyle.primaryText().copyWith(color: Colors.white),
+                                                ),
+                                              ),
                                             ),
-                                            SizedBox(height: 18.h),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    height: 30.h,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        _productDetailBloc.add(
-                                                          ProductAddFeedBackEvent(
-                                                            AddFeedBackRequest(
-                                                              userId: userinfo.id,
-                                                              productId: widget.productId,
-                                                              comment: 'San pham nay rat tot',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            WidgetStateProperty.all<Color>(AppColors.primaryBrand),
-                                                        shape: WidgetStateProperty.all<OutlinedBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(AppSizes.buttonBorderRadius),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        'Xác nhận',
-                                                        style: AppTextStyle.primaryText().copyWith(color: Colors.white),
-                                                      ),
+                                            SizedBox(height: 10.h),
+                                            SizedBox(
+                                              width: double.infinity,
+                                              height: 30.h,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  context.router.pop();
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                                                  shape: WidgetStateProperty.all<OutlinedBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(AppSizes.buttonBorderRadius),
                                                     ),
                                                   ),
-                                                  SizedBox(height: 10.h),
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    height: 30.h,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        context.router.pop();
-                                                      },
-                                                      style: ButtonStyle(
-                                                        backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                                                        shape: WidgetStateProperty.all<OutlinedBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(AppSizes.buttonBorderRadius),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        'Quay lại',
-                                                        style: AppTextStyle.primaryText().copyWith(color: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
+                                                child: Text(
+                                                  'Quay lại',
+                                                  style: AppTextStyle.primaryText().copyWith(color: Colors.black),
+                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  );
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return alert;
-                                    },
-                                  );
-                                } else {
-                                  AppDialog.showAppDialog(
-                                    context: context,
-                                    content: 'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
-                                    buttonName: 'Đồng ý',
-                                    action: () {
-                                      context.router.pushAndPopUntil(
-                                        const SignInPageRoute(),
-                                        predicate: (_) => false,
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                                child: Text(
-                                  'Viết bình luận cho sản phẩm này',
-                                  style: AppTextStyle.primaryText().copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
+                                    ],
                                   ),
                                 ),
                               ),
+                            );
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return alert;
+                              },
+                            );
+                          } else {
+                            AppDialog.showAppDialog(
+                              context: context,
+                              content: 'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
+                              buttonName: 'Đồng ý',
+                              action: () {
+                                context.router.pushAndPopUntil(
+                                  const SignInPageRoute(),
+                                  predicate: (_) => false,
+                                );
+                              },
+                            );
+                          }
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                          child: Text(
+                            'Viết bình luận cho sản phẩm này',
+                            style: AppTextStyle.primaryText().copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline,
                             ),
+                          ),
+                        ),
+                      ),
+                      if (state.listFeedBacksEntity.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
                             SizedBox(height: 15.h),
                             ListView.builder(
                               padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
@@ -240,6 +253,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
@@ -264,9 +278,27 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                   color: AppColors.greyColor,
                                                 ),
                                               SizedBox(width: 8.w),
-                                              Text(
-                                                state.listFeedBacksEntity[index].userFeedBacks.name.toString(),
-                                                style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      state.listFeedBacksEntity[index].userFeedBacks.name.toString(),
+                                                      style: AppTextStyle.smallText()
+                                                          .copyWith(fontWeight: FontWeight.w500),
+                                                    ),
+                                                    IgnorePointer(
+                                                      child: RatingBar(
+                                                        size: 15.w,
+                                                        filledIcon: Icons.star,
+                                                        emptyIcon: Icons.star_border,
+                                                        onRatingChanged: (value) {},
+                                                        initialRating:
+                                                            state.listFeedBacksEntity[index].rating.toDouble(),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -293,139 +325,10 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                             SizedBox(height: AppSizes.paddingBottom),
                           ],
                         )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 15.h),
-                            InkWell(
-                              onTap: () {
-                                if (ValidateUtils.isLogined(userinfo)) {
-                                  final AlertDialog alert = AlertDialog(
-                                    insetPadding: EdgeInsets.zero,
-                                    titlePadding: EdgeInsets.zero,
-                                    buttonPadding: EdgeInsets.zero,
-                                    actionsPadding: EdgeInsets.zero,
-                                    contentPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    content: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20.r),
-                                        ),
-                                        padding: EdgeInsets.all(20.w),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            TextField(
-                                              controller: _feedBackController,
-                                            ),
-                                            SizedBox(height: 18.h),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    height: 30.h,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        _productDetailBloc.add(
-                                                          ProductAddFeedBackEvent(
-                                                            AddFeedBackRequest(
-                                                              userId: userinfo.id,
-                                                              productId: widget.productId,
-                                                              comment: 'San pham nay rat tot',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            WidgetStateProperty.all<Color>(AppColors.primaryBrand),
-                                                        shape: WidgetStateProperty.all<OutlinedBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(AppSizes.buttonBorderRadius),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        'Xác nhận',
-                                                        style: AppTextStyle.primaryText().copyWith(color: Colors.white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 10.h),
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    height: 30.h,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        context.router.pop();
-                                                      },
-                                                      style: ButtonStyle(
-                                                        backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                                                        shape: WidgetStateProperty.all<OutlinedBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(AppSizes.buttonBorderRadius),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: Text(
-                                                        'Quay lại',
-                                                        style: AppTextStyle.primaryText().copyWith(color: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return alert;
-                                    },
-                                  );
-                                } else {
-                                  AppDialog.showAppDialog(
-                                    context: context,
-                                    content: 'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
-                                    buttonName: 'Đồng ý',
-                                    action: () {
-                                      context.router.pushAndPopUntil(
-                                        const SignInPageRoute(),
-                                        predicate: (_) => false,
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                                child: Text(
-                                  'Viết bình luận cho sản phẩm này',
-                                  style: AppTextStyle.primaryText().copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 15.h),
-                            const NoDataFound(),
-                          ],
-                        );
+                      else
+                        const NoDataFound(),
+                    ],
+                  );
                 } else if (state is ProductGetFeedBacksLoadingState) {
                   return const LoadingPage();
                 } else {

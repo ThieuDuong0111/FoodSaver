@@ -11,6 +11,8 @@ public class FeedBackDTO {
 
 	private String comment;
 
+	private int rating;
+
 	private Date publishedDate;
 
 	public int getId() {
@@ -43,6 +45,14 @@ public class FeedBackDTO {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 	public Date getPublishedDate() {

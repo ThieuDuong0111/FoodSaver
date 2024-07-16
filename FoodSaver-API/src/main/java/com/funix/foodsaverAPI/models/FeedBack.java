@@ -1,5 +1,6 @@
 package com.funix.foodsaverAPI.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,9 @@ public class FeedBack {
 
 	private String comment;
 
+	@Column(nullable = false)
+	private int rating;
+
 	private Date publishedDate;
 
 	public FeedBack() {
@@ -32,11 +36,12 @@ public class FeedBack {
 	}
 
 	public FeedBack(MyUser userFeedBacks, Product productFeedBacks,
-		String comment, Date publishedDate) {
+		String comment, int rating, Date publishedDate) {
 		super();
 		this.userFeedBacks = userFeedBacks;
 		this.productFeedBacks = productFeedBacks;
 		this.comment = comment;
+		this.rating = rating;
 		this.publishedDate = publishedDate;
 	}
 
@@ -79,4 +84,13 @@ public class FeedBack {
 	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
 	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
 }

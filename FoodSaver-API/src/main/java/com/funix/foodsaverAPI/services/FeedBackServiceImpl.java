@@ -40,6 +40,7 @@ public class FeedBackServiceImpl implements IFeedBackService {
 			userRepository.findById(addFeedBackDTO.getUserId()).get(),
 			productRepository.findById(addFeedBackDTO.getProductId()).get(),
 			addFeedBackDTO.getComment(),
+			addFeedBackDTO.getRating(),
 			new Date());
 		feedBackRepository.save(feed);
 	}

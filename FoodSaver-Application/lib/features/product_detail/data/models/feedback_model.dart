@@ -13,6 +13,7 @@ class FeedBackModel with _$FeedBackModel implements DataModel {
     required UserModel userFeedBacks,
     required ProductModel productFeedBacks,
     required String comment,
+    required int rating,
     required DateTime publishedDate,
   }) = _FeedBackModel;
 

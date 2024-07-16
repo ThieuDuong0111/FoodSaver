@@ -1,5 +1,6 @@
 package com.funix.foodsaveradmin.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,11 @@ public class FeedBack {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product productFeedBacks;
 
+	@Column(columnDefinition = "TEXT")
 	private String comment;
+
+	@Column(nullable = false)
+	private int rating;
 
 	private Date publishedDate;
 
@@ -65,5 +70,13 @@ public class FeedBack {
 
 	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 }

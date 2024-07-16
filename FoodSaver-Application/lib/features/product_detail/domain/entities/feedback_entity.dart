@@ -12,6 +12,7 @@ class FeedBackEntity with _$FeedBackEntity implements DomainEntity {
     required UserEntity userFeedBacks,
     required ProductEntity productFeedBacks,
     required String comment,
+    required int rating,
     required DateTime publishedDate,
   }) = _FeedBackEntity;
   FeedBackEntity._();

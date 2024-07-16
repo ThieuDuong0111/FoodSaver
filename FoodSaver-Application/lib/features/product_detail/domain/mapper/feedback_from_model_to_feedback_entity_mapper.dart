@@ -22,6 +22,7 @@ class FeedBackFromModelToEntityMapperImpl extends FeedBackFromModelToEntityMappe
       userFeedBacks: _userFromModelToEntityMapper.fromModel(model.userFeedBacks)!,
       productFeedBacks: _productFromModelToEntityMapper.fromModel(model.productFeedBacks),
       comment: model.comment,
+      rating: model.rating,
       publishedDate: model.publishedDate,
     );
     return feedBackEntity;
