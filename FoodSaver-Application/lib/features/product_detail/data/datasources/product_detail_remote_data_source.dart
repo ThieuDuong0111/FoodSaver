@@ -35,8 +35,9 @@ class ProductDetailRemoteDataSourceImpl implements ProductDetailRemoteDataSource
           'Content-Type': 'application/json',
         },
       );
-      final ProductModel model = ProductModel.fromJson(json.decode(response.body));
+
       if (response.statusCode == 200) {
+        final ProductModel model = ProductModel.fromJson(json.decode(response.body));
         return Right(_productFromModelToEntityMapper.fromModel(model));
       }
       throw Exception();

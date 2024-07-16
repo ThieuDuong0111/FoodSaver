@@ -23,7 +23,7 @@ public class UnitServiceImpl implements IUnitService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<Unit> getAllCategories() {
+	public List<Unit> getAllUnits() {
 		return UnitRepository.findAll();
 	}
 

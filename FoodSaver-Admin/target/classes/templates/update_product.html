@@ -89,10 +89,17 @@
 											<p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger"
 												th:errors="*{name}" />
 										</div>
-
+										<div class="mb-3">
+											<label for="selectUnit" class="form-label">Đơn vị</label>
+											<select th:field="${productDTO.unit.id}" th:attr="name='creator.id'"
+												id="selectUnit" class="form-select">
+												<option th:each="unit : ${productDTO.units}" th:value="${unit.id}"
+													th:text="${unit.name}"></option>
+											</select>
+										</div>
 										<div class="mb-3">
 											<label for="selectCategory" class="form-label">Danh mục</label>
-											<select th:field="${productDTO.category.id}" th:attr="name='creator.id'"
+											<select th:field="${productDTO.category.id}" th:attr="name='category.id'"
 												id="selectCategory" class="form-select">
 												<option th:each="category : ${productDTO.categories}"
 													th:value="${category.id}" th:text="${category.name}"></option>

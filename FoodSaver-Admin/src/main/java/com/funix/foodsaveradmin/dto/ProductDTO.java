@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.funix.foodsaveradmin.models.Category;
 import com.funix.foodsaveradmin.models.MyUser;
+import com.funix.foodsaveradmin.models.Unit;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,9 +16,13 @@ public class ProductDTO {
 
 	private CategoryDTO category;
 
+	private UnitDTO unit;
+
 	private MyUser creator;
 
 	private List<Category> categories;
+
+	private List<Unit> units;
 
 	@NotEmpty(message = "Tên không được bỏ trống.")
 	private String name;
@@ -146,4 +151,19 @@ public class ProductDTO {
 		this.imageType = imageType;
 	}
 
+	public List<Unit> getUnits() {
+		return units;
+	}
+
+	public void setUnits(List<Unit> units) {
+		this.units = units;
+	}
+
+	public UnitDTO getUnit() {
+		return unit;
+	}
+
+	public void setUnit(UnitDTO unit) {
+		this.unit = unit;
+	}
 }

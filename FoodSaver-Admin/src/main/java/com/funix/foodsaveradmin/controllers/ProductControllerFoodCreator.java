@@ -14,6 +14,7 @@ import com.funix.foodsaveradmin.dto.ProductDTO;
 import com.funix.foodsaveradmin.models.Product;
 import com.funix.foodsaveradmin.services.CategoryServiceImpl;
 import com.funix.foodsaveradmin.services.ProductServiceImpl;
+import com.funix.foodsaveradmin.services.UnitServiceImpl;
 import com.funix.foodsaveradmin.services.UserServiceImpl;
 
 import jakarta.validation.Valid;
@@ -30,6 +31,9 @@ public class ProductControllerFoodCreator {
 	private CategoryServiceImpl categoryServiceImpl;
 
 	@Autowired
+	private UnitServiceImpl unitServiceImpl;
+
+	@Autowired
 	private UserServiceImpl userServiceImpl;
 
 	@GetMapping({ "", "/" })
@@ -42,6 +46,7 @@ public class ProductControllerFoodCreator {
 		Model model) {
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setCategories(categoryServiceImpl.getAllCategories());
+		productDTO.setUnits(unitServiceImpl.getAllUnits());
 		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("creator_id",
 			userServiceImpl.getLoggedInUserInfo().getId());
@@ -55,6 +60,7 @@ public class ProductControllerFoodCreator {
 
 		if (result.hasErrors()) {
 			productDTO.setCategories(categoryServiceImpl.getAllCategories());
+			productDTO.setUnits(unitServiceImpl.getAllUnits());
 			model.addAttribute("productDTO", productDTO);
 			model.addAttribute("creator_id",
 				userServiceImpl.getLoggedInUserInfo().getId());
@@ -74,7 +80,7 @@ public class ProductControllerFoodCreator {
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
 		ProductDTO productDTO = productServiceImpl.getProductById(id);
-
+		productDTO.setUnits(unitServiceImpl.getAllUnits());
 		productDTO.setCategories(categoryServiceImpl.getAllCategories());
 		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("creator_id",
@@ -92,6 +98,7 @@ public class ProductControllerFoodCreator {
 				userServiceImpl
 					.convertToEntity(userServiceImpl.getUserById(
 						userServiceImpl.getLoggedInUserInfo().getId())));
+			productDTO.setUnits(unitServiceImpl.getAllUnits());
 			productDTO.setCategories(categoryServiceImpl.getAllCategories());
 			model.addAttribute("productDTO", productDTO);
 			model.addAttribute("creator_id",

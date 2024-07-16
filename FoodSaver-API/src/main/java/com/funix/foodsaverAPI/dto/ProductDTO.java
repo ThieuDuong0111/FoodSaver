@@ -10,6 +10,8 @@ public class ProductDTO {
 
 	private UserDTO creator;
 
+	private UnitDTO unit;
+
 	@NotEmpty(message = "Name is required.")
 	private String name;
 
@@ -26,7 +28,7 @@ public class ProductDTO {
 	private int quantity;
 
 	private Double rating;
-	
+
 	private int commentsCount;
 
 	private String imageUrl;
@@ -117,5 +119,13 @@ public class ProductDTO {
 
 	public void setCommentsCount(int commentsCount) {
 		this.commentsCount = commentsCount;
+	}
+
+	public UnitDTO getUnit() {
+		return unit;
+	}
+
+	public void setUnit(UnitDTO unit) {
+		this.unit = unit;
 	}
 }

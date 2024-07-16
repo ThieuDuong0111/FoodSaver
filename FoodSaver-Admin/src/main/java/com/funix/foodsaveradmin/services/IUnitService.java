@@ -13,7 +13,7 @@ public interface IUnitService {
 
 	Unit convertToEntity(UnitDTO UnitDTO);
 
-	List<Unit> getAllCategories();
+	List<Unit> getAllUnits();
 
 	void saveUnit(UnitDTO UnitDTO);
 

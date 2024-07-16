@@ -1,9 +1,8 @@
-package com.funix.foodsaveradmin.dto;
+package com.funix.foodsaverAPI.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
 public class UnitDTO {
-
 	private int id;
 
 	@NotEmpty(message = "Tên không được bỏ trống.")

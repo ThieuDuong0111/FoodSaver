@@ -133,14 +133,29 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Text(state.productEntity.name!, style: AppTextStyle.mediumTitle()),
+                                  child: Text(
+                                    state.productEntity.name!,
+                                    style: AppTextStyle.mediumTitle(),
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 3.w,
                                 ),
-                                Text(
-                                  ParseUtils.formatCurrency(state.productEntity.price.toDouble()),
-                                  style: AppTextStyle.mediumTitle().copyWith(color: AppColors.primaryBrand),
+                                Flexible(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        ParseUtils.formatCurrency(state.productEntity.price.toDouble()),
+                                        style: AppTextStyle.mediumTitle().copyWith(color: AppColors.primaryBrand),
+                                      ),
+                                      // SizedBox(width: 1.w),
+                                      Text(
+                                        ' (${state.productEntity.unit.name})',
+                                        style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

@@ -29,7 +29,7 @@ public class Product {
 	private MyUser creator;
 
 	@ManyToOne
-	@JoinColumn(name = "unit")
+	@JoinColumn(name = "unit_id")
 	private Unit unit;
 
 	@OneToMany(mappedBy = "cartProduct")
