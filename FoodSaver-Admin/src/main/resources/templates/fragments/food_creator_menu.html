@@ -41,6 +41,18 @@
 					<div data-i18n="Order">Đơn hàng</div>
 				</a>
 			</li>
+			<li th:class="${role_id == 7} ? 'menu-item active' : 'menu-item'">
+				<a href="/food_creator/feedbacks/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-note"></i>
+					<div data-i18n="Order">Phản hồi</div>
+				</a>
+			</li>
+			<!--<li th:class="${role_id == 8} ? 'menu-item active' : 'menu-item'">
+				<a href="/food_creator/orders/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-trim"></i>
+					<div data-i18n="Order">Phản hồi theo sản phẩm</div>
+				</a>
+			</li>-->
 		</ul>
 	</aside>
 </body>
