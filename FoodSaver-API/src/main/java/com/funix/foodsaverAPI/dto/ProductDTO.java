@@ -26,6 +26,8 @@ public class ProductDTO {
 	private int quantity;
 
 	private Double rating;
+	
+	private int commentsCount;
 
 	private String imageUrl;
 
@@ -107,5 +109,13 @@ public class ProductDTO {
 
 	public void setRating(Double rating) {
 		this.rating = rating;
+	}
+
+	public int getCommentsCount() {
+		return commentsCount;
+	}
+
+	public void setCommentsCount(int commentsCount) {
+		this.commentsCount = commentsCount;
 	}
 }

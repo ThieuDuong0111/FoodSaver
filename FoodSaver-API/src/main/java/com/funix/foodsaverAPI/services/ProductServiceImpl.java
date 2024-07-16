@@ -39,6 +39,7 @@ public class ProductServiceImpl implements IProductService {
 //			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
 //				+ product.getImageUrl());
 //		}
+		productDTO.setCommentsCount(feedBackRepository.countCommentsByProductId(product.getId()));
 		productDTO.setRating(calculateRating(product.getId()));
 		productDTO
 			.setCategory(categoryService.convertToDto(product.getCategory()));

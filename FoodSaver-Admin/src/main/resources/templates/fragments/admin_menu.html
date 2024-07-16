@@ -30,6 +30,12 @@
 				<span class="menu-header-text">Tính năng</span>
 			</li>
 			<!-- Apps -->
+			<li th:class="${role_id == 8} ? 'menu-item active' : 'menu-item'">
+				<a href="/admin/units/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-unite"></i>
+					<div data-i18n="Unit">Đơn vị</div>
+				</a>
+			</li>
 
 			<li th:class="${role_id == 3} ? 'menu-item active' : 'menu-item'">
 				<a href="/admin/users/page/1?sortField=id&sortDir=desc&role_id=3" class="menu-link">

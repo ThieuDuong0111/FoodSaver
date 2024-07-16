@@ -3,6 +3,13 @@ INSERT INTO Role(Name) VALUES
 ('food_creator'),
 ('user');
 
+INSERT INTO Unit(Name) VALUES
+('kg'),
+('gram'),
+('ly'),
+('phần'),
+('cái');
+
 INSERT INTO User(Role_Id, Name, Password, Email, Phone, Address) VALUES
 (1, 'thieuduong', '$2a$12$zR8r1NRxUyM14NHuoqm/.O8Ib5jNdK8wL6zr2UIsseJEeCsb7bRs6', 'duongthieu1995@gmail.com', '0707046410', '107 Bau Cat 2, P.12, Q.TB'),
 (2, 'laidao', '$2a$12$zR8r1NRxUyM14NHuoqm/.O8Ib5jNdK8wL6zr2UIsseJEeCsb7bRs6', 'laidao1995@gmail.com', '0707046411', '234 Hoang Hoa Tham, P.14, Q.TB'),

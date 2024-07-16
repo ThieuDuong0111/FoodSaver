@@ -28,6 +28,7 @@ class ProductFromModelToEntityMapperImpl extends ProductFromModelToEntityMapper 
       quantity: model.quantity,
       imageUrl: model.imageUrl,
       rating: model.rating,
+      commentsCount: model.commentsCount,
     );
     return productentity;
   }

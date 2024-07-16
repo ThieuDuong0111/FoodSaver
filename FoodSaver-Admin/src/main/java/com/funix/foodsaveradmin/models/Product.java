@@ -28,6 +28,10 @@ public class Product {
 	@JoinColumn(name = "creator_id")
 	private MyUser creator;
 
+	@ManyToOne
+	@JoinColumn(name = "unit")
+	private Unit unit;
+
 	@OneToMany(mappedBy = "cartProduct")
 	private List<CartItem> cartItems;
 
@@ -158,5 +162,13 @@ public class Product {
 
 	public void setFeedBacks(List<FeedBack> feedBacks) {
 		this.feedBacks = feedBacks;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 }

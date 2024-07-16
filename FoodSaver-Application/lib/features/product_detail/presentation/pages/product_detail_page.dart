@@ -232,6 +232,34 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 24.w,
+                                  color: Colors.yellow,
+                                ),
+                                SizedBox(width: 5.w),
+                                Text(
+                                  state.productEntity.rating.toString(),
+                                  style: AppTextStyle.primaryText().copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(width: 5.w),
+                                Text(
+                                  state.productEntity.commentsCount == 0
+                                      ? '(Chưa có bình luận)'
+                                      : '(${state.productEntity.commentsCount}+ bình luận)',
+                                  style: AppTextStyle.primaryText().copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(height: 15.h),
                             Text(
                               'Thông tin người bán: ',
