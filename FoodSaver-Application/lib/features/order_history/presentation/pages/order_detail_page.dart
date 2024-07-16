@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
+import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
@@ -180,7 +181,7 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                     children: [
                       if (state.orderEntity.isPaid)
                         Text(
-                          'Complete',
+                          'Hoàn thành',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.smallText().copyWith(
@@ -190,7 +191,7 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                         )
                       else
                         Text(
-                          'Waiting',
+                          'Đang chờ',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.smallText().copyWith(
@@ -210,6 +211,171 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                     ],
                   ),
                   SizedBox(height: 10.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 15.h),
+                  Text(
+                    'Thông tin người bán: ',
+                    style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Hình ảnh:',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        child: ValidateUtils.isNotNullOrEmpty(state.orderEntity.creator.imageUrl)
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(20.w),
+                                child: ImageParse(
+                                  width: 40.w,
+                                  height: 40.w,
+                                  url: state.orderEntity.creator.imageUrl,
+                                  type: 'user',
+                                ),
+                              )
+                            : Icon(
+                                Icons.account_circle,
+                                size: 40.w,
+                                color: AppColors.greyColor,
+                              ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Tên:',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${state.orderEntity.creator.name}',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Số điện thoại:',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${state.orderEntity.creator.phone}',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Email:',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${state.orderEntity.creator.email}',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
+                  Container(
+                    width: double.infinity,
+                    height: 1.h,
+                    color: const Color(0xFFCACACA),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Địa chỉ:',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Text(
+                          '${state.orderEntity.creator.address}',
+                          style: AppTextStyle.smallText().copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.h),
                   Container(
                     width: double.infinity,
                     height: 1.h,

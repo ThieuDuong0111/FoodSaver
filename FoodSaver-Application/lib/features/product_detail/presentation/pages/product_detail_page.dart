@@ -212,6 +212,173 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               state.productEntity.description!,
                               style: AppTextStyle.primaryText(),
                             ),
+                            SizedBox(height: 15.h),
+                            Text(
+                              'Thông tin người bán: ',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 10.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Hình ảnh:',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: ValidateUtils.isNotNullOrEmpty(state.productEntity.creator.imageUrl)
+                                      ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(20.w),
+                                          child: ImageParse(
+                                            width: 40.w,
+                                            height: 40.w,
+                                            url: state.productEntity.creator.imageUrl,
+                                            type: 'user',
+                                          ),
+                                        )
+                                      : Icon(
+                                          Icons.account_circle,
+                                          size: 40.w,
+                                          color: AppColors.greyColor,
+                                        ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Tên:',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '${state.productEntity.creator.name}',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Số điện thoại:',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '${state.productEntity.creator.phone}',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Email:',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Text(
+                                    '${state.productEntity.creator.email}',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 5.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    'Địa chỉ:',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Text(
+                                    '${state.productEntity.creator.address}',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
                             SizedBox(
                               height: AppSizes.buttonHeight + 24.h,
                             ),

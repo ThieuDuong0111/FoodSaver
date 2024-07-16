@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:funix_thieudvfx_foodsaver/core/data/data_model.dart';
+import 'package:funix_thieudvfx_foodsaver/features/my_profile/data/models/user_model.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/data/models/order_detail_model.dart';
 
 part 'order_model.freezed.dart';
@@ -15,6 +16,7 @@ class OrderModel with _$OrderModel implements DataModel {
     required String? creatorName,
     required int totalAmount,
     required bool isPaid,
+    required UserModel creator,
   }) = _OrderModel;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => _$OrderModelFromJson(json);

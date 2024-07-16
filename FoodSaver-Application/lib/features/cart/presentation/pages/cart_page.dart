@@ -339,11 +339,13 @@ class _CartWrapperState extends State<CartWrapper> {
                                   ),
                                   Text(
                                     'Giỏ hàng trống.',
-                                    style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
+                                    style: AppTextStyle.mediumTitle()
+                                        .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
                                     'Bạn hãy thêm sản phẩm nhé.',
-                                    style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
+                                    style: AppTextStyle.mediumTitle()
+                                        .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),

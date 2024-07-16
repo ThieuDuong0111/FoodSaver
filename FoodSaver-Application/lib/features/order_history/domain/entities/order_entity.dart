@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:funix_thieudvfx_foodsaver/core/data/domain_entity.dart';
+import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/domain/entities/order_detail_entity.dart';
 
 part 'order_entity.freezed.dart';
@@ -14,6 +15,7 @@ class OrderEntity with _$OrderEntity implements DomainEntity {
     required String? creatorName,
     required int totalAmount,
     required bool isPaid,
+    required UserEntity creator,
   }) = _OrderEntity;
   OrderEntity._();
 }

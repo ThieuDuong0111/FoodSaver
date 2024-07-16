@@ -15,8 +15,10 @@ public class OrderDTO {
 	private double totalAmount;
 
 	private Boolean isPaid;
-	
+
 	private String creatorName;
+
+	private UserDTO creator;
 
 	public int getId() {
 		return id;
@@ -72,5 +74,13 @@ public class OrderDTO {
 
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
+	}
+
+	public UserDTO getCreator() {
+		return creator;
+	}
+
+	public void setCreator(UserDTO creator) {
+		this.creator = creator;
 	}
 }

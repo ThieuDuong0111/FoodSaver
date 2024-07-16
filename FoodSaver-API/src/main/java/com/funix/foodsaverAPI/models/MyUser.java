@@ -38,6 +38,9 @@ public class MyUser {
 	@OneToMany(mappedBy = "userOrders")
 	private List<Order> orders;
 
+	@OneToMany(mappedBy = "userFeedBacks")
+	private List<FeedBack> feedBacks;
+
 	@Column(length = 100, unique = true)
 	private String name;
 
@@ -164,5 +167,13 @@ public class MyUser {
 
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
+	}
+
+	public List<FeedBack> getFeedBacks() {
+		return feedBacks;
+	}
+
+	public void setFeedBacks(List<FeedBack> feedBacks) {
+		this.feedBacks = feedBacks;
 	}
 }

@@ -39,12 +39,16 @@ public class OrderServiceImpl implements IOrderService {
 	public OrderDTO getOrderById(int id) {
 		Optional<Order> optionalOrder = orderRepository.findById(id);
 		Order order = null;
+		MyUser creator = null;
 		if (optionalOrder.isPresent()) {
 			order = optionalOrder.get();
+			creator = userServiceImpl.getUserById(order.getCreatorId());
 		} else {
 			throw new RuntimeException("Order not found for id : " + id);
 		}
-		return convertToDto(order);
+		OrderDTO orderDTO = convertToDto(order);
+		orderDTO.setCreator(userServiceImpl.convertToDto(creator));
+		return orderDTO;
 	}
 
 	@Override
@@ -53,5 +57,4 @@ public class OrderServiceImpl implements IOrderService {
 		return orderRepository.findOrderByUserId(user.getId()).stream()
 			.map(this::convertToDto).toList();
 	}
-
 }

@@ -31,6 +31,9 @@ public class Product {
 	@OneToMany(mappedBy = "cartProduct")
 	private List<CartItem> cartItems;
 
+	@OneToMany(mappedBy = "productFeedBacks")
+	private List<FeedBack> feedBacks;
+
 	@Column(length = 100)
 	private String name;
 
@@ -147,5 +150,13 @@ public class Product {
 
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
+	}
+
+	public List<FeedBack> getFeedBacks() {
+		return feedBacks;
+	}
+
+	public void setFeedBacks(List<FeedBack> feedBacks) {
+		this.feedBacks = feedBacks;
 	}
 }
