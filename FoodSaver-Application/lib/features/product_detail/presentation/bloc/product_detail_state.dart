@@ -36,3 +36,31 @@ class ProductByCategoryPageFinishedState extends ProductDetailState {
   });
   final List<ProductEntity> listProductEntity;
 }
+
+class ProductAddFeedBackLoadingState extends ProductDetailState {}
+
+class ProductAddFeedBackErrorState extends ProductDetailState {
+  const ProductAddFeedBackErrorState({required this.failure});
+  final Failure failure;
+}
+
+class ProductAddFeedBackFinishedState extends ProductDetailState {
+  const ProductAddFeedBackFinishedState({
+    required this.addFeedBackRequest,
+  });
+  final AddFeedBackRequest addFeedBackRequest;
+}
+
+class ProductGetFeedBacksLoadingState extends ProductDetailState {}
+
+class ProductGetFeedBacksErrorState extends ProductDetailState {
+  const ProductGetFeedBacksErrorState({required this.failure});
+  final Failure failure;
+}
+
+class ProductGetFeedBacksFinishedState extends ProductDetailState {
+  const ProductGetFeedBacksFinishedState({
+    required this.listFeedBacksEntity,
+  });
+  final List<FeedBackEntity> listFeedBacksEntity;
+}

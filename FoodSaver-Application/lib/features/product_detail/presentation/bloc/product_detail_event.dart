@@ -16,3 +16,13 @@ class ProductByCategoryPageEvent extends ProductDetailEvent {
   const ProductByCategoryPageEvent(this.categoryId);
   final int categoryId;
 }
+
+class ProductAddFeedBackEvent extends ProductDetailEvent {
+  const ProductAddFeedBackEvent(this.addFeedBackRequest);
+  final AddFeedBackRequest addFeedBackRequest;
+}
+
+class ProductGetFeedBacksEvent extends ProductDetailEvent {
+  const ProductGetFeedBacksEvent(this.productId);
+  final int productId;
+}

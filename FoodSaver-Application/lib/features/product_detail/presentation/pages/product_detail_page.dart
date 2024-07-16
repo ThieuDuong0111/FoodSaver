@@ -212,6 +212,26 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               state.productEntity.description!,
                               style: AppTextStyle.primaryText(),
                             ),
+                            SizedBox(height: 5.h),
+                            Container(
+                              width: double.infinity,
+                              height: 1.h,
+                              color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(height: 10.h),
+                            InkWell(
+                              onTap: () {
+                                context.router.push(ProductGetFeedBacksPageRoute(productId: state.productEntity.id));
+                              },
+                              child: Text(
+                                'Xem phản hồi về sản phẩm',
+                                style: AppTextStyle.primaryText().copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 15.h),
                             Text(
                               'Thông tin người bán: ',
