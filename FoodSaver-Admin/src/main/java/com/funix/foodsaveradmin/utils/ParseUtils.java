@@ -13,7 +13,7 @@ public class ParseUtils {
 		SimpleDateFormat inputFormat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss.S");
 		SimpleDateFormat outputFormat = new SimpleDateFormat(
-			"dd/MM/yyyy-HH:mm:ss");
+			"dd/MM/yyyy-HH:mm");
 
 		Date date = inputFormat.parse(dateTime.toString());
 
@@ -34,4 +34,16 @@ public class ParseUtils {
 			.toString()
 			+ LocalDateTime.now().toString();
 	}
+
+	public static String checkExpiration(Date expiredDate) {
+		Date currentDate = new Date();
+		if (expiredDate.before(currentDate)
+			|| expiredDate.equals(currentDate)) {
+			return "Hết hạn";
+		} else {
+			return "Còn hạn";
+		}
+	}
+	
+	
 }

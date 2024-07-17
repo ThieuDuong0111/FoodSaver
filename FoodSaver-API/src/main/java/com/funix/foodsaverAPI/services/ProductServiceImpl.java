@@ -13,6 +13,7 @@ import com.funix.foodsaverAPI.dto.ProductDTO;
 import com.funix.foodsaverAPI.models.Product;
 import com.funix.foodsaverAPI.repositories.IFeedBackRepository;
 import com.funix.foodsaverAPI.repositories.IProductRepository;
+import com.funix.foodsaverAPI.utils.ParseUtils;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -39,7 +40,10 @@ public class ProductServiceImpl implements IProductService {
 //			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
 //				+ product.getImageUrl());
 //		}
-		productDTO.setCommentsCount(feedBackRepository.countCommentsByProductId(product.getId()));
+		productDTO
+			.setIsExpired(ParseUtils.checkIsExpired(product.getExpiredDate()));
+		productDTO.setCommentsCount(
+			feedBackRepository.countCommentsByProductId(product.getId()));
 		productDTO.setRating(calculateRating(product.getId()));
 		productDTO
 			.setCategory(categoryService.convertToDto(product.getCategory()));
@@ -119,9 +123,11 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Double calculateRating(int productId) {
-		return feedBackRepository
+		double number = feedBackRepository
 			.findAverageRatingByProductId(productId) == null ? 5.0
 				: feedBackRepository.findAverageRatingByProductId(productId);
+		number = Math.floor(number * 10) / 10;
+		return number;
 	}
 
 }

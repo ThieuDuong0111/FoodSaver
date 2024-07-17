@@ -21,6 +21,8 @@ class ProductEntity with _$ProductEntity implements DomainEntity {
     required double? rating,
     required int commentsCount,
     required String? imageUrl,
+    required DateTime? expiredDate,
+    required bool? isExpired,
   }) = _ProductEntity;
   ProductEntity._();
 }

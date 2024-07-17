@@ -22,6 +22,8 @@ class ProductModel with _$ProductModel implements DataModel {
     required double? rating,
     required int commentsCount,
     required String? imageUrl,
+    required DateTime? expiredDate,
+    required bool? isExpired,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);

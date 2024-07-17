@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/constants/api_endpoints.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
@@ -27,12 +27,13 @@ class ImageParse extends StatelessWidget {
     }
     // debugPrint('$url');
     return SizedBox(
+      // color: Colors.amber,
       width: width,
       height: height,
       child: Image.network(
         '${ApiEndpoints.baseUrl}/image/$type/$url',
         width: width,
-        fit: BoxFit.fitWidth,
+        height: height,
       ),
     );
   }

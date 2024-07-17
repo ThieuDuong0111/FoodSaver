@@ -1,5 +1,6 @@
 package com.funix.foodsaverAPI.models;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -59,6 +60,8 @@ public class Product {
 	private double discountPrice;
 
 	private int quantity;
+
+	private Date expiredDate;
 
 	public int getId() {
 		return id;
@@ -170,5 +173,13 @@ public class Product {
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+
+	public Date getExpiredDate() {
+		return expiredDate;
+	}
+
+	public void setExpiredDate(Date expiredDate) {
+		this.expiredDate = expiredDate;
 	}
 }

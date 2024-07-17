@@ -1,5 +1,7 @@
 package com.funix.foodsaverAPI.dto;
 
+import java.util.Date;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -12,19 +14,19 @@ public class ProductDTO {
 
 	private UnitDTO unit;
 
-	@NotEmpty(message = "Name is required.")
+	@NotEmpty(message = "Name không được bỏ trống.")
 	private String name;
 
-	@NotEmpty(message = "Description is required.")
+	@NotEmpty(message = "Description không được bỏ trống.")
 	private String description;
 
-	@Min(value = 1, message = "Price must not be greater than 0")
+	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double price;
 
-	@Min(value = 1, message = "Discount price must not be greater than 0")
+	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double discountPrice;
 
-	@Min(value = 1, message = "Quantity must not be greater than 0")
+	@Min(value = 1, message = "Số lượng phải lớn hơn 0")
 	private int quantity;
 
 	private Double rating;
@@ -32,6 +34,10 @@ public class ProductDTO {
 	private int commentsCount;
 
 	private String imageUrl;
+
+	private Date expiredDate;
+
+	private Boolean isExpired;
 
 	public int getId() {
 		return id;
@@ -127,5 +133,21 @@ public class ProductDTO {
 
 	public void setUnit(UnitDTO unit) {
 		this.unit = unit;
+	}
+
+	public Date getExpiredDate() {
+		return expiredDate;
+	}
+
+	public void setExpiredDate(Date expiredDate) {
+		this.expiredDate = expiredDate;
+	}
+
+	public Boolean getIsExpired() {
+		return isExpired;
+	}
+
+	public void setIsExpired(Boolean isExpired) {
+		this.isExpired = isExpired;
 	}
 }

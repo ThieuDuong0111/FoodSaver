@@ -17,7 +17,7 @@ class ParseUtils {
     DateTime dateTime = originalFormat.parse(originalDateTime);
     dateTime = dateTime.add(const Duration(hours: 7));
 
-    final DateFormat newFormat = DateFormat('dd/MM/yyyy-HH:mm:ss');
+    final DateFormat newFormat = DateFormat('dd/MM/yyyy-HH:mm');
 
     return newFormat.format(dateTime);
   }

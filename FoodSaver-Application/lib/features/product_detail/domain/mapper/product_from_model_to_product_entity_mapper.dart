@@ -34,6 +34,8 @@ class ProductFromModelToEntityMapperImpl extends ProductFromModelToEntityMapper 
       rating: model.rating,
       commentsCount: model.commentsCount,
       unit: UnitEntity(id: model.unit.id, name: model.unit.name),
+      expiredDate: model.expiredDate,
+      isExpired: model.isExpired,
     );
     return productentity;
   }

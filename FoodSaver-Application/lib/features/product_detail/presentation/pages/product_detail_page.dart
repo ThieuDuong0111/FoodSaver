@@ -68,6 +68,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
   late CartBloc _cartBloc;
   int count = 1;
   late FToast fToast;
+  bool isExpired = true;
   @override
   void initState() {
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
@@ -112,20 +113,18 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                     bloc: _productDetailBloc,
                     builder: (context, state) {
                       if (state is ProductDetailPageFinishedState) {
+                        isExpired = state.productEntity.isExpired!;
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 12.h),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.r),
-                                child: ImageParse(
-                                  width: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal,
-                                  height: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal,
-                                  url: state.productEntity.imageUrl,
-                                  type: 'product',
-                                ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(25.r),
+                              child: ImageParse(
+                                width: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2,
+                                height: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2,
+                                url: state.productEntity.imageUrl,
+                                type: 'product',
                               ),
                             ),
                             SizedBox(height: 8.h),
@@ -164,20 +163,27 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text.rich(
                                         TextSpan(
-                                          text: 'bởi ',
-                                          style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                          children: [
+                                            TextSpan(
+                                              text: 'bởi ',
+                                              style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                            ),
+                                            TextSpan(
+                                              text: state.productEntity.creator.name,
+                                              style: AppTextStyle.primaryText().copyWith(
+                                                color: const Color(0xFF03A33A),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        TextSpan(
-                                          text: state.productEntity.creator.name,
-                                          style: AppTextStyle.primaryText()
-                                              .copyWith(color: const Color(0xFF03A33A), fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
@@ -221,6 +227,32 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                   ),
                                 ),
                               ],
+                            ),
+                            SizedBox(height: 5.h),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Ngày hết hạn: ',
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                                  ),
+                                  TextSpan(
+                                    text: '${ParseUtils.formatDateTime(state.productEntity.expiredDate.toString())} ',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      color: state.productEntity.isExpired! ? Colors.red : const Color(0xFF03A33A),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  if (state.productEntity.isExpired!)
+                                    TextSpan(
+                                      text: '(Đã hết hạn)',
+                                      style: AppTextStyle.primaryText().copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 5.h),
                             Text(
@@ -478,11 +510,15 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                       onPressed: () {
                         final UserEntity userEntity = ref.watch(UserInfoNotifier.provider).userInfo;
                         if (ValidateUtils.isLogined(userEntity)) {
-                          _cartBloc.add(
-                            CartUpdateItemEvent(
-                              cartUpdateRequest: CartUpdateRequest(id: widget.productId, quantity: count),
-                            ),
-                          );
+                          if (isExpired) {
+                            fToast.showToast(child: const ToastWidget(message: 'Sản phẩm này đã hết hạn.'));
+                          } else {
+                            _cartBloc.add(
+                              CartUpdateItemEvent(
+                                cartUpdateRequest: CartUpdateRequest(id: widget.productId, quantity: count),
+                              ),
+                            );
+                          }
                         } else {
                           AppDialog.showAppDialog(
                             context: context,

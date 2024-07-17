@@ -36,8 +36,16 @@ public class ParseUtils {
 	}
 
 	public static String generateOrderCode() throws ParseException {
-
 		return UUID.randomUUID().toString();
+	}
 
+	public static Boolean checkIsExpired(Date expiredDate) {
+		Date currentDate = new Date();
+		if (expiredDate.before(currentDate)
+			|| expiredDate.equals(currentDate)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

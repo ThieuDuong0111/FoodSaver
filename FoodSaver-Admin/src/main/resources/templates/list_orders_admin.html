@@ -84,7 +84,19 @@
 										<tr th:each="order : ${listorders}">
 											<td th:text="${order.id}"></td>
 											<td th:text="${order.orderCode}"></td>
-											<td th:text="${order.userOrders.name}"></td>
+											<td
+												th:if="${order.userOrders.avatar == null || order.userOrders.avatar == ''}">
+												<img th:src="@{'/images/none_image.jpg'} " height="40px" , /><span
+													style="padding-left: 12px;"
+													th:text="${order.userOrders.name}"></span>
+											</td>
+											<td
+												th:unless="${order.userOrders.avatar == null || order.userOrders.avatar == ''}">
+												<img th:src="@{'data:image/jpeg;base64,' + ${order.userOrders.avatar}}"
+													height="40px" , style="border-radius: 50%;" /><span
+													style="padding-left: 12px;"
+													th:text="${order.userOrders.name}"></span>
+											</td>
 											<td th:text="${order.userOrders.phone}"></td>
 											<td
 												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(order.totalAmount)}">

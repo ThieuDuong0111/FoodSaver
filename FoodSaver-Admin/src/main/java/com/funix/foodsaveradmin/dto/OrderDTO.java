@@ -20,6 +20,7 @@ public class OrderDTO {
 
 	private Boolean isPaid;
 
+
 	public int getId() {
 		return id;
 	}
@@ -83,5 +84,4 @@ public class OrderDTO {
 	public void setIsPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
 	}
-
 }

@@ -74,9 +74,6 @@
 											<th>Sản phẩm</th>
 											<th>Nội dung</th>
 											<th>Đánh giá</th>
-											<!--	<th>Thời gian đặt hàng</th>
-											<th>Trạng thái</th>
-											<th>Thao tác</th>-->
 										</tr>
 									</thead>
 									<tbody>
@@ -86,26 +83,6 @@
 											<td th:text="${feedback.productFeedBacks.name}"></td>
 											<td th:text="${feedback.comment}"></td>
 											<td th:text="${feedback.rating}"></td>
-											<!--<td
-												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(order.totalAmount)}">
-											</td>
-											<td
-												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseDateTime(order.publishedDate)}">
-											</td>
-											<td>
-												<span th:if="${order.isPaid == true}" class="badge
-													bg-label-success me-1">Hoàn thành</span>
-												<span th:unless="${order.isPaid == true}" class="badge
-													bg-label-danger me-1">Đang chờ</span>
-											</td>
-											<td>
-												<div class="demo-inline-spacing">
-													<a class="btn btn-primary"
-														th:href="@{/food_creator/feedbacks/detail/{id}(id=${order.id})}"
-														style="text-decoration: none; color: white;">
-														Xem chi tiết</a>
-												</div>
-											</td>-->
 										</tr>
 									</tbody>
 								</table>

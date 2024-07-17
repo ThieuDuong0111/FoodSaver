@@ -86,14 +86,6 @@
 											<p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger"
 												th:errors="*{name}" />
 										</div>
-										<div class="mb-3">
-											<label for="selectUnit" class="form-label">Đơn vị</label>
-											<select th:field="${productDTO.unit.id}" th:attr="name='unit.id'"
-												id="selectUnit" class="form-select">
-												<option th:each="unit : ${productDTO.units}" th:value="${unit.id}"
-													th:text="${unit.name}"></option>
-											</select>
-										</div>
 
 										<div class="mb-3">
 											<label for="selectCategory" class="form-label">Danh mục</label>
@@ -112,13 +104,22 @@
 												th:errors="*{price}" />
 										</div>
 
-										<div class="mb-3">
+										<!--<div class="mb-3">
 											<label class="form-label" for="basic-default-discountPrice">Giá khuyến mãi
 											</label>
 											<input type="number" class="form-control" id="basic-default-discountPrice"
 												placeholder="Giá khuyến mãi" th:field="*{discountPrice}" min="0" />
 											<p th:if="${#fields.hasErrors('discountPrice')}" th:errorclass="text-danger"
 												th:errors="*{discountPrice}" />
+										</div>-->
+										<input type="hidden" th:value="1.0" th:attr="name='discountPrice'" />
+										<div class="mb-3">
+											<label for="selectUnit" class="form-label">Đơn vị</label>
+											<select th:field="${productDTO.unit.id}" th:attr="name='unit.id'"
+												id="selectUnit" class="form-select">
+												<option th:each="unit : ${productDTO.units}" th:value="${unit.id}"
+													th:text="${unit.name}"></option>
+											</select>
 										</div>
 
 										<div class="mb-3">
@@ -127,6 +128,16 @@
 												placeholder="Số lượng" th:field="*{quantity}" min="0" />
 											<p th:if="${#fields.hasErrors('quantity')}" th:errorclass="text-danger"
 												th:errors="*{quantity}" />
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label" for="basic-default-expiredDate">Thời gian hết
+												hạn</label>
+											<input type="datetime-local" class="form-control"
+												id="basic-default-expiredDate" placeholder="Số lượng"
+												th:field="*{expiredDate}" min="0" />
+											<p th:if="${#fields.hasErrors('expiredDate')}" th:errorclass="text-danger"
+												th:errors="*{expiredDate}" />
 										</div>
 
 										<div class="mb-3">

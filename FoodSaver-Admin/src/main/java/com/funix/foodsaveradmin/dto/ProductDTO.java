@@ -1,7 +1,9 @@
 package com.funix.foodsaveradmin.dto;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.funix.foodsaveradmin.models.Category;
@@ -41,11 +43,14 @@ public class ProductDTO {
 	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double price;
 
-	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
+//	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double discountPrice;
 
 	@Min(value = 1, message = "Số lượng phải lớn hơn 0")
 	private int quantity;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
+	private Date expiredDate;
 
 	public int getId() {
 		return id;
@@ -165,5 +170,13 @@ public class ProductDTO {
 
 	public void setUnit(UnitDTO unit) {
 		this.unit = unit;
+	}
+
+	public Date getExpiredDate() {
+		return expiredDate;
+	}
+
+	public void setExpiredDate(Date expiredDate) {
+		this.expiredDate = expiredDate;
 	}
 }
