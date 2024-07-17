@@ -69,15 +69,6 @@
 								<div class="card mb-4">
 									<div class="card-header">
 										<h5 class="mb-0">Chi tiết đơn hàng</h5>
-										<br>
-										<div class="d-flex flex-column"> <span th:text="'Mã: ' + ${orderDTO.orderCode}">
-											</span></div>
-										<br>
-										<span>Trạng thái: </span>
-										<span th:if="${orderDTO.isPaid == true}" class="badge
-													bg-label-success me-1" th:text="Complete"></span>
-										<span th:unless="${orderDTO.isPaid == true}" class="badge
-													bg-label-danger me-1" th:text="Waiting"></span>
 									</div>
 									<div class="table-responsive text-nowrap">
 										<table class="table">
@@ -92,7 +83,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="orderDetail : ${orderDTO.orderDetails}">
+												<tr th:each="orderDetail : ${order.orderDetails}">
 													<td th:text="${orderDetail.id}"></td>
 													<td th:if="${orderDetail.image == null || orderDetail.image == ''}">
 														<img th:src="@{'/images/none_image_product.jpg'} " height="40px"
@@ -122,7 +113,7 @@
 															style="padding-top: 10px; padding-bottom: 10px;">
 															<h6 class="w-px-50 mb-0">Tổng:</h6>
 															<h6 class="mb-0"
-																th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(orderDTO.totalAmount)}">
+																th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(order.totalAmount)}">
 															</h6>
 														</div>
 													</td>
@@ -142,28 +133,28 @@
 									<div class="card-body">
 										<div class="d-flex justify-content-start align-items-center mb-4">
 											<div class="avatar me-2">
-												<img th:if="${orderDTO.userOrders.avatar == null || orderDTO.userOrders.avatar == ''}"
+												<img th:if="${order.userOrders.avatar == null || order.userOrders.avatar == ''}"
 													th:src="@{'/images/none_image.png'} " alt="Avatar"
 													class="rounded-circle">
-												<img th:unless="${orderDTO.userOrders.avatar == null || orderDTO.userOrders.avatar == ''}"
-													th:src="@{'data:image/jpeg;base64,' + ${orderDTO.userOrders.avatar}}"
+												<img th:unless="${order.userOrders.avatar == null || order.userOrders.avatar == ''}"
+													th:src="@{'data:image/jpeg;base64,' + ${order.userOrders.avatar}}"
 													alt="Avatar" class="rounded-circle">
 											</div>
 											<div class="d-flex flex-column">
 
-												<h6 class="mb-0" th:text="${orderDTO.userOrders.name}"></h6>
+												<h6 class="mb-0" th:text="${order.userOrders.name}"></h6>
 
 												<small class="text-muted"
-													th:text="'ID: #' + ${orderDTO.userOrders.id}"></small>
+													th:text="'ID: #' + ${order.userOrders.id}"></small>
 											</div>
 										</div>
 										<div class="d-flex flex-column">
 											<h6 class="mb-0">Thông tin liên lạc</h6>
 										</div>
 										<br>
-										<p class=" mb-1" th:text="'Email: ' + ${orderDTO.userOrders.email}"></p>
-										<p class=" mb-1" th:text="'Số điện thoại: ' + ${orderDTO.userOrders.phone}"></p>
-										<p class=" mb-1" th:text="'Địa chỉ: ' + ${orderDTO.userOrders.address}"></p>
+										<p class=" mb-1" th:text="'Email: ' + ${order.userOrders.email}"></p>
+										<p class=" mb-1" th:text="'Số điện thoại: ' + ${order.userOrders.phone}"></p>
+										<p class=" mb-1" th:text="'Địa chỉ: ' + ${order.userOrders.address}"></p>
 									</div>
 								</div>
 

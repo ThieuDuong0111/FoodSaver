@@ -85,10 +85,11 @@
 										<tr th:each="category : ${listCategories}">
 											<td th:text="${category.id}"></td>
 											<td th:if="${category.image == null || category.image == ''}"><img
-													th:src="@{'/images/none_image_product.jpg'} " height="40px" , /></td>
+													th:src="@{'/images/none_image_product.jpg'} " height="40px" , />
+											</td>
 											<td th:unless="${category.image == null || category.image == ''}"><img
 													th:src="@{'data:image/jpeg;base64,' + ${category.image}}"
-													height="40px" />
+													height="40px" , style="border-radius: 50%;" />
 											</td>
 											<td th:text="${category.name}"></td>
 											<td>

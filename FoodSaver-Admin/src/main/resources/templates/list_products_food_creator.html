@@ -96,8 +96,8 @@
 											</td>
 											<td th:unless="${product.image == null || product.image == ''}"><img
 													th:src="@{'data:image/jpeg;base64,' + ${product.image}}"
-													height="40px" /><span style="padding-left: 12px;"
-													th:text="${product.name}"></span>
+													height="40px" , style="border-radius: 50%;" /><span
+													style="padding-left: 12px;" th:text="${product.name}"></span>
 											</td>
 											<td
 												th:if="${product.category.image == null || product.category.image == ''}">
@@ -108,7 +108,8 @@
 											<td
 												th:unless="${product.category.image == null || product.category.image == ''}">
 												<img th:src="@{'data:image/jpeg;base64,' + ${product.category.image}}"
-													height="40px" /><span style="padding-left: 12px;"
+													height="40px" , style="border-radius: 50%;" /><span
+													style="padding-left: 12px;"
 													th:text="${product.category.name}"></span>
 											</td>
 

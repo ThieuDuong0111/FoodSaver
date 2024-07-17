@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.funix.foodsaveradmin.dto.OrderDTO;
 import com.funix.foodsaveradmin.dto.UserDTO;
 import com.funix.foodsaveradmin.models.Order;
 import com.funix.foodsaveradmin.services.OrderServiceImpl;
@@ -33,10 +32,12 @@ public class OrderControllerAdmin {
 	@GetMapping("/detail/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
-		OrderDTO orderDTO = orderServiceImpl.getOrderById(id);
-		UserDTO userDTO = userServiceImpl.getUserById(orderDTO.getUserOrders().getId());
+		Order order = orderServiceImpl
+			.convertToEntity(orderServiceImpl.getOrderById(id));
+		UserDTO userDTO = userServiceImpl
+			.getUserById(order.getUserOrders().getId());
 		model.addAttribute("userDTO", userDTO);
-		model.addAttribute("orderDTO", orderDTO);
+		model.addAttribute("order", order);
 		return "order_detail_admin";
 	}
 

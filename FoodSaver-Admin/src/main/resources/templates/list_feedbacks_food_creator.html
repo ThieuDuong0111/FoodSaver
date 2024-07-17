@@ -79,15 +79,39 @@
 									<tbody>
 										<tr th:each="feedback : ${listFeedBacks}">
 											<td th:text="${feedback.id}"></td>
-											<td th:text="${feedback.userFeedBacks.name}"></td>
-											<td th:text="${feedback.productFeedBacks.name}"></td>
+											<td
+												th:if="${feedback.userFeedBacks.avatar == null || feedback.userFeedBacks.avatar == ''}">
+												<img th:src="@{'/images/none_image.png'} " height="40px" , /><span
+													style="padding-left: 12px;"
+													th:text="${feedback.userFeedBacks.name}"></span>
+											</td>
+											<td
+												th:unless="${feedback.userFeedBacks.avatar == null || feedback.userFeedBacks.avatar == ''}">
+												<img th:src="@{'data:image/jpeg;base64,' + ${feedback.userFeedBacks.avatar}}"
+													height="40px" , style="border-radius: 50%;" /><span
+													style="padding-left: 12px;"
+													th:text="${feedback.userFeedBacks.name}"></span>
+											</td>
+											<td
+												th:if="${feedback.productFeedBacks.image == null || feedback.productFeedBacks.image == ''}">
+												<img th:src="@{'/images/none_image_product.jpg'} " height="40px"
+													, /><span style="padding-left: 12px;"
+													th:text="${feedback.productFeedBacks.name}"></span>
+											</td>
+											<td
+												th:unless="${feedback.productFeedBacks.image == null || feedback.productFeedBacks.image == ''}">
+												<img th:src="@{'data:image/jpeg;base64,' + ${feedback.productFeedBacks.image}}"
+													height="40px" , style="border-radius: 50%;" /><span
+													style="padding-left: 12px;"
+													th:text="${feedback.productFeedBacks.name}"></span>
+											</td>
 											<td th:text="${feedback.comment}"></td>
 											<td th:text="${feedback.rating}"></td>
 										</tr>
 									</tbody>
 								</table>
 
-								<!--<div th:if="${totalPages > 1}" style="padding: 15px;">
+								<div th:if="${totalPages > 1}" style="padding: 15px;">
 									<div class="table-pagination">
 										<div>
 											Tổng số hàng: [[${totalItems}]]
@@ -121,7 +145,7 @@
 											</ul>
 										</nav>
 									</div>
-								</div>-->
+								</div>
 							</div>
 						</div>
 					</div>
