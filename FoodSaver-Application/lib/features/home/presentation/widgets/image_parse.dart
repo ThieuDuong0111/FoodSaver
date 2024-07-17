@@ -25,9 +25,9 @@ class ImageParse extends StatelessWidget {
         child: Image.asset(Assets.images.noneImageProduct.path, width: width, height: height - 16.h),
       );
     }
-    // debugPrint('$url');
+
     return SizedBox(
-      // color: Colors.amber,
+      // color: Colors.amberAccent,
       width: width,
       height: height,
       child: Image.network(

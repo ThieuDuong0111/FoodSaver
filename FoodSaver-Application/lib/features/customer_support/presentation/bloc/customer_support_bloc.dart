@@ -6,8 +6,6 @@ part 'customer_support_state.dart';
 
 class CustomerSupportBloc extends Bloc<CustomerSupportEvent, CustomerSupportState> {
   CustomerSupportBloc() : super(CustomerSupportInitial()) {
-    on<CustomerSupportEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<CustomerSupportEvent>((event, emit) {});
   }
 }

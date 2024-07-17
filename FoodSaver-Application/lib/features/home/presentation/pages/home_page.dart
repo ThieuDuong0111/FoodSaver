@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/us
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_dialog.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -43,6 +45,9 @@ class HomeWrapper extends StatefulWidget {
 class _HomeWrapperState extends State<HomeWrapper> {
   late HomeBloc _homeBloc;
   late FToast fToast;
+  final CarouselController _carouselController = CarouselController();
+
+  int _currentBannerIndex = 0;
   @override
   void initState() {
     _homeBloc = BlocProvider.of<HomeBloc>(context);
@@ -214,6 +219,52 @@ class _HomeWrapperState extends State<HomeWrapper> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    CarouselSlider(
+                      carouselController: _carouselController,
+                      options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 7),
+                        viewportFraction: 0.95,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentBannerIndex = index;
+                          });
+                        },
+                      ),
+                      items: state.homeEntity.banners
+                          .map(
+                            (banner) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              child: ImageParse(
+                                width: 1920,
+                                height: 1080,
+                                url: banner!.imageUrl.toString(),
+                                type: 'banner',
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    SizedBox(height: 5.h),
+                    Center(
+                      child: AnimatedSmoothIndicator(
+                        onDotClicked: (index) {
+                          _carouselController.jumpToPage(index);
+                        },
+                        activeIndex: _currentBannerIndex,
+                        count: state.homeEntity.banners.length,
+                        effect: const ExpandingDotsEffect(
+                          spacing: 4,
+                          radius: 5,
+                          dotWidth: 5,
+                          dotHeight: 5,
+                          dotColor: AppColors.greyColor,
+                          activeDotColor: AppColors.primaryBrand,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                       child: Text(
