@@ -17,6 +17,10 @@ class OrderModel with _$OrderModel implements DataModel {
     required int totalAmount,
     required bool isPaid,
     required UserModel creator,
+    required int statusType,
+    required String statusTypeParse,
+    required int paymentType,
+    required String paymentTypeParse,
   }) = _OrderModel;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => _$OrderModelFromJson(json);

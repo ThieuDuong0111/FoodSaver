@@ -10,6 +10,7 @@ import com.funix.foodsaverAPI.dto.OrderDTO;
 import com.funix.foodsaverAPI.models.MyUser;
 import com.funix.foodsaverAPI.models.Order;
 import com.funix.foodsaverAPI.repositories.IOrderRepository;
+import com.funix.foodsaverAPI.utils.ParseUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -27,7 +28,10 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public OrderDTO convertToDto(Order Order) {
-		return modelMapper.map(Order, OrderDTO.class);
+		OrderDTO orderDTO = modelMapper.map(Order, OrderDTO.class);
+		orderDTO.setStatusTypeParse(ParseUtils.convertStatusType(Order.getStatusType()));
+		orderDTO.setPaymentTypeParse(ParseUtils.convertPaymentType(Order.getPaymentType()));
+		return orderDTO;
 	}
 
 	@Override

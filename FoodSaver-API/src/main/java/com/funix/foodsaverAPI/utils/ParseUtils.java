@@ -48,4 +48,36 @@ public class ParseUtils {
 			return false;
 		}
 	}
+
+	public static String convertStatusType(int statusType) {
+		switch (statusType) {
+		case 0: {
+			return "Đang chờ";
+		}
+		case 1: {
+			return "Xác nhận";
+		}
+		case 2: {
+			return "Đã hủy";
+		}
+		case 3: {
+			return "Hoàn thành";
+		}
+		default:
+			return "";
+		}
+	}
+
+	public static String convertPaymentType(int statusType) {
+		switch (statusType) {
+		case 0: {
+			return "Tiền mặt";
+		}
+		case 1: {
+			return "Chuyển khoản";
+		}
+		default:
+			return "";
+		}
+	}
 }

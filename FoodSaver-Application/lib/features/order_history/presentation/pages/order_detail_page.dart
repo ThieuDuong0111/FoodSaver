@@ -179,26 +179,17 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (state.orderEntity.isPaid)
-                        Text(
-                          'Hoàn thành',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.smallText().copyWith(
-                            color: Colors.green,
-                            fontWeight: FontWeight.w500,
+                      Text(
+                        ParseUtils.convertStatusTypeText(state.orderEntity.statusType),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.smallText().copyWith(
+                          color: ParseUtils.convertStatusTypeColor(
+                            state.orderEntity.statusType,
                           ),
-                        )
-                      else
-                        Text(
-                          'Đang chờ',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.smallText().copyWith(
-                            color: Colors.red,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          fontWeight: FontWeight.w500,
                         ),
+                      ),
                       SizedBox(width: 5.w),
                       Text(
                         ParseUtils.formatCurrency(

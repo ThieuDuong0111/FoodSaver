@@ -16,6 +16,10 @@ class OrderEntity with _$OrderEntity implements DomainEntity {
     required int totalAmount,
     required bool isPaid,
     required UserEntity creator,
+    required int statusType,
+    required String statusTypeParse,
+    required int paymentType,
+    required String paymentTypeParse,
   }) = _OrderEntity;
   OrderEntity._();
 }

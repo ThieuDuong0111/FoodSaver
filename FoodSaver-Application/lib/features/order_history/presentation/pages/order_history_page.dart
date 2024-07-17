@@ -153,26 +153,17 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                               ),
                                             ),
                                             SizedBox(width: 5.w),
-                                            if (state.listOrderEntity[index].isPaid)
-                                              Text(
-                                                'Hoàn thành',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: AppTextStyle.smallText().copyWith(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.w500,
+                                            Text(
+                                              ParseUtils.convertStatusTypeText(state.listOrderEntity[index].statusType),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTextStyle.smallText().copyWith(
+                                                color: ParseUtils.convertStatusTypeColor(
+                                                  state.listOrderEntity[index].statusType,
                                                 ),
-                                              )
-                                            else
-                                              Text(
-                                                'Đang chờ',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: AppTextStyle.smallText().copyWith(
-                                                  color: Colors.red,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                                fontWeight: FontWeight.w500,
                                               ),
+                                            ),
                                           ],
                                         ),
                                         SizedBox(height: 8.h),

@@ -60,8 +60,20 @@ public class ParseUtils {
 			return "Hoàn thành";
 		}
 		default:
-			throw new IllegalArgumentException(
-				"Unexpected value: " + statusType);
+			return "";
+		}
+	}
+
+	public static String convertPaymentType(int statusType) {
+		switch (statusType) {
+		case 0: {
+			return "Tiền mặt";
+		}
+		case 1: {
+			return "Chuyển khoản";
+		}
+		default:
+			return "";
 		}
 	}
 }

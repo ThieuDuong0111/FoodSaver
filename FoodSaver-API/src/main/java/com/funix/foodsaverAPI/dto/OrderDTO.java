@@ -20,6 +20,14 @@ public class OrderDTO {
 
 	private UserDTO creator;
 
+	private int statusType;
+
+	private String statusTypeParse;
+
+	private int paymentType;
+
+	private String paymentTypeParse;
+
 	public int getId() {
 		return id;
 	}
@@ -82,5 +90,37 @@ public class OrderDTO {
 
 	public void setCreator(UserDTO creator) {
 		this.creator = creator;
+	}
+
+	public int getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(int statusType) {
+		this.statusType = statusType;
+	}
+
+	public int getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(int paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public String getStatusTypeParse() {
+		return statusTypeParse;
+	}
+
+	public void setStatusTypeParse(String statusTypeParse) {
+		this.statusTypeParse = statusTypeParse;
+	}
+
+	public String getPaymentTypeParse() {
+		return paymentTypeParse;
+	}
+
+	public void setPaymentTypeParse(String paymentTypeParse) {
+		this.paymentTypeParse = paymentTypeParse;
 	}
 }
