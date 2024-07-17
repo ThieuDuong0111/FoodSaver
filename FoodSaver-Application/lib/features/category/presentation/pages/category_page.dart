@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:funix_thieudvfx_foodsaver/core/constants/api_endpoints.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/bloc/category_bloc.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
@@ -70,7 +70,7 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                       crossAxisCount: 3,
                       crossAxisSpacing: AppSizes.categoryCrossAxisSpacing,
                       mainAxisSpacing: AppSizes.categoryMainAxisSpacing,
-                      childAspectRatio: 153 / 201,
+                      childAspectRatio: 170 / 201,
                     ),
                     itemCount: state.listCategories.length,
                     itemBuilder: (context, index) {
@@ -84,43 +84,52 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                             ),
                           );
                         },
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                15.r,
-                              ),
-                              child: Image.network(
-                                '${ApiEndpoints.baseUrl}/image/category/${state.listCategories[index].imageUrl}',
-                                width: AppSizes.homeProductImageSize(context),
-                                // height: AppSizes.homeProductImageSize(context),
-                                fit: BoxFit.fitWidth,
-                              ),
-                              // ImageParse(
-                              //   width: AppSizes.homeProductImageSize(context),
-                              //   height: AppSizes.homeProductImageSize(context),
-                              //   url: state.listCategories[index].imageUrl,
-                              //   type: 'category',
-                              // ),
-                            ),
-                            Flexible(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        state.listCategories[index].name.toString(),
-                                        style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
-                                        maxLines: 1,
-                                      ),
-                                    ),
-                                  ],
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 3.h),
+                          child: Container(
+                            width: 115.h,
+                            padding: EdgeInsets.all(10.w),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.r),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(9, 30, 66, 0.25),
+                                  blurRadius: 8,
+                                  spreadRadius: -2,
+                                  offset: Offset(
+                                    0,
+                                    4,
+                                  ),
                                 ),
-                              ),
+                                BoxShadow(
+                                  color: Color.fromRGBO(9, 30, 66, 0.08),
+                                  spreadRadius: 1,
+                                ),
+                              ],
                             ),
-                          ],
+                            child: Column(
+                              children: [
+                                Text(
+                                  state.listCategories[index].name.toString(),
+                                  style: AppTextStyle.primaryText()
+                                      .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(height: 5.h),
+                                Align(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    child: ImageParse(
+                                      width: 60.h,
+                                      height: 60.h,
+                                      url: state.listCategories[index].imageUrl,
+                                      type: 'category',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     },

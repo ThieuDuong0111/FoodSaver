@@ -70,7 +70,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Edit Profile', context),
+        title: AppComponent.customAppBar(Colors.white, 'Cập nhật tài khoản', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
@@ -102,7 +102,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                     _addressController.text = state.userEntity.address!;
                     _imageFile = null;
                   });
-                  fToast.showToast(child: const ToastWidget(message: 'Update User Information successfully'));
+                  fToast.showToast(child: const ToastWidget(message: 'Cập nhật thông tin thành công.'));
                 }
                 if (state is EditInfoErrorState) {
                   setState(() {
@@ -149,7 +149,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                                           SizedBox(width: 10.w),
                                           Expanded(
                                             child: Text(
-                                              'Camera',
+                                              'Chụp ảnh',
                                               style: AppTextStyle.primaryText(),
                                             ),
                                           ),
@@ -175,7 +175,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                                           SizedBox(width: 10.w),
                                           Expanded(
                                             child: Text(
-                                              'Gallery',
+                                              'Bộ sưu tập',
                                               style: AppTextStyle.primaryText(),
                                             ),
                                           ),
@@ -238,14 +238,14 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                           controller: _emailController,
                           decoration: AppCommonStyle.textFieldStyle(
                             hasError: _hasEmailError,
-                            hintText: 'Enter your email',
+                            hintText: 'Nhập emial',
                           ),
                         ),
                         SizedBox(
                           height: AppSizes.spaceBetweenFormAndForm,
                         ),
                         Text(
-                          'Phone Number',
+                          'Số điện thoại',
                           style: AppTextStyle.labelText(),
                         ),
                         SizedBox(
@@ -256,14 +256,14 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                           controller: _phoneController,
                           decoration: AppCommonStyle.textFieldStyle(
                             hasError: _hasPhoneError,
-                            hintText: 'Enter your phone number',
+                            hintText: 'Nhập số điện thoại',
                           ),
                         ),
                         SizedBox(
                           height: AppSizes.spaceBetweenFormAndForm,
                         ),
                         Text(
-                          'Address',
+                          'Địa chỉ',
                           style: AppTextStyle.labelText(),
                         ),
                         SizedBox(
@@ -274,7 +274,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                           controller: _addressController,
                           decoration: AppCommonStyle.textFieldStyle(
                             hasError: _hasAddressError,
-                            hintText: 'Enter your address',
+                            hintText: 'Nhập địa chỉ',
                           ),
                         ),
                       ],
@@ -311,7 +311,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                             ),
                           ),
                         ),
-                        child: Text('SAVE CHANGES', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
+                        child: Text('LƯU', style: AppTextStyle.primaryText().copyWith(color: Colors.white)),
                       ),
                     ),
                     SizedBox(height: AppSizes.paddingBottom),

@@ -69,6 +69,12 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
   int count = 1;
   late FToast fToast;
   bool isExpired = true;
+  bool isOutOfStock = true;
+  double starHeight = 20.h;
+  double currentScreenWidth = 0;
+  double ratingWidth = 143.w;
+  double remainWidth = 0;
+  int commentsCount = 1;
   @override
   void initState() {
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
@@ -81,6 +87,8 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    currentScreenWidth = MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2;
+    remainWidth = currentScreenWidth - ratingWidth;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -113,21 +121,25 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                     bloc: _productDetailBloc,
                     builder: (context, state) {
                       if (state is ProductDetailPageFinishedState) {
+                        commentsCount = state.productEntity.ratingsCount > 0 ? state.productEntity.ratingsCount : 1;
                         isExpired = state.productEntity.isExpired!;
+                        isOutOfStock = state.productEntity.quantity < 1;
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 12.h),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(25.r),
-                              child: ImageParse(
-                                width: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2,
-                                height: MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2,
-                                url: state.productEntity.imageUrl,
-                                type: 'product',
+                            Align(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25.r),
+                                child: ImageParse(
+                                  width: (MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2) * 0.85,
+                                  height: (MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2) * 0.85,
+                                  url: state.productEntity.imageUrl,
+                                  type: 'product',
+                                ),
                               ),
                             ),
-                            SizedBox(height: 8.h),
+                            SizedBox(height: 10.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -233,6 +245,24 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               TextSpan(
                                 children: [
                                   TextSpan(
+                                    text: 'Tình trạng: ',
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: isOutOfStock ? 'Hết hàng' : 'Còn hàng',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      color: isOutOfStock ? Colors.red : const Color(0xFF03A33A),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
                                     text: 'Ngày hết hạn: ',
                                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                   ),
@@ -270,43 +300,261 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               onTap: () {
                                 context.router.push(ProductGetFeedBacksPageRoute(productId: state.productEntity.id));
                               },
-                              child: Text(
-                                'Xem phản hồi và đánh giá về sản phẩm',
-                                style: AppTextStyle.primaryText().copyWith(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Xem bình luận về sản phẩm',
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  SizedBox(width: 2.w),
+                                  Flexible(
+                                    child: Text(
+                                      state.productEntity.commentsCount == 0
+                                          ? '(Chưa có bình luận)'
+                                          : '(${state.productEntity.commentsCount}+ bình luận)',
+                                      style: AppTextStyle.primaryText().copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 5.h),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  size: 24.w,
-                                  color: Colors.yellow,
-                                ),
-                                SizedBox(width: 5.w),
-                                Text(
-                                  state.productEntity.rating.toString(),
-                                  style: AppTextStyle.primaryText().copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+
+                            SizedBox(height: 10.h),
+                            //Add product rating detail
+
+                            SizedBox(
+                              width: currentScreenWidth,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    state.productEntity.rating.toString(),
+                                    style: AppTextStyle.superBig().copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 5.w),
-                                Text(
-                                  state.productEntity.commentsCount == 0
-                                      ? '(Chưa có bình luận)'
-                                      : '(${state.productEntity.commentsCount}+ bình luận)',
-                                  style: AppTextStyle.primaryText().copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                  SizedBox(width: 5.w),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      //5-stars
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: starHeight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 5,
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  size: 16.w,
+                                                  color: Colors.amber,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade400,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth,
+                                                height: 5.h,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.green.shade600,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth * (state.productEntity.rating5Count / commentsCount),
+                                                height: 5.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      //4-stars
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: starHeight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 4,
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  size: 16.w,
+                                                  color: Colors.amber,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade400,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth,
+                                                height: 5.h,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.green.shade300,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth * (state.productEntity.rating4Count / commentsCount),
+                                                height: 5.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      //3-stars
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: starHeight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 3,
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  size: 16.w,
+                                                  color: Colors.amber,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade400,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth,
+                                                height: 5.h,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.yellow,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth * (state.productEntity.rating3Count / commentsCount),
+                                                height: 5.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      //2-stars
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: starHeight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 2,
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  size: 16.w,
+                                                  color: Colors.amber,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade400,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth,
+                                                height: 5.h,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.orange,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth * (state.productEntity.rating2Count / commentsCount),
+                                                height: 5.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      //1-stars
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            height: starHeight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Icon(
+                                                  Icons.star,
+                                                  size: 16.w,
+                                                  color: Colors.amber,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade400,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth,
+                                                height: 5.h,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius: BorderRadiusDirectional.circular(5.r),
+                                                ),
+                                                width: remainWidth * (state.productEntity.rating1Count / commentsCount),
+                                                height: 5.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+
                             SizedBox(height: 15.h),
                             Text(
                               'Thông tin người bán: ',
@@ -512,6 +760,8 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                         if (ValidateUtils.isLogined(userEntity)) {
                           if (isExpired) {
                             fToast.showToast(child: const ToastWidget(message: 'Sản phẩm này đã hết hạn.'));
+                          } else if (isOutOfStock) {
+                            fToast.showToast(child: const ToastWidget(message: 'Sản phẩm này đã hết hàng.'));
                           } else {
                             _cartBloc.add(
                               CartUpdateItemEvent(

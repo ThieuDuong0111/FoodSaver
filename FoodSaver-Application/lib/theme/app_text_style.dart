@@ -3,6 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class AppTextStyle {
+  static TextStyle superBig() {
+    return TextStyle(
+      color: AppColors.primaryBrand,
+      fontSize: 32.sp,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   static TextStyle bigTitle() {
     return TextStyle(
       color: AppColors.primaryBrand,

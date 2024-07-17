@@ -54,7 +54,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
   late TextEditingController _feedBackController;
   late ProductDetailBloc _productDetailBloc;
   late FToast fToast;
-  double rating = 0;
+  double rating = 1;
 
   @override
   void initState() {
@@ -287,15 +287,25 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                       style: AppTextStyle.smallText()
                                                           .copyWith(fontWeight: FontWeight.w500),
                                                     ),
-                                                    IgnorePointer(
-                                                      child: RatingBar(
-                                                        size: 15.w,
-                                                        filledIcon: Icons.star,
-                                                        emptyIcon: Icons.star_border,
-                                                        onRatingChanged: (value) {},
-                                                        initialRating:
-                                                            state.listFeedBacksEntity[index].rating.toDouble(),
-                                                      ),
+                                                    Row(
+                                                      children: [
+                                                        IgnorePointer(
+                                                          child: RatingBar(
+                                                            size: 15.w,
+                                                            filledIcon: Icons.star,
+                                                            emptyIcon: Icons.star_border,
+                                                            onRatingChanged: (value) {},
+                                                            initialRating:
+                                                                state.listFeedBacksEntity[index].rating.toDouble(),
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 2.w),
+                                                        Text(
+                                                          '(${state.listFeedBacksEntity[index].rating.toInt()}/5)',
+                                                          style: AppTextStyle.smallText()
+                                                              .copyWith(fontWeight: FontWeight.w400),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),

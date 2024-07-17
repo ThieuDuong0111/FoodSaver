@@ -23,6 +23,12 @@ class ProductEntity with _$ProductEntity implements DomainEntity {
     required String? imageUrl,
     required DateTime? expiredDate,
     required bool? isExpired,
+    required int ratingsCount,
+    required int rating5Count,
+    required int rating4Count,
+    required int rating3Count,
+    required int rating2Count,
+    required int rating1Count,
   }) = _ProductEntity;
   ProductEntity._();
 }

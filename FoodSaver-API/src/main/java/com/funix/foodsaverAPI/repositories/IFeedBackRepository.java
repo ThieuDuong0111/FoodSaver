@@ -19,4 +19,10 @@ public interface IFeedBackRepository extends JpaRepository<FeedBack, Integer> {
 	
     @Query(value = "SELECT COUNT(f.comment) FROM feed_back f WHERE f.product_id = :product_id AND f.comment IS NOT NULL", nativeQuery = true)
     int countCommentsByProductId(@Param("product_id") int productId);
+    
+    @Query(value = "SELECT COUNT(f.rating) FROM feed_back f WHERE f.product_id = :product_id AND f.comment IS NOT NULL", nativeQuery = true)
+    int countRatingsByProductId(@Param("product_id") int productId);
+    
+    @Query(value = "SELECT COUNT(f.rating) FROM feed_back f WHERE f.product_id = :product_id AND f.rating = :rating AND f.comment IS NOT NULL", nativeQuery = true)
+    int countRatingPointByProductId(@Param("product_id") int productId, @Param("rating") int ratingPoint);
 }

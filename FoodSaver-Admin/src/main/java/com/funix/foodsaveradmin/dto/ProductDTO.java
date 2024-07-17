@@ -46,7 +46,7 @@ public class ProductDTO {
 //	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double discountPrice;
 
-	@Min(value = 1, message = "Số lượng phải lớn hơn 0")
+	@Min(value = 0, message = "Số lượng phải lớn hơn 0")
 	private int quantity;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")

@@ -38,6 +38,9 @@ public class FeedBackServiceImpl implements IFeedBackService {
 
 	@Override
 	public void addFeedBack(AddFeedBackDTO addFeedBackDTO) {
+		if (addFeedBackDTO.getRating() > 5) {
+			addFeedBackDTO.setRating(5);
+		}
 		FeedBack feed = new FeedBack(
 			userRepository.findById(addFeedBackDTO.getUserId()).get(),
 			productRepository.findById(addFeedBackDTO.getProductId()).get(),

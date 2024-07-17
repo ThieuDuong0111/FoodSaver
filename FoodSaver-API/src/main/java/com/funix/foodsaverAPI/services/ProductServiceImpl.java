@@ -40,8 +40,28 @@ public class ProductServiceImpl implements IProductService {
 //			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
 //				+ product.getImageUrl());
 //		}
+		productDTO.setIsOutOfStock(product.getQuantity() < 1);
 		productDTO
 			.setIsExpired(ParseUtils.checkIsExpired(product.getExpiredDate()));
+		// Rating counts
+		productDTO.setRatingsCount(
+			feedBackRepository.countRatingsByProductId(product.getId()));
+		// Rating 1
+		productDTO.setRating1Count(
+			feedBackRepository.countRatingPointByProductId(product.getId(), 1));
+		// Rating 2
+		productDTO.setRating2Count(
+			feedBackRepository.countRatingPointByProductId(product.getId(), 2));
+		// Rating 3
+		productDTO.setRating3Count(
+			feedBackRepository.countRatingPointByProductId(product.getId(), 3));
+		// Rating 4
+		productDTO.setRating4Count(
+			feedBackRepository.countRatingPointByProductId(product.getId(), 4));
+		// Rating 5
+		productDTO.setRating5Count(
+			feedBackRepository.countRatingPointByProductId(product.getId(), 5));
+		// -------
 		productDTO.setCommentsCount(
 			feedBackRepository.countCommentsByProductId(product.getId()));
 		productDTO.setRating(calculateRating(product.getId()));
