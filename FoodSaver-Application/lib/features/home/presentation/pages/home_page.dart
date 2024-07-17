@@ -45,6 +45,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
   late HomeBloc _homeBloc;
   late FToast fToast;
   final CarouselController _carouselController = CarouselController();
+  double bannerWidth = 0;
+  double bannerHeight = 0;
 
   int _currentBannerIndex = 0;
   @override
@@ -58,6 +60,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    bannerWidth = MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2;
+    bannerHeight = bannerWidth * 1080 / 1920;
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
@@ -218,13 +222,14 @@ class _HomeWrapperState extends State<HomeWrapper> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 10.h),
                     CarouselSlider(
                       carouselController: _carouselController,
                       options: CarouselOptions(
                         enlargeCenterPage: true,
                         autoPlay: true,
                         autoPlayInterval: const Duration(seconds: 7),
-                        viewportFraction: 0.95,
+                        viewportFraction: 1,
                         onPageChanged: (index, reason) {
                           setState(() {
                             _currentBannerIndex = index;
@@ -233,19 +238,22 @@ class _HomeWrapperState extends State<HomeWrapper> {
                       ),
                       items: state.homeEntity.banners
                           .map(
-                            (banner) => Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: ImageParse(
-                                width: 1920,
-                                height: 1080,
-                                url: banner!.imageUrl.toString(),
-                                type: 'banner',
+                            (banner) => Align(
+                              alignment: Alignment.topCenter,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.r),
+                                child: ImageParse(
+                                  width: bannerWidth,
+                                  height: bannerHeight,
+                                  url: banner!.imageUrl.toString(),
+                                  type: 'banner',
+                                ),
                               ),
                             ),
                           )
                           .toList(),
                     ),
-                    SizedBox(height: 5.h),
+                    // SizedBox(height: 10.h),
                     Center(
                       child: AnimatedSmoothIndicator(
                         onDotClicked: (index) {
