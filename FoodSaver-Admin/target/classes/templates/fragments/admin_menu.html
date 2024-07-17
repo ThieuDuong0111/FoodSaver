@@ -30,6 +30,12 @@
 				<span class="menu-header-text">Tính năng</span>
 			</li>
 			<!-- Apps -->
+			<li th:class="${role_id == 9} ? 'menu-item active' : 'menu-item'">
+				<a href="/admin/banners/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-images"></i>
+					<div data-i18n="Banner">Banner</div>
+				</a>
+			</li>
 			<li th:class="${role_id == 8} ? 'menu-item active' : 'menu-item'">
 				<a href="/admin/units/page/1?sortField=id&sortDir=desc" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-unite"></i>
@@ -65,6 +71,12 @@
 				<a href="/admin/orders/page/1?sortField=id&sortDir=desc" class="menu-link">
 					<i class="menu-icon tf-icons bx bx-cube"></i>
 					<div data-i18n="Order">Đơn hàng</div>
+				</a>
+			</li>
+			<li th:class="${role_id == 7} ? 'menu-item active' : 'menu-item'">
+				<a href="/admin/feedbacks/page/1?sortField=id&sortDir=desc" class="menu-link">
+					<i class="menu-icon tf-icons bx bx-note"></i>
+					<div data-i18n="Order">Phản hồi</div>
 				</a>
 			</li>
 		</ul>

@@ -1,7 +1,5 @@
 package com.funix.foodsaveradmin.services;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,9 +25,14 @@ public class FeedBackServiceImpl implements IFeedBackService {
 	}
 
 	@Override
-	public List<FeedBack> findPaginated(int pageNum, int pageSize,
-		String sortField, String sortDirection, int creatorId) {
-		return this.feedBackRepository.findAllByCreatorId(creatorId);
+	public Page<FeedBack> findPaginated(int pageNum, int pageSize,
+		String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+			? Sort.by(sortField).ascending()
+			: Sort.by(sortField).descending();
+
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+		return this.feedBackRepository.findAll(pageable);
 	}
 
 	@Override

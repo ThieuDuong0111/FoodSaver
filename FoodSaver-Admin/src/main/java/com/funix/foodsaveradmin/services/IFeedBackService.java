@@ -1,6 +1,5 @@
 package com.funix.foodsaveradmin.services;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 
@@ -11,9 +10,9 @@ public interface IFeedBackService {
 
 	FeedBackDTO convertToDto(FeedBack feedBack);
 
-	List<FeedBack> findPaginated(int pageNum, int pageSize,
+	Page<FeedBack> findPaginated(int pageNum, int pageSize,
 		String sortField,
-		String sortDirection, int creatorId);
+		String sortDirection);
 
 	Page<FeedBack> findAllByCreatorIdPagination(int pageNum, int pageSize,
 		String sortField,
