@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.HomeDTO;
+import com.funix.foodsaverAPI.services.BannerServiceImpl;
 import com.funix.foodsaverAPI.services.CategoryServiceImpl;
 import com.funix.foodsaverAPI.services.ProductServiceImpl;
 
@@ -14,6 +15,9 @@ import com.funix.foodsaverAPI.services.ProductServiceImpl;
 @RequestMapping("/api/home")
 public class HomeController {
 
+	@Autowired
+	private BannerServiceImpl bannerServiceImpl;
+	
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
 
@@ -23,6 +27,7 @@ public class HomeController {
 	@GetMapping
 	public ResponseEntity<?> getHome() {
 		HomeDTO homeDTO = new HomeDTO();
+		homeDTO.setBanners(bannerServiceImpl.getAllBanners());
 		homeDTO.setCategories(categoryServiceImpl.getAllCategories());
 		homeDTO.setProducts(productServiceImpl.getTop20Products());
 		return ResponseEntity.ok(homeDTO);

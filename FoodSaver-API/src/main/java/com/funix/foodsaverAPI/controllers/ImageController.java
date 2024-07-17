@@ -8,10 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.funix.foodsaverAPI.models.Banner;
 import com.funix.foodsaverAPI.models.Category;
 import com.funix.foodsaverAPI.models.MyUser;
 import com.funix.foodsaverAPI.models.OrderDetail;
 import com.funix.foodsaverAPI.models.Product;
+import com.funix.foodsaverAPI.services.BannerServiceImpl;
 import com.funix.foodsaverAPI.services.CategoryServiceImpl;
 import com.funix.foodsaverAPI.services.OrderDetailServiceImpl;
 import com.funix.foodsaverAPI.services.ProductServiceImpl;
@@ -29,7 +31,10 @@ public class ImageController {
 
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
-	
+
+	@Autowired
+	private BannerServiceImpl bannerServiceImpl;
+
 	@Autowired
 	private OrderDetailServiceImpl orderDetailServiceImpl;
 
@@ -64,7 +69,18 @@ public class ImageController {
 			.contentType(MediaType.valueOf(product.getImageType()))
 			.body(image);
 	}
-	
+
+	@GetMapping("/banner/{url}")
+	public ResponseEntity<?> getBannerById(
+		@PathVariable("url") String url) {
+		Banner banner = bannerServiceImpl.getBannerByImageUrl(url);
+		byte[] image = Base64.getDecoder()
+			.decode(banner.getImage());
+		return ResponseEntity.status(HttpStatus.OK)
+			.contentType(MediaType.valueOf(banner.getImageType()))
+			.body(image);
+	}
+
 	@GetMapping("/order/{id}/{url}")
 	public ResponseEntity<?> getImageOrderById(
 		@PathVariable("url") String url,
