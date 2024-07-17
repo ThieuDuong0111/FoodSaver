@@ -1,5 +1,6 @@
 package com.funix.foodsaveradmin.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -12,13 +13,19 @@ import org.springframework.stereotype.Service;
 
 import com.funix.foodsaveradmin.dto.OrderDTO;
 import com.funix.foodsaveradmin.models.Order;
+import com.funix.foodsaveradmin.models.OrderDetail;
+import com.funix.foodsaveradmin.models.Product;
 import com.funix.foodsaveradmin.repositories.IOrderRepository;
+import com.funix.foodsaveradmin.repositories.IProductRepository;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
 	private IOrderRepository orderRepository;
+
+	@Autowired
+	private IProductRepository productRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -68,6 +75,19 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
+	public void confirmOrderById(int id) {
+		Optional<Order> optionalOrder = orderRepository.findById(id);
+		Order order = null;
+		if (optionalOrder.isPresent()) {
+			order = optionalOrder.get();
+		} else {
+			throw new RuntimeException("Order not found for id : " + id);
+		}
+		order.setStatusType(1);
+		orderRepository.save(order);
+	}
+
+	@Override
 	public void approveOrderById(int id) {
 		Optional<Order> optionalOrder = orderRepository.findById(id);
 		Order order = null;
@@ -77,7 +97,28 @@ public class OrderServiceImpl implements IOrderService {
 			throw new RuntimeException("Order not found for id : " + id);
 		}
 		order.setIsPaid(true);
+		order.setStatusType(3);
 		orderRepository.save(order);
 	}
 
+	@Override
+	public void cancelOrderById(int id) {
+		Optional<Order> optionalOrder = orderRepository.findById(id);
+		Order order = null;
+		if (optionalOrder.isPresent()) {
+			order = optionalOrder.get();
+			// Update Product Quantity
+			List<OrderDetail> orderDetails = order.getOrderDetails();
+			for (int i = 0; i < orderDetails.size(); i++) {
+				Product product = productRepository
+					.findById(orderDetails.get(i).getProductId()).get();
+				product.setQuantity(product.getQuantity()
+					+ orderDetails.get(i).getUnitQuantity());
+			}
+		} else {
+			throw new RuntimeException("Order not found for id : " + id);
+		}
+		order.setStatusType(2);
+		orderRepository.save(order);
+	}
 }

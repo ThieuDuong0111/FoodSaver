@@ -234,7 +234,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                 children: [
                                   TextSpan(
                                     text: 'Ngày hết hạn: ',
-                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   TextSpan(
                                     text: '${ParseUtils.formatDateTime(state.productEntity.expiredDate.toString())} ',

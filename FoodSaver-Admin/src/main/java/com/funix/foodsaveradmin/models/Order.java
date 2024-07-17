@@ -41,6 +41,12 @@ public class Order {
 
 	private Boolean isPaid;
 
+	@Column(nullable = false)
+	private int statusType;
+
+	@Column(nullable = false)
+	private int paymentType;
+
 	public int getId() {
 		return id;
 	}
@@ -111,5 +117,21 @@ public class Order {
 
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
+	}
+
+	public int getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(int statusType) {
+		this.statusType = statusType;
+	}
+
+	public int getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(int paymentType) {
+		this.paymentType = paymentType;
 	}
 }

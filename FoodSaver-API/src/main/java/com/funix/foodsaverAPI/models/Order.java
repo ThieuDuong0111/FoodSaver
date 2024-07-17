@@ -29,7 +29,7 @@ public class Order {
 	private MyUser userOrders;
 
 	private int creatorId;
-	
+
 	private String creatorName;
 
 	private Date publishedDate;
@@ -41,12 +41,19 @@ public class Order {
 
 	private Boolean isPaid;
 
+	@Column(nullable = false)
+	private int statusType;
+
+	@Column(nullable = false)
+	private int paymentType;
+
 	public Order() {
 		super();
 	}
 
 	public Order(MyUser userOrders, Date publishedDate, String orderCode,
-		Boolean isPaid, int creatorId, String creatorName) {
+		Boolean isPaid, int creatorId, String creatorName, int statusType,
+		int paymentType) {
 		super();
 		this.userOrders = userOrders;
 		this.publishedDate = publishedDate;
@@ -54,6 +61,8 @@ public class Order {
 		this.isPaid = isPaid;
 		this.creatorId = creatorId;
 		this.creatorName = creatorName;
+		this.statusType = statusType;
+		this.paymentType = paymentType;
 	}
 
 	public int getId() {
@@ -126,5 +135,21 @@ public class Order {
 
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
+	}
+
+	public int getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(int statusType) {
+		this.statusType = statusType;
+	}
+
+	public int getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(int paymentType) {
+		this.paymentType = paymentType;
 	}
 }

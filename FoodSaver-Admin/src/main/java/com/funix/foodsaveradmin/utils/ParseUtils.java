@@ -44,6 +44,24 @@ public class ParseUtils {
 			return "Còn hạn";
 		}
 	}
-	
-	
+
+	public static String convertStatusType(int statusType) {
+		switch (statusType) {
+		case 0: {
+			return "Đang chờ";
+		}
+		case 1: {
+			return "Xác nhận";
+		}
+		case 2: {
+			return "Đã hủy";
+		}
+		case 3: {
+			return "Hoàn thành";
+		}
+		default:
+			throw new IllegalArgumentException(
+				"Unexpected value: " + statusType);
+		}
+	}
 }

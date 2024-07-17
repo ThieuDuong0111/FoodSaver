@@ -20,6 +20,9 @@ public class OrderDTO {
 
 	private Boolean isPaid;
 
+	private int statusType;
+
+	private int paymentType;
 
 	public int getId() {
 		return id;
@@ -83,5 +86,21 @@ public class OrderDTO {
 
 	public void setIsPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+
+	public int getStatusType() {
+		return statusType;
+	}
+
+	public void setStatusType(int statusType) {
+		this.statusType = statusType;
+	}
+
+	public int getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(int paymentType) {
+		this.paymentType = paymentType;
 	}
 }

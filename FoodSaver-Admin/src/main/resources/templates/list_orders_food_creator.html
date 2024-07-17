@@ -103,11 +103,8 @@
 											<td
 												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseDateTime(order.publishedDate)}">
 											</td>
-											<td>
-												<span th:if="${order.isPaid == true}" class="badge
-													bg-label-success me-1">Hoàn thành</span>
-												<span th:unless="${order.isPaid == true}" class="badge
-													bg-label-danger me-1">Đang chờ</span>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).convertStatusType(order.statusType)}">
 											</td>
 											<td>
 												<div class="demo-inline-spacing">

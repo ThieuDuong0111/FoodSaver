@@ -13,7 +13,11 @@ public interface IOrderService {
 
 	OrderDTO getOrderById(int id);
 
+	void confirmOrderById(int id);
+
 	void approveOrderById(int id);
+	
+	void cancelOrderById(int id);
 
 	Page<Order> findPaginated(int pageNum, int pageSize,
 		String sortField,

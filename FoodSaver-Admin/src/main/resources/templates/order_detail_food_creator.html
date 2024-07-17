@@ -69,23 +69,30 @@
 									<div class="card-header">
 										<div class="table-header">
 											<h5 class="mb-0">Chi tiết đơn hàng</h5>
-											<div th:if="${orderDTO.isPaid == true}">
-												<br>
+											<div th:if="${order.statusType == 0}">
+												<button class="btn btn-primary" data-bs-toggle="modal"
+													data-bs-target="#modalConfirm" th:attr="data-id=${order.id}">Xác
+													nhận</button>
+												<button class="btn btn-danger" data-bs-toggle="modal"
+													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Hủy
+													đơn</button>
 											</div>
-											<div th:unless="${orderDTO.isPaid == true}">
-												<button class="btn btn-success" data-bs-toggle="modal"
-													data-bs-target="#modalApprove"
-													th:attr="data-id=${orderDTO.id}">Duyệt đơn</button>
+											<div th:if="${order.statusType == 1}">
+												<button class="btn btn-primary" data-bs-toggle="modal"
+													data-bs-target="#modalApprove" th:attr="data-id=${order.id}">Duyệt
+													đơn</button>
+												<button class="btn btn-danger" data-bs-toggle="modal"
+													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Hủy
+													đơn</button>
 											</div>
 										</div>
-										<div class="d-flex flex-column"> <span th:text="'Mã: ' + ${orderDTO.orderCode}">
+										<div class="d-flex flex-column"> <span th:text="'Mã: ' + ${order.orderCode}">
 											</span></div>
 										<br>
 										<span>Status: </span>
-										<span th:if="${orderDTO.isPaid == true}" class="badge
-													bg-label-success me-1" th:text="Complete"></span>
-										<span th:unless="${orderDTO.isPaid == true}" class="badge
-													bg-label-danger me-1" th:text="Waiting"></span>
+										<span
+											th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).convertStatusType(order.statusType)}">
+										</span>
 									</div>
 									<div class="table-responsive text-nowrap">
 										<table class="table">
@@ -100,7 +107,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="orderDetail : ${orderDTO.orderDetails}">
+												<tr th:each="orderDetail : ${order.orderDetails}">
 													<td th:text="${orderDetail.id}"></td>
 													<td th:if="${orderDetail.image == null || orderDetail.image == ''}">
 														<img th:src="@{'/images/none_image_product.jpg'} " height="40px"
@@ -130,7 +137,7 @@
 															style="padding-top: 10px; padding-bottom: 10px;">
 															<h6 class="w-px-50 mb-0">Tổng:</h6>
 															<h6 class="mb-0"
-																th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(orderDTO.totalAmount)}">
+																th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseVNDCurrency(order.totalAmount)}">
 															</h6>
 														</div>
 													</td>
@@ -150,28 +157,28 @@
 									<div class="card-body">
 										<div class="d-flex justify-content-start align-items-center mb-4">
 											<div class="avatar me-2">
-												<img th:if="${orderDTO.userOrders.avatar == null || orderDTO.userOrders.avatar == ''}"
+												<img th:if="${order.userOrders.avatar == null || order.userOrders.avatar == ''}"
 													th:src="@{'/images/none_image.png'} " alt="Avatar"
 													class="rounded-circle">
-												<img th:unless="${orderDTO.userOrders.avatar == null || orderDTO.userOrders.avatar == ''}"
-													th:src="@{'data:image/jpeg;base64,' + ${orderDTO.userOrders.avatar}}"
+												<img th:unless="${order.userOrders.avatar == null || order.userOrders.avatar == ''}"
+													th:src="@{'data:image/jpeg;base64,' + ${order.userOrders.avatar}}"
 													alt="Avatar" class="rounded-circle">
 											</div>
 											<div class="d-flex flex-column">
 
-												<h6 class="mb-0" th:text="${orderDTO.userOrders.name}"></h6>
+												<h6 class="mb-0" th:text="${order.userOrders.name}"></h6>
 
 												<small class="text-muted"
-													th:text="'ID: #' + ${orderDTO.userOrders.id}"></small>
+													th:text="'ID: #' + ${order.userOrders.id}"></small>
 											</div>
 										</div>
 										<div class="d-flex flex-column">
 											<h6 class="mb-0">Thông tin liên lạc</h6>
 										</div>
 										<br>
-										<p class=" mb-1" th:text="'Email: ' + ${orderDTO.userOrders.email}"></p>
-										<p class=" mb-1" th:text="'Số điện thoại: ' + ${orderDTO.userOrders.phone}"></p>
-										<p class=" mb-1" th:text="'Địa chỉ: ' + ${orderDTO.userOrders.address}"></p>
+										<p class=" mb-1" th:text="'Email: ' + ${order.userOrders.email}"></p>
+										<p class=" mb-1" th:text="'Số điện thoại: ' + ${order.userOrders.phone}"></p>
+										<p class=" mb-1" th:text="'Địa chỉ: ' + ${order.userOrders.address}"></p>
 									</div>
 								</div>
 							</div>
@@ -182,9 +189,8 @@
 					<!-- Footer -->
 					<div th:replace="~{fragments/footer :: footer}"></div>
 					<!-- / Footer -->
-
-					<!-- Modal -->
-					<div class="modal fade" id="modalApprove" aria-labelledby="modalToggleLabel" tabindex="-1"
+					<!-- Modal Confirm-->
+					<div class="modal fade" id="modalConfirm" aria-labelledby="modalToggleLabel" tabindex="-1"
 						style="display: none" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
@@ -194,12 +200,54 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
+								<div class="modal-body">Bạn có chắc chắn muốn xác nhận đơn hàng này</span>?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+										Đóng
+									</button>
+									<button type="button" class="btn btn-primary" id="confirmConfirm">Xác nhận</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Modal Approve-->
+					<div class="modal fade" id="modalApprove" aria-labelledby="modalToggleLabel" tabindex="-1"
+						style="display: none" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalToggleLabel">Duyệt đơn
+									</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
 								<div class="modal-body">Bạn có chắc chắn muốn duyệt đơn hàng này</span>?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 										Đóng
 									</button>
-									<button type="button" class="btn btn-success" id="confirmDelete">Duyệt</button>
+									<button type="button" class="btn btn-success" id="confirmApprove">Duyệt</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Modal Cancel-->
+					<div class="modal fade" id="modalCancel" aria-labelledby="modalToggleLabel" tabindex="-1"
+						style="display: none" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalToggleLabel">Hủy đơn
+									</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">Bạn có chắc chắn muốn hủy đơn hàng này</span>?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+										Đóng
+									</button>
+									<button type="button" class="btn btn-danger" id="confirmCancel">Hủy</button>
 								</div>
 							</div>
 						</div>
@@ -243,14 +291,34 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {
+			$('#modalConfirm').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var orderId = button.data('id');
+				console.log(orderId);
+				var modal = $(this);
+				var deleteButton = modal.find('#confirmConfirm');
+				deleteButton.off('click').on('click', function () {
+					window.location.href = '/food_creator/orders/confirm/' + orderId;
+				});
+			});
 			$('#modalApprove').on('show.bs.modal', function (event) {
 				var button = $(event.relatedTarget);
 				var orderId = button.data('id');
 				console.log(orderId);
 				var modal = $(this);
-				var deleteButton = modal.find('#confirmDelete');
+				var deleteButton = modal.find('#confirmApprove');
 				deleteButton.off('click').on('click', function () {
 					window.location.href = '/food_creator/orders/approve/' + orderId;
+				});
+			});
+			$('#modalCancel').on('show.bs.modal', function (event) {
+				var button = $(event.relatedTarget);
+				var orderId = button.data('id');
+				console.log(orderId);
+				var modal = $(this);
+				var deleteButton = modal.find('#confirmCancel');
+				deleteButton.off('click').on('click', function () {
+					window.location.href = '/food_creator/orders/cancel/' + orderId;
 				});
 			});
 		});

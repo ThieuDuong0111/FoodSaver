@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.funix.foodsaveradmin.dto.OrderDTO;
 import com.funix.foodsaveradmin.dto.UserDTO;
 import com.funix.foodsaveradmin.models.Order;
 import com.funix.foodsaveradmin.services.OrderServiceImpl;
@@ -18,6 +17,7 @@ import com.funix.foodsaveradmin.services.UserServiceImpl;
 @RequestMapping({ "/food_creator/orders" })
 public class OrderControllerFoodCreator {
 	private static String redirectOrder = "redirect:/food_creator/orders/page/1?sortField=id&sortDir=desc";
+	private static String redirectOrderDetail = "redirect:/food_creator/orders/detail/";
 
 	@Autowired
 	private OrderServiceImpl orderServiceImpl;
@@ -33,11 +33,23 @@ public class OrderControllerFoodCreator {
 	@GetMapping("/detail/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
-		OrderDTO orderDTO = orderServiceImpl.getOrderById(id);
-		UserDTO userDTO = userServiceImpl.getUserById(orderDTO.getUserOrders().getId());
+		Order order = orderServiceImpl
+			.convertToEntity(orderServiceImpl.getOrderById(id));
+		UserDTO userDTO = userServiceImpl
+			.getUserById(order.getUserOrders().getId());
 		model.addAttribute("userDTO", userDTO);
-		model.addAttribute("orderDTO", orderDTO);
+		model.addAttribute("order", order);
 		return "order_detail_food_creator";
+	}
+
+	@GetMapping("/confirm/{id}")
+	public String cofirmOrder(@PathVariable(value = "id") int id) {
+		try {
+			orderServiceImpl.confirmOrderById(id);
+		} catch (Exception e) {
+			return redirectOrderDetail + id;
+		}
+		return redirectOrderDetail + id;
 	}
 
 	@GetMapping("/approve/{id}")
@@ -45,9 +57,19 @@ public class OrderControllerFoodCreator {
 		try {
 			orderServiceImpl.approveOrderById(id);
 		} catch (Exception e) {
-			return redirectOrder;
+			return redirectOrderDetail + id;
 		}
-		return redirectOrder;
+		return redirectOrderDetail + id;
+	}
+
+	@GetMapping("/cancel/{id}")
+	public String cancelOrder(@PathVariable(value = "id") int id) {
+		try {
+			orderServiceImpl.cancelOrderById(id);
+		} catch (Exception e) {
+			return redirectOrderDetail + id;
+		}
+		return redirectOrderDetail + id;
 	}
 
 	@GetMapping("/page/{pageNo}")
