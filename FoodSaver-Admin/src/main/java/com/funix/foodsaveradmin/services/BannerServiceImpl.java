@@ -21,7 +21,7 @@ import com.funix.foodsaveradmin.utils.ParseUtils;
 
 @Service
 public class BannerServiceImpl implements IBannerService {
-	
+
 	@Autowired
 	private IBannerRepository bannerRepository;
 	@Autowired
@@ -45,8 +45,7 @@ public class BannerServiceImpl implements IBannerService {
 	@Override
 	public void saveBanner(BannerDTO BannerDTO) {
 		// save image file
-		if (!BannerDTO.getImageFile().isEmpty()
-			&& BannerDTO.getImageFile() != null) {
+		if (BannerDTO.getImageFile() != null) {
 			MultipartFile image = BannerDTO.getImageFile();
 			try {
 				BannerDTO.setImage(

@@ -44,8 +44,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public void saveCategory(CategoryDTO categoryDTO) {
 		// save image file
-		if (!categoryDTO.getImageFile().isEmpty()
-			&& categoryDTO.getImageFile() != null) {
+		if (categoryDTO.getImageFile() != null) {
 			MultipartFile image = categoryDTO.getImageFile();
 			try {
 				categoryDTO.setImage(

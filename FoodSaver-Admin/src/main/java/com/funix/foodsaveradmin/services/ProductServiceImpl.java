@@ -42,8 +42,7 @@ public class ProductServiceImpl implements IProductService {
 	@Transactional
 	public void saveProduct(ProductDTO productDTO) {
 		// save image file
-		if (!productDTO.getImageFile().isEmpty()
-			&& productDTO.getImageFile() != null) {
+		if (productDTO.getImageFile() != null) {
 			MultipartFile image = productDTO.getImageFile();
 			try {
 				productDTO.setImage(

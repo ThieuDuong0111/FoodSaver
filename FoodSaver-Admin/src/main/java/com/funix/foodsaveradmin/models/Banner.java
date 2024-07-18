@@ -28,6 +28,20 @@ public class Banner {
 	@Column(length = 20)
 	private String imageType;
 
+	public Banner() {
+		super();
+	}
+
+	public Banner(int id, String name, String image, String imageUrl,
+		String imageType) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.imageUrl = imageUrl;
+		this.imageType = imageType;
+	}
+
 	public int getId() {
 		return id;
 	}

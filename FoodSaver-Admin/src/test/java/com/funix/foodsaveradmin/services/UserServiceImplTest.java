@@ -1,93 +1,126 @@
-//package com.funix.foodsaveradmin.services;
-//
-//import com.funix.foodsaveradmin.dto.UserDTO;
-//import com.funix.foodsaveradmin.models.MyUser;
-//import com.funix.foodsaveradmin.repositories.IUserRepository;
-//import com.funix.foodsaveradmin.services.UserServiceImpl;
-//
-//import jakarta.transaction.Transactional;
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-//import org.modelmapper.ModelMapper;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageImpl;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.domain.Sort;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.ArgumentMatchers.anyInt;
-//import static org.mockito.Mockito.*;
-//
-//@DataJpaTest
-//@AutoConfigureTestDatabase(replace = Replace.NONE)
-//public class UserServiceImplTest {
-//
-//	@Mock
-//	private IUserRepository userRepository;
-//
-//	@Mock
-//	private ModelMapper modelMapper;
-//
-//	@InjectMocks
-//	private UserServiceImpl userService;
-//
-//	@BeforeEach
-//	public void setUp() {
-//		MockitoAnnotations.openMocks(this);
-//	}
-//
-//	@Test
-//	public void testGetAllUsers() {
-//		MyUser user = new MyUser();
-//		List<MyUser> userList = Arrays.asList(user);
-//		when(userRepository.findAll()).thenReturn(userList);
-//		List<MyUser> result = userService.getAllUsers();
-//		assertEquals(1, result.size());
-//		verify(userRepository, times(1)).findAll();
-//	}
-//
-//	@Test
-////	@Rollback
-//	public void testSaveUser() {
-//		UserDTO userDTO = new UserDTO("thieuduong", "12345678", "0707046410",
-//			"duongthieu1995@gmail.com", "107 Bau Cat 2");
-//		MyUser user = new MyUser();
-//		when(modelMapper.map(any(UserDTO.class), eq(MyUser.class)))
-//			.thenReturn(user);
-//		userService.saveUser(userDTO, true);
-//		verify(userRepository, times(1)).save(any(MyUser.class));
-//	}
-//
-//	@Test
-//	public void testGetUserById() {
-//		MyUser user = new MyUser();
-//		UserDTO userDTO = new UserDTO();
-//		when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
-//		when(modelMapper.map(any(MyUser.class), eq(UserDTO.class)))
-//			.thenReturn(userDTO);
-//		UserDTO result = userService.getUserById(1);
-//		assertNotNull(result);
-//		verify(userRepository, times(1)).findById(anyInt());
-//	}
-//
-//	@Test
-//	public void testDeleteUserById() {
-//		userService.deleteUserById(1);
-//		verify(userRepository, times(1)).deleteById(anyInt());
-//	}
-//
-//}
+package com.funix.foodsaveradmin.services;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import java.util.*;
+
+import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.*;
+
+import com.funix.foodsaveradmin.dto.UserDTO;
+import com.funix.foodsaveradmin.models.MyUser;
+import com.funix.foodsaveradmin.repositories.IUserRepository;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+public class UserServiceImplTest {
+
+	@Mock
+	private IUserRepository userRepository;
+
+	@Mock
+	private ModelMapper modelMapper;
+
+	@InjectMocks
+	private UserServiceImpl userService;
+
+	@Test
+	public void convertToDto_ShouldMapCorrectly() {
+		MyUser user = new MyUser();
+		user.setId(1);
+		user.setName("testUser");
+
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(1);
+		userDTO.setName("testUser");
+
+		when(modelMapper.map(user, UserDTO.class)).thenReturn(userDTO);
+
+		UserDTO resultDTO = userService.convertToDto(user);
+
+		assertThat(resultDTO).isNotNull();
+		assertThat(resultDTO.getId()).isEqualTo(user.getId());
+		assertThat(resultDTO.getName()).isEqualTo(user.getName());
+	}
+
+	@Test
+	public void convertToEntity_ShouldMapCorrectly() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(1);
+		userDTO.setName("testUser");
+
+		MyUser user = new MyUser();
+		user.setId(1);
+		user.setName("testUser");
+
+		when(modelMapper.map(userDTO, MyUser.class)).thenReturn(user);
+
+		MyUser resultUser = userService.convertToEntity(userDTO);
+
+		assertThat(resultUser).isNotNull();
+		assertThat(resultUser.getId()).isEqualTo(userDTO.getId());
+		assertThat(resultUser.getName()).isEqualTo(userDTO.getName());
+	}
+
+	@Test
+	public void getAllUsers_ShouldReturnAllUsers() {
+		List<MyUser> userList = Arrays.asList(new MyUser(), new MyUser());
+		when(userRepository.findAll()).thenReturn(userList);
+
+		List<MyUser> result = userService.getAllUsers();
+
+		assertThat(result).hasSize(2);
+	}
+	
+	@Test
+	public void saveUser_ShouldSaveUserCorrectly() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setName("newUser");
+		userDTO.setPassword("password");
+
+		MyUser convertedUser = new MyUser();
+
+		when(modelMapper.map(userDTO, MyUser.class)).thenReturn(convertedUser);
+
+		userService.saveUser(userDTO, true);
+
+		verify(userRepository, times(1)).save(convertedUser);
+	}
+
+	@Test
+	public void deleteUserById_ShouldDeleteUserWithGivenId() {
+		int userId = 1;
+		userService.deleteUserById(userId);
+		verify(userRepository, times(1)).deleteById(userId);
+	}
+
+	@Test
+	public void findPaginated_ShouldReturnPageOfUsers() {
+		int pageNum = 1;
+		int pageSize = 10;
+		String sortField = "id";
+		String sortDirection = "asc";
+		int roleId = 1;
+
+		Page<MyUser> page = new PageImpl<>(
+			Arrays.asList(new MyUser(), new MyUser()));
+		when(userRepository.findAllByRoleId(roleId,
+			PageRequest.of(pageNum - 1, pageSize,
+				Sort.by(sortDirection.equals("asc") ? Sort.Direction.ASC
+					: Sort.Direction.DESC, sortField))))
+			.thenReturn(page);
+
+		Page<MyUser> resultPage = userService.findPaginated(pageNum, pageSize,
+			sortField, sortDirection, roleId);
+
+		assertThat(resultPage).hasSize(2);
+	}
+
+}

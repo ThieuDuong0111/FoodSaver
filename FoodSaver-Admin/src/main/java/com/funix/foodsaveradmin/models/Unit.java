@@ -27,9 +27,10 @@ public class Unit {
 		super();
 	}
 
-	public Unit(int id) {
+	public Unit(int id, String name) {
 		super();
 		this.id = id;
+		this.name = name;
 	}
 
 	public String getName() {
