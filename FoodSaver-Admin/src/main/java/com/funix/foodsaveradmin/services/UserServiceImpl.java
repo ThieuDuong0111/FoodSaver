@@ -50,8 +50,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void saveUser(UserDTO userDTO, Boolean isCreate) {
 		// save image file
-		if (!userDTO.getImageFile().isEmpty()
-			&& userDTO.getImageFile() != null) {
+		if (userDTO.getImageFile() != null) {
 			MultipartFile image = userDTO.getImageFile();
 			try {
 				userDTO.setAvatar(

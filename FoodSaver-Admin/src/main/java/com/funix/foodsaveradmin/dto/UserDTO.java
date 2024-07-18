@@ -35,6 +35,25 @@ public class UserDTO {
 
 	private MultipartFile imageFile;
 
+	public UserDTO() {
+		super();
+	}
+
+	public UserDTO(
+		@NotEmpty(message = "Tên không được bỏ trống.") String name,
+		@NotEmpty(message = "Mật khẩu không được bỏ trống.") String password,
+		@NotEmpty(message = "Email không được bỏ trống.") String email,
+		@NotEmpty(message = "Số điện thoại không được bỏ trống.") String phone,
+		@NotEmpty(message = "Địa chỉ không được bỏ trống.") String address) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+
+	}
+
 	public int getId() {
 		return id;
 	}
