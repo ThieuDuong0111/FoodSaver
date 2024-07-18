@@ -69,6 +69,14 @@
 								<div class="card mb-4">
 									<div class="card-header">
 										<h5 class="mb-0">Chi tiết đơn hàng</h5>
+										<br>
+										<div class="d-flex flex-column"> <span th:text="'Mã: ' + ${order.orderCode}">
+											</span></div>
+										<br>
+										<span>Trạng thái: </span>
+										<span
+											th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).convertStatusType(order.statusType)}">
+										</span>
 									</div>
 									<div class="table-responsive text-nowrap">
 										<table class="table">

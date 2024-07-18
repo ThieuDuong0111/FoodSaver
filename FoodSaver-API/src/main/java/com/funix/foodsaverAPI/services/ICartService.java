@@ -30,7 +30,9 @@ public interface ICartService {
 	CartDTO checkout(HttpServletRequest request)
 		throws IllegalArgumentException, ParseException;
 
-	BigDecimal calculateTotalAmountOfCart(CartDTO cartDTO);
+	BigDecimal calculateTotalAmountOfCart(Cart cart);
 
 	BigDecimal calculateTotalAmountOfOrder(Order order);
+	
+	void seperateCartItemsByCreator (Cart cart, CartDTO cartDTO);
 }

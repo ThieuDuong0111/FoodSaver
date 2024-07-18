@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.funix.foodsaverAPI.dto.CartByCreatorDTO;
 import com.funix.foodsaverAPI.dto.CartDTO;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
@@ -75,10 +76,10 @@ public class CartServiceImpl implements ICartService {
 		}
 		Optional<Cart> cartGet = cartRepository.getItemsByUserId(user.getId());
 		CartDTO cartDTO = convertToDto(cartGet.get());
-		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
-		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
-			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
+		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartGet.get()));
 		cartDTO.setItemsCount(cartGet.get().getCartItems().size());
+		// --- Tách cartItems theo creator
+		seperateCartItemsByCreator(cartGet.get(), cartDTO);
 		return cartDTO;
 	}
 
@@ -112,7 +113,6 @@ public class CartServiceImpl implements ICartService {
 					+ cartItemProductDTO.getQuantity()) <= 0) {
 					break;
 				}
-
 				// Update Unit Quantity
 				cartItems.get(i).setUnitQuantity(
 					currentQuantity + cartItemProductDTO.getQuantity());
@@ -125,7 +125,6 @@ public class CartServiceImpl implements ICartService {
 				cartItemRepository.save(cartItems.get(i));
 			}
 		}
-
 		// If Item Is Not Exist
 		if (!isItemExist) {
 			Product product = productServiceImpl
@@ -143,10 +142,10 @@ public class CartServiceImpl implements ICartService {
 		// Return Cart
 		Optional<Cart> cartGet = cartRepository.getItemsByUserId(user.getId());
 		CartDTO cartDTO = convertToDto(cartGet.get());
-		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
-		cartDTO.getCartItems().stream().map(cartItemDTO -> productServiceImpl
-			.convertFromCartItemToProductDTO(cartItemDTO)).toList();
+		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartGet.get()));
 		cartDTO.setItemsCount(cartGet.get().getCartItems().size());
+		// --- Tách cartItems theo creator
+		seperateCartItemsByCreator(cartGet.get(), cartDTO);
 		return cartDTO;
 
 	}
@@ -161,10 +160,11 @@ public class CartServiceImpl implements ICartService {
 		cartItemRepository.deleteById(cartItemDTO.getId());
 
 		CartDTO cartDTO = convertToDto(cart.get());
-		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cartDTO));
-		cartDTO.getCartItems().stream().map(cartItemDto -> productServiceImpl
-			.convertFromCartItemToProductDTO(cartItemDto)).toList();
+		cartDTO.setTotalAmount(calculateTotalAmountOfCart(cart.get()));
 		cartDTO.setItemsCount(cart.get().getCartItems().size());
+		// --- Tách cartItems theo creator
+		seperateCartItemsByCreator(cart.get(), cartDTO);
+
 		return cartDTO;
 	}
 
@@ -242,6 +242,7 @@ public class CartServiceImpl implements ICartService {
 				.save(newCart);
 
 			CartDTO cartDTO = convertToDto(newCart);
+			cartDTO.setCartByCreator(new ArrayList<CartByCreatorDTO>());
 			cartDTO.setTotalAmount(new BigDecimal(0.0));
 			return cartDTO;
 		} else {
@@ -251,16 +252,16 @@ public class CartServiceImpl implements ICartService {
 	}
 
 	@Override
-	public BigDecimal calculateTotalAmountOfCart(CartDTO cartDTO) {
+	public BigDecimal calculateTotalAmountOfCart(Cart cart) {
 		double totalAmount = 0.0;
 
-		if (cartDTO.getCartItems().size() == 0) {
+		if (cart.getCartItems().size() == 0) {
 			return new BigDecimal(totalAmount);
 		}
-		for (int i = 0; i < cartDTO.getCartItems().size(); i++) {
+		for (int i = 0; i < cart.getCartItems().size(); i++) {
 			totalAmount = totalAmount
-				+ cartDTO.getCartItems().get(i).getUnitPrice()
-					* cartDTO.getCartItems().get(i).getUnitQuantity();
+				+ cart.getCartItems().get(i).getUnitPrice()
+					* cart.getCartItems().get(i).getUnitQuantity();
 
 		}
 		return new BigDecimal(totalAmount);
@@ -279,5 +280,29 @@ public class CartServiceImpl implements ICartService {
 
 		}
 		return new BigDecimal(totalAmount);
+	}
+
+	@Override
+	public void seperateCartItemsByCreator(Cart cart, CartDTO cartDTO) {
+		cartDTO.setCartByCreator(new ArrayList<CartByCreatorDTO>());
+		List<Integer> creatorIds = cartRepository
+			.getDistinctCreatorId(cart.getId());
+
+		for (int i = 0; i < creatorIds.size(); i++) {
+			List<CartItemDTO> cartItemDTO = new ArrayList<CartItemDTO>();
+			for (int j = 0; j < cart.getCartItems().size(); j++) {
+				// So sánh creatorId có trong cartItems
+				if (creatorIds.get(i) == cart.getCartItems().get(j)
+					.getCartProduct()
+					.getCreator().getId()) {
+					// Nếu có, add một đối tượng cartItemDTO vào list cartItems
+					cartItemDTO.add(
+						modelMapper.map(cart.getCartItems().get(j),
+							CartItemDTO.class));
+				}
+			}
+			cartDTO.getCartByCreator()
+				.add(new CartByCreatorDTO(cartItemDTO));
+		}
 	}
 }

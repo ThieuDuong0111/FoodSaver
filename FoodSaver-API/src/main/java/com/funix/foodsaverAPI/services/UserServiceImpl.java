@@ -109,17 +109,6 @@ public class UserServiceImpl implements IUserService {
 						ImageUtils.resizeImage(image.getBytes(), 500, 500)));
 				user.setImageType("image/jpeg");
 				user.setImageUrl(ParseUtils.parseImageUrl(image.getBytes()) + ".jpeg");
-//				String array0[] = image.getOriginalFilename().split("/");
-//				String fileName = array0[array0.length - 1];
-//				String array1[] = fileName.split(".");
-//				String imageType = array1[1];
-//				System.out.println("------------" + fileName);
-//				System.out.println("------------" + imageType);
-//				user.setImageType("image/" + imageType);
-////				String array[] = image.getContentType().split("/");
-//				String imageUrl = ParseUtils.parseImageUrl(image.getBytes());
-//				user.setImageUrl(
-//					imageUrl + "." + imageType);
 			} catch (Exception e) {
 				System.out.println("Upload Image Exception: " + e.getMessage());
 			}

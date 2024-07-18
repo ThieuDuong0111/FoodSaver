@@ -7,7 +7,7 @@ import java.util.List;
 public class CartDTO {
 	private int id;
 
-	private List<CartItemDTO> cartItems;
+	private List<CartByCreatorDTO> cartByCreator;
 
 	private UserDTO userCarts;
 
@@ -16,9 +16,9 @@ public class CartDTO {
 	private Boolean isDone;
 
 	private BigDecimal totalAmount;
-	
+
 	private int itemsCount;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -35,12 +35,12 @@ public class CartDTO {
 		this.publishedDate = publishedDate;
 	}
 
-	public List<CartItemDTO> getCartItems() {
-		return cartItems;
+	public List<CartByCreatorDTO> getCartByCreator() {
+		return cartByCreator;
 	}
 
-	public void setCartItems(List<CartItemDTO> cartItems) {
-		this.cartItems = cartItems;
+	public void setCartByCreator(List<CartByCreatorDTO> cartByCreator) {
+		this.cartByCreator = cartByCreator;
 	}
 
 	public UserDTO getUserCarts() {

@@ -107,217 +107,355 @@ class _CartWrapperState extends State<CartWrapper> {
                     children: [
                       SingleChildScrollView(
                         padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                        child: state.cartEntity.cartItems.isNotEmpty
+                        child: state.cartEntity.cartByCreator.isNotEmpty
                             ? ListView(
                                 physics: const ScrollPhysics(),
                                 shrinkWrap: true,
                                 children: <Widget>[
                                   SizedBox(height: 12.h),
                                   ListView.builder(
-                                    itemCount: state.cartEntity.cartItems.length,
+                                    itemCount: state.cartEntity.cartByCreator.length,
                                     physics: const ScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return Column(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    ClipRRect(
-                                                      child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(10.r),
-                                                        child: ImageParse(
-                                                          width: 75.w,
-                                                          height: 75.w,
-                                                          url: state.cartEntity.cartItems[index]!.cartProduct.imageUrl,
-                                                          type: 'product',
-                                                        ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(15.r),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(9, 30, 66, 0.25),
+                                                  blurRadius: 8,
+                                                  spreadRadius: -2,
+                                                  offset: Offset(
+                                                    0,
+                                                    4,
+                                                  ),
+                                                ),
+                                                BoxShadow(
+                                                  color: Color.fromRGBO(9, 30, 66, 0.08),
+                                                  spreadRadius: 1,
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 6.h,
+                                                ),
+                                                if (state.cartEntity.cartByCreator[index]!.cartItems.isNotEmpty)
+                                                  Column(
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          SizedBox(width: 3.w),
+                                                          ClipRRect(
+                                                            borderRadius: BorderRadius.circular(20.w),
+                                                            child: ImageParse(
+                                                              width: 20.w,
+                                                              height: 20.w,
+                                                              url: state.cartEntity.cartByCreator[index]!.cartItems
+                                                                  .first.cartProduct.creator.imageUrl,
+                                                              type: 'user',
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 10.w),
+                                                          Text(
+                                                            state.cartEntity.cartByCreator[index]!.cartItems.first
+                                                                .cartProduct.creator.name!,
+                                                            style: AppTextStyle.primaryText().copyWith(
+                                                              color: const Color(0xFF03A33A),
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                    SizedBox(width: 8.w),
-                                                    Expanded(
-                                                      child: SizedBox(
-                                                        height: 75.w,
-                                                        child: Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      SizedBox(
+                                                        height: 8.h,
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: 1.h,
+                                                        color: const Color(0xFFCACACA),
+                                                      ),
+                                                    ],
+                                                  )
+                                                else
+                                                  const SizedBox(),
+                                                ListView.builder(
+                                                  itemCount: state.cartEntity.cartByCreator[index]!.cartItems.length,
+                                                  physics: const ScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (context, indexItem) {
+                                                    return Column(
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 12.h,
+                                                        ),
+                                                        Row(
                                                           children: [
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    state
-                                                                        .cartEntity.cartItems[index]!.cartProduct.name!,
-                                                                    maxLines: 1,
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    style: AppTextStyle.primaryText()
-                                                                        .copyWith(fontWeight: FontWeight.w500),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(width: 5.w),
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    AppDialog.showAppDialog(
-                                                                      context: context,
-                                                                      content:
-                                                                          'Bạn có chắc chắn muốn xóa sản phẩm này?',
-                                                                      buttonName: 'Xóa',
-                                                                      action: () {
-                                                                        _cartBloc.add(
-                                                                          CartDeleteItemEvent(
-                                                                            id: state.cartEntity.cartItems[index]!.id,
-                                                                          ),
-                                                                        );
-                                                                        context.router.pop();
-                                                                      },
-                                                                    );
-                                                                  },
-                                                                  child: Icon(
-                                                                    Icons.delete_outline,
-                                                                    color: AppColors.primaryBrand,
-                                                                    size: 20.w,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Flexible(
-                                                              child: Text.rich(
-                                                                maxLines: 1,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                TextSpan(
-                                                                  children: [
-                                                                    TextSpan(
-                                                                      text: 'bởi ',
-                                                                      style: AppTextStyle.primaryText()
-                                                                          .copyWith(fontWeight: FontWeight.w500),
-                                                                    ),
-                                                                    TextSpan(
-                                                                      text: state.cartEntity.cartItems[index]!
-                                                                          .cartProduct.creator.name,
-                                                                      style: AppTextStyle.primaryText().copyWith(
-                                                                        color: const Color(0xFF03A33A),
-                                                                        fontWeight: FontWeight.w500,
+                                                            Expanded(
+                                                              child: Row(
+                                                                children: [
+                                                                  ClipRRect(
+                                                                    child: ClipRRect(
+                                                                      borderRadius: BorderRadius.circular(10.r),
+                                                                      child: ImageParse(
+                                                                        width: 75.w,
+                                                                        height: 75.w,
+                                                                        url: state.cartEntity.cartByCreator[index]!
+                                                                            .cartItems[indexItem].cartProduct.imageUrl,
+                                                                        type: 'product',
                                                                       ),
                                                                     ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                  SizedBox(width: 8.w),
+                                                                  Expanded(
+                                                                    child: SizedBox(
+                                                                      height: 75.w,
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  state
+                                                                                      .cartEntity
+                                                                                      .cartByCreator[index]!
+                                                                                      .cartItems[indexItem]
+                                                                                      .cartProduct
+                                                                                      .name!,
+                                                                                  maxLines: 1,
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  style: AppTextStyle.primaryText()
+                                                                                      .copyWith(
+                                                                                    fontWeight: FontWeight.w500,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(width: 5.w),
+                                                                              InkWell(
+                                                                                onTap: () {
+                                                                                  AppDialog.showAppDialog(
+                                                                                    context: context,
+                                                                                    content:
+                                                                                        'Bạn có chắc chắn muốn xóa sản phẩm này?',
+                                                                                    buttonName: 'Xóa',
+                                                                                    action: () {
+                                                                                      _cartBloc.add(
+                                                                                        CartDeleteItemEvent(
+                                                                                          id: state
+                                                                                              .cartEntity
+                                                                                              .cartByCreator[index]!
+                                                                                              .cartItems[indexItem]
+                                                                                              .id,
+                                                                                        ),
+                                                                                      );
+                                                                                      context.router.pop();
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                                child: Icon(
+                                                                                  Icons.delete_outline,
+                                                                                  color: AppColors.primaryBrand,
+                                                                                  size: 20.w,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Flexible(
+                                                                            child: Text.rich(
+                                                                              maxLines: 1,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                              TextSpan(
+                                                                                children: [
+                                                                                  TextSpan(
+                                                                                    text: state
+                                                                                        .cartEntity
+                                                                                        .cartByCreator[index]!
+                                                                                        .cartItems[indexItem]
+                                                                                        .cartProduct
+                                                                                        .description,
+                                                                                    style: AppTextStyle.primaryText()
+                                                                                        .copyWith(
+                                                                                      color: AppColors.greyColor,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Flexible(
+                                                                                      child: Text(
+                                                                                        ParseUtils
+                                                                                            .formatCurrencyWithoutSymbol(
+                                                                                          state
+                                                                                              .cartEntity
+                                                                                              .cartByCreator[index]!
+                                                                                              .cartItems[indexItem]
+                                                                                              .cartProduct
+                                                                                              .price
+                                                                                              .toDouble(),
+                                                                                        ),
+                                                                                        maxLines: 1,
+                                                                                        overflow: TextOverflow.ellipsis,
+                                                                                        style:
+                                                                                            AppTextStyle.primaryText()
+                                                                                                .copyWith(
+                                                                                          fontWeight: FontWeight.w500,
+                                                                                          color: Colors.black,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(width: 5.w),
+                                                                                    Expanded(
+                                                                                      child: Text(
+                                                                                        ParseUtils.formatCurrency(
+                                                                                          state
+                                                                                                  .cartEntity
+                                                                                                  .cartByCreator[index]!
+                                                                                                  .cartItems[indexItem]
+                                                                                                  .unitQuantity *
+                                                                                              state
+                                                                                                  .cartEntity
+                                                                                                  .cartByCreator[index]!
+                                                                                                  .cartItems[indexItem]
+                                                                                                  .cartProduct
+                                                                                                  .price
+                                                                                                  .toDouble(),
+                                                                                        ),
+                                                                                        maxLines: 1,
+                                                                                        overflow: TextOverflow.ellipsis,
+                                                                                        style:
+                                                                                            AppTextStyle.primaryText()
+                                                                                                .copyWith(
+                                                                                          fontWeight: FontWeight.w700,
+                                                                                          color: AppColors.primaryBrand,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              SizedBox(width: 2.w),
+                                                                              Row(
+                                                                                mainAxisAlignment:
+                                                                                    MainAxisAlignment.end,
+                                                                                children: [
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      if (state
+                                                                                              .cartEntity
+                                                                                              .cartByCreator[index]!
+                                                                                              .cartItems[indexItem]
+                                                                                              .unitQuantity >
+                                                                                          1) {
+                                                                                        _cartBloc.add(
+                                                                                          CartUpdateItemEvent(
+                                                                                            cartUpdateRequest:
+                                                                                                CartUpdateRequest(
+                                                                                              id: state
+                                                                                                  .cartEntity
+                                                                                                  .cartByCreator[index]!
+                                                                                                  .cartItems[indexItem]
+                                                                                                  .cartProduct
+                                                                                                  .id,
+                                                                                              quantity: -1,
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                    },
+                                                                                    child: Icon(
+                                                                                      Icons.remove_circle_outline,
+                                                                                      color: AppColors.primaryBrand,
+                                                                                      size: 20.w,
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(width: 8.w),
+                                                                                  Text(
+                                                                                    state
+                                                                                        .cartEntity
+                                                                                        .cartByCreator[index]!
+                                                                                        .cartItems[indexItem]
+                                                                                        .unitQuantity
+                                                                                        .toString(),
+                                                                                    style: AppTextStyle.primaryText()
+                                                                                        .copyWith(
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(width: 8.w),
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      _cartBloc.add(
+                                                                                        CartUpdateItemEvent(
+                                                                                          cartUpdateRequest:
+                                                                                              CartUpdateRequest(
+                                                                                            id: state
+                                                                                                .cartEntity
+                                                                                                .cartByCreator[index]!
+                                                                                                .cartItems[indexItem]
+                                                                                                .cartProduct
+                                                                                                .id,
+                                                                                            quantity: 1,
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                    child: Icon(
+                                                                                      Icons.add_circle_outline,
+                                                                                      color: AppColors.primaryBrand,
+                                                                                      size: 20.w,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Flexible(
-                                                                        child: Text(
-                                                                          ParseUtils.formatCurrencyWithoutSymbol(
-                                                                            state.cartEntity.cartItems[index]!
-                                                                                .cartProduct.price
-                                                                                .toDouble(),
-                                                                          ),
-                                                                          maxLines: 1,
-                                                                          overflow: TextOverflow.ellipsis,
-                                                                          style: AppTextStyle.primaryText().copyWith(
-                                                                            fontWeight: FontWeight.w500,
-                                                                            color: Colors.black,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(width: 5.w),
-                                                                      Expanded(
-                                                                        child: Text(
-                                                                          ParseUtils.formatCurrency(
-                                                                            state.cartEntity.cartItems[index]!
-                                                                                    .unitQuantity *
-                                                                                state.cartEntity.cartItems[index]!
-                                                                                    .cartProduct.price
-                                                                                    .toDouble(),
-                                                                          ),
-                                                                          maxLines: 1,
-                                                                          overflow: TextOverflow.ellipsis,
-                                                                          style: AppTextStyle.primaryText().copyWith(
-                                                                            fontWeight: FontWeight.w700,
-                                                                            color: AppColors.primaryBrand,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                SizedBox(width: 2.w),
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                                  children: [
-                                                                    InkWell(
-                                                                      onTap: () {
-                                                                        _cartBloc.add(
-                                                                          CartUpdateItemEvent(
-                                                                            cartUpdateRequest: CartUpdateRequest(
-                                                                              id: state.cartEntity.cartItems[index]!
-                                                                                  .cartProduct.id,
-                                                                              quantity: -1,
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                      child: Icon(
-                                                                        Icons.remove_circle_outline,
-                                                                        color: AppColors.primaryBrand,
-                                                                        size: 20.w,
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(width: 8.w),
-                                                                    Text(
-                                                                      state.cartEntity.cartItems[index]!.unitQuantity
-                                                                          .toString(),
-                                                                      style: AppTextStyle.primaryText()
-                                                                          .copyWith(fontWeight: FontWeight.w500),
-                                                                    ),
-                                                                    SizedBox(width: 8.w),
-                                                                    InkWell(
-                                                                      onTap: () {
-                                                                        _cartBloc.add(
-                                                                          CartUpdateItemEvent(
-                                                                            cartUpdateRequest: CartUpdateRequest(
-                                                                              id: state.cartEntity.cartItems[index]!
-                                                                                  .cartProduct.id,
-                                                                              quantity: 1,
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                      child: Icon(
-                                                                        Icons.add_circle_outline,
-                                                                        color: AppColors.primaryBrand,
-                                                                        size: 20.w,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                        SizedBox(
+                                                          height: 12.h,
+                                                        ),
+                                                        if (indexItem <
+                                                            state.cartEntity.cartByCreator[index]!.cartItems.length - 1)
+                                                          Container(
+                                                            width: double.infinity,
+                                                            height: 1.h,
+                                                            color: const Color(0xFFCACACA),
+                                                          ),
+                                                      ],
+                                                    );
+                                                  },
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            height: 1.h,
-                                            color: const Color(0xFFCACACA),
-                                          ),
-                                          SizedBox(height: 12.h),
+                                          SizedBox(height: 14.h),
                                         ],
                                       );
                                     },
@@ -350,7 +488,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                 ],
                               ),
                       ),
-                      if (state.cartEntity.cartItems.isNotEmpty)
+                      if (state.cartEntity.cartByCreator.isNotEmpty)
                         Positioned(
                           bottom: 0,
                           left: 0,
