@@ -49,11 +49,14 @@ class ProductListViewVertical extends StatelessWidget {
             },
             child: Row(
               children: [
-                ImageParse(
-                  width: size,
-                  height: size,
-                  url: products[index]!.imageUrl,
-                  type: 'product',
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: ImageParse(
+                    width: size,
+                    height: size,
+                    url: products[index]!.imageUrl,
+                    type: 'product',
+                  ),
                 ),
                 SizedBox(width: 10.w),
                 Expanded(
