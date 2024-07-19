@@ -28,6 +28,10 @@ public class OrderDTO {
 
 	private String paymentTypeParse;
 
+	public OrderDTO() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

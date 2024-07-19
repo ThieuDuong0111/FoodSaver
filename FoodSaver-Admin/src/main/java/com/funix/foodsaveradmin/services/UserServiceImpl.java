@@ -29,6 +29,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IUserRepository userRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -64,6 +65,26 @@ public class UserServiceImpl implements IUserService {
 						imageUrl + "." + array[1]);
 				} else {
 					userDTO.setImageUrl(
+						imageUrl);
+				}
+			} catch (Exception e) {
+				System.out.println("Upload Image Exception: " + e.getMessage());
+			}
+		}
+		if (userDTO.getImageStoreFile() != null) {
+			MultipartFile image = userDTO.getImageStoreFile();
+			try {
+				userDTO.setStoreImage(
+					Base64.getEncoder().encodeToString(
+						ImageUtils.resizeImage(image.getBytes(), 500, 1000)));
+				userDTO.setStoreImageType(image.getContentType());
+				String array[] = image.getContentType().split("/");
+				String imageUrl = ParseUtils.parseImageUrl(image.getBytes());
+				if (array.length > 1) {
+					userDTO.setStoreImageUrl(
+						imageUrl + "." + array[1]);
+				} else {
+					userDTO.setStoreImageUrl(
 						imageUrl);
 				}
 			} catch (Exception e) {

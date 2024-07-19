@@ -54,6 +54,22 @@ public class MyUser {
 	@Column(length = 20)
 	private String imageType;
 
+	@Column(length = 100, unique = true)
+	private String storeName;
+
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+	private String storeImage;
+
+	@Column(columnDefinition = "TEXT")
+	private String storeImageUrl;
+
+	@Column(length = 20)
+	private String storeImageType;
+
+	@Column(columnDefinition = "TEXT")
+	private String storeDescription;
+
 	private String password;
 
 	@Column(length = 50, unique = true)
@@ -175,6 +191,46 @@ public class MyUser {
 
 	public void setFeedBacks(List<FeedBack> feedBacks) {
 		this.feedBacks = feedBacks;
+	}
+
+	public String getStoreImage() {
+		return storeImage;
+	}
+
+	public void setStoreImage(String storeImage) {
+		this.storeImage = storeImage;
+	}
+
+	public String getStoreImageUrl() {
+		return storeImageUrl;
+	}
+
+	public void setStoreImageUrl(String storeImageUrl) {
+		this.storeImageUrl = storeImageUrl;
+	}
+
+	public String getStoreImageType() {
+		return storeImageType;
+	}
+
+	public void setStoreImageType(String storeImageType) {
+		this.storeImageType = storeImageType;
+	}
+
+	public String getStoreDescription() {
+		return storeDescription;
+	}
+
+	public void setStoreDescription(String storeDescription) {
+		this.storeDescription = storeDescription;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 }

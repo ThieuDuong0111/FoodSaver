@@ -10,6 +10,7 @@ import com.funix.foodsaverAPI.dto.HomeDTO;
 import com.funix.foodsaverAPI.services.BannerServiceImpl;
 import com.funix.foodsaverAPI.services.CategoryServiceImpl;
 import com.funix.foodsaverAPI.services.ProductServiceImpl;
+import com.funix.foodsaverAPI.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/api/home")
@@ -17,6 +18,9 @@ public class HomeController {
 
 	@Autowired
 	private BannerServiceImpl bannerServiceImpl;
+	
+	@Autowired
+	private UserServiceImpl userServiceImpl;
 	
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
@@ -29,6 +33,7 @@ public class HomeController {
 		HomeDTO homeDTO = new HomeDTO();
 		homeDTO.setBanners(bannerServiceImpl.getAllBanners());
 		homeDTO.setCategories(categoryServiceImpl.getAllCategories());
+		homeDTO.setStores(userServiceImpl.get10NewestStore());
 		homeDTO.setProducts(productServiceImpl.getTop20Products());
 		return ResponseEntity.ok(homeDTO);
 	}

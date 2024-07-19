@@ -13,11 +13,20 @@ public class UserDTO {
 	@NotEmpty(message = "Tên không được bỏ trống.")
 	private String name;
 
+	@NotEmpty(message = "Tên cửa hàng không được bỏ trống.")
+	private String storeName;
+
 	private String avatar;
 
 	private String imageUrl;
 
 	private String imageType;
+
+	private String storeImage;
+
+	private String storeImageUrl;
+
+	private String storeImageType;
 
 	@NotEmpty(message = "Mật khẩu không được bỏ trống.")
 	private String password;
@@ -31,9 +40,13 @@ public class UserDTO {
 	@NotEmpty(message = "Địa chỉ không được bỏ trống.")
 	private String address;
 
+	private String storeDescription;
+
 	private Role role;
 
 	private MultipartFile imageFile;
+
+	private MultipartFile imageStoreFile;
 
 	public UserDTO() {
 		super();
@@ -140,5 +153,53 @@ public class UserDTO {
 
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
+	}
+
+	public String getStoreImage() {
+		return storeImage;
+	}
+
+	public void setStoreImage(String storeImage) {
+		this.storeImage = storeImage;
+	}
+
+	public String getStoreImageUrl() {
+		return storeImageUrl;
+	}
+
+	public void setStoreImageUrl(String storeImageUrl) {
+		this.storeImageUrl = storeImageUrl;
+	}
+
+	public String getStoreImageType() {
+		return storeImageType;
+	}
+
+	public void setStoreImageType(String storeImageType) {
+		this.storeImageType = storeImageType;
+	}
+
+	public String getStoreDescription() {
+		return storeDescription;
+	}
+
+	public void setStoreDescription(String storeDescription) {
+		this.storeDescription = storeDescription;
+	}
+
+	public MultipartFile getImageStoreFile() {
+		return imageStoreFile;
+	}
+
+	public void setImageStoreFile(MultipartFile imageStoreFile) {
+		this.imageStoreFile = imageStoreFile;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 }

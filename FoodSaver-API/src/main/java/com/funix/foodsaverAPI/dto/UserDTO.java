@@ -7,6 +7,9 @@ public class UserDTO {
 	private int id;
 	private String name;
 	private String imageUrl;
+	private String storeName;
+	private String storeImageUrl;
+	private String storeDescription;
 	private String email;
 	private String phone;
 	private String address;
@@ -66,5 +69,29 @@ public class UserDTO {
 
 	public void setImageFile(MultipartFile imageFile) {
 		this.imageFile = imageFile;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public String getStoreImageUrl() {
+		return storeImageUrl;
+	}
+
+	public void setStoreImageUrl(String storeImageUrl) {
+		this.storeImageUrl = storeImageUrl;
+	}
+
+	public String getStoreDescription() {
+		return storeDescription;
+	}
+
+	public void setStoreDescription(String storeDescription) {
+		this.storeDescription = storeDescription;
 	}
 }

@@ -29,7 +29,7 @@ class ProductByCategoryRemoteDataSourceImpl implements ProductByCategoryRemoteDa
     try {
       final Response response = await _appHttpClient.get(
         Uri.parse(
-          '${ApiEndpoints.baseUrl}/products?categoryId=$categoryId',
+          '${ApiEndpoints.baseUrl}/products/by-category/$categoryId',
         ),
         headers: <String, String>{
           'Content-Type': 'application/json',

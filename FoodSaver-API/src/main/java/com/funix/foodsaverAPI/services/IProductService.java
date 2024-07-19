@@ -23,6 +23,8 @@ public interface IProductService {
 	void deleteProductById(int id);
 
 	List<ProductDTO> findByCategoryId(int categoryId);
+	
+	List<ProductDTO> findByStoreId(int storeId);
 
 	List<ProductDTO> searchByName(String name);
 	

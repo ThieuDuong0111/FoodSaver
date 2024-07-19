@@ -39,7 +39,7 @@ public class ImageController {
 	private OrderDetailServiceImpl orderDetailServiceImpl;
 
 	@GetMapping("/user/{url}")
-	public ResponseEntity<?> getImageUserById(
+	public ResponseEntity<?> getImageUserByUrl(
 		@PathVariable("url") String url) {
 		MyUser user = userServiceImpl.getUserByImageUrl(url);
 		byte[] image = Base64.getDecoder()
@@ -48,9 +48,20 @@ public class ImageController {
 			.contentType(MediaType.valueOf(user.getImageType()))
 			.body(image);
 	}
+	
+	@GetMapping("/store/{url}")
+	public ResponseEntity<?> getStoreImageUserByUrl(
+		@PathVariable("url") String url) {
+		MyUser user = userServiceImpl.getUserByStoreImageUrl(url);
+		byte[] image = Base64.getDecoder()
+			.decode(user.getStoreImage());
+		return ResponseEntity.status(HttpStatus.OK)
+			.contentType(MediaType.valueOf(user.getStoreImageType()))
+			.body(image);
+	}
 
 	@GetMapping("/category/{url}")
-	public ResponseEntity<?> getImageCategoryById(
+	public ResponseEntity<?> getImageCategoryByUrl(
 		@PathVariable("url") String url) {
 		Category category = categoryServiceImpl.getCategoryByImageUrl(url);
 		byte[] image = Base64.getDecoder().decode(category.getImage());
@@ -60,7 +71,7 @@ public class ImageController {
 	}
 
 	@GetMapping("/product/{url}")
-	public ResponseEntity<?> getImageProductById(
+	public ResponseEntity<?> getImageProductByUrl(
 		@PathVariable("url") String url) {
 		Product product = productServiceImpl.getProductByImageUrl(url);
 		byte[] image = Base64.getDecoder()
@@ -71,7 +82,7 @@ public class ImageController {
 	}
 
 	@GetMapping("/banner/{url}")
-	public ResponseEntity<?> getBannerById(
+	public ResponseEntity<?> getBannerByUrl(
 		@PathVariable("url") String url) {
 		Banner banner = bannerServiceImpl.getBannerByImageUrl(url);
 		byte[] image = Base64.getDecoder()
@@ -82,7 +93,7 @@ public class ImageController {
 	}
 
 	@GetMapping("/order/{id}/{url}")
-	public ResponseEntity<?> getImageOrderById(
+	public ResponseEntity<?> getImageOrderByUrl(
 		@PathVariable("url") String url,
 		@PathVariable("id") int id) {
 		OrderDetail orderDetail = orderDetailServiceImpl.getOrderDetailById(id);

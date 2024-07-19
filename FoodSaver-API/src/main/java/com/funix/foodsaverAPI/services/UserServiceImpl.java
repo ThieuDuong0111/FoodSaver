@@ -3,6 +3,7 @@ package com.funix.foodsaverAPI.services;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,8 @@ public class UserServiceImpl implements IUserService {
 					Base64.getEncoder().encodeToString(
 						ImageUtils.resizeImage(image.getBytes(), 500, 500)));
 				user.setImageType("image/jpeg");
-				user.setImageUrl(ParseUtils.parseImageUrl(image.getBytes()) + ".jpeg");
+				user.setImageUrl(
+					ParseUtils.parseImageUrl(image.getBytes()) + ".jpeg");
 			} catch (Exception e) {
 				System.out.println("Upload Image Exception: " + e.getMessage());
 			}
@@ -152,6 +154,18 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public MyUser getUserByImageUrl(String url) {
 		Optional<MyUser> optionalUser = userRepository.findByImageUrl(url);
+		MyUser user = null;
+		if (optionalUser.isPresent()) {
+			user = optionalUser.get();
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public MyUser getUserByStoreImageUrl(String url) {
+		Optional<MyUser> optionalUser = userRepository.findByStoreImageUrl(url);
 		MyUser user = null;
 		if (optionalUser.isPresent()) {
 			user = optionalUser.get();
@@ -302,5 +316,19 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 		return signInDTO;
+	}
+
+	@Override
+	public List<UserDTO> get10NewestStore() {
+		return userRepository.get10NewestStore().stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<UserDTO> getAllStores() {
+		return userRepository.getAllStores().stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
 	}
 }

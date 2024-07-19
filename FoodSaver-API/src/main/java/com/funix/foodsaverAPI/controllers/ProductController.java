@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.funix.foodsaverAPI.dto.ProductDTO;
@@ -33,10 +32,17 @@ public class ProductController {
 		return ResponseEntity.ok(productDTO);
 	}
 
-	@GetMapping({ "/products" })
+	@GetMapping({ "/products/by-category/{id}" })
 	public ResponseEntity<?> getProductByCategoryId(
-		@RequestParam(value = "categoryId") int categoryId) {
+		@PathVariable int id) {
 		return ResponseEntity
-			.ok(productServiceImpl.findByCategoryId(categoryId));
+			.ok(productServiceImpl.findByCategoryId(id));
+	}
+
+	@GetMapping({ "/products/by-store/{id}" })
+	public ResponseEntity<?> getProductByStoreId(
+		@PathVariable int id) {
+		return ResponseEntity
+			.ok(productServiceImpl.findByStoreId(id));
 	}
 }

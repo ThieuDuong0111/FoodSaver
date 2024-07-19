@@ -5,6 +5,7 @@ import java.util.List;
 public class HomeDTO {
 	private List<BannerDTO> banners;
 	private List<CategoryDTO> categories;
+	private List<UserDTO> stores;
 	private List<ProductDTO> products;
 
 	public List<BannerDTO> getBanners() {
@@ -21,6 +22,14 @@ public class HomeDTO {
 
 	public void setCategories(List<CategoryDTO> categories) {
 		this.categories = categories;
+	}
+
+	public List<UserDTO> getStores() {
+		return stores;
+	}
+
+	public void setStores(List<UserDTO> stores) {
+		this.stores = stores;
 	}
 
 	public List<ProductDTO> getProducts() {

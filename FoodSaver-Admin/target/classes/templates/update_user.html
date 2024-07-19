@@ -73,14 +73,40 @@
 								<div class="card-body">
 									<form action="#" th:action="@{/admin/users/update}" th:object="${userDTO}"
 										enctype="multipart/form-data" method="POST">
-										<!--<img th:src="@{'data:image/jpeg;base64,' + ${userDTO.avatar}}" ,
-											style="border-radius: 50%;" />-->
+										<!--Hình đại diện-->
 										<div class="mb-3">
 											<label class="form-label" for="basic-default-avatar">Hình đại diện</label>
 											<input type="file" class="form-control" id="basic-default-avatar"
 												th:field="*{imageFile}" />
 											<p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger"
 												th:errors="*{imageFile}" />
+										</div>
+										<!--Hình đại diện cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeImage">Hình đại diện cửa
+												hàng</label>
+											<input type="file" class="form-control" id="basic-default-storeImage"
+												th:field="*{imageStoreFile}" />
+											<p th:if="${#fields.hasErrors('imageStoreFile')}"
+												th:errorclass="text-danger" th:errors="*{imageStoreFile}" />
+										</div>
+										<!--Tên cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeName">Tên cửa hàng</label>
+											<input type="text" class="form-control" id="basic-default-storeName"
+												placeholder="Nhập tên cửa hàng" th:field="*{storeName}" />
+											<p th:if="${#fields.hasErrors('storeName')}" th:errorclass="text-danger"
+												th:errors="*{storeName}" />
+										</div>
+										<!--Mô tả cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeDescription">Mô tả cửa
+												hàng</label>
+											<textarea rows="5" class="form-control" id="basic-default-storeDescription"
+												placeholder="Mô tả cửa hàng"
+												th:field="*{storeDescription}" /></textarea>
+											<p th:if="${#fields.hasErrors('storeDescription')}"
+												th:errorclass="text-danger" th:errors="*{storeDescription}"></p>
 										</div>
 
 										<div class="mb-3">
@@ -90,21 +116,6 @@
 											<p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger"
 												th:errors="*{name}" />
 										</div>
-
-										<!--<div class="mb-3 form-password-toggle">
-											<label class="form-label" for="basic-default-password">Password</label>
-											<div class="input-group input-group-merge">
-												<input type="password" class="form-control" id="basic-default-password"
-													placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-													aria-describedby="basic-default-password" th:value="*{password}"
-													th:field="*{password}" />
-												<span class="input-group-text cursor-pointer"
-													id="basic-default-password"><i class="bx bx-hide"></i></span>
-
-											</div>
-											<p th:if="${#fields.hasErrors('password')}" th:errorclass="text-danger"
-												th:errors="*{password}"></p>
-										</div>-->
 
 										<div class="mb-3">
 											<label class="form-label" for="basic-default-email">Email</label>
@@ -135,9 +146,14 @@
 												th:errors="*{address}"></p>
 										</div>
 										<input type="hidden" th:value="*{id}" th:attr="name='id'" />
+										<input type="hidden" th:value="*{avatar}" th:attr="name='avatar'" />
 										<input type="hidden" th:value="*{imageUrl}" th:attr="name='imageUrl'" />
 										<input type="hidden" th:value="*{imageType}" th:attr="name='imageType'" />
-										<input type="hidden" th:value="*{avatar}" th:attr="name='avatar'" />
+										<input type="hidden" th:value="*{storeImage}" th:attr="name='storeImage'" />
+										<input type="hidden" th:value="*{storeImageUrl}"
+											th:attr="name='storeImageUrl'" />
+										<input type="hidden" th:value="*{storeImageType}"
+											th:attr="name='storeImageType'" />
 										<input type="hidden" th:value="*{password}" th:attr="name='password'" />
 										<input type="hidden" th:value="${role_id}" th:attr="name='role.id'" />
 

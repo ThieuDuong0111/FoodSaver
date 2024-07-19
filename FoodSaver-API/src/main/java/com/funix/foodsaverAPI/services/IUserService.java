@@ -16,6 +16,10 @@ public interface IUserService {
 	MyUser convertToEntity(UserDTO userDTO);
 
 	List<MyUser> getAllUsers();
+	
+	List<UserDTO> getAllStores();
+	
+	List<UserDTO> get10NewestStore();
 
 	UserDTO updateUserInfo(HttpServletRequest request, UserDTO userDTO);
 	
@@ -26,6 +30,8 @@ public interface IUserService {
 	MyUser getUserByName(String name);
 
 	MyUser getUserByImageUrl(String url);
+	
+	MyUser getUserByStoreImageUrl(String url);
 
 	MyUser getUserByToken(HttpServletRequest request);
 

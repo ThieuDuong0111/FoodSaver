@@ -36,10 +36,6 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public ProductDTO convertToDto(Product product) {
 		ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-//		if (product.getImageUrl() != null) {
-//			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
-//				+ product.getImageUrl());
-//		}
 		productDTO.setIsOutOfStock(product.getQuantity() < 1);
 		productDTO
 			.setIsExpired(ParseUtils.checkIsExpired(product.getExpiredDate()));
@@ -76,10 +72,6 @@ public class ProductServiceImpl implements IProductService {
 	public ProductDTO convertFromCartItemToProductDTO(CartItemDTO cartItemDTO) {
 		ProductDTO productDTO = modelMapper.map(cartItemDTO.getCartProduct(),
 			ProductDTO.class);
-//		if (cartItemDTO.getCartProduct().getImageUrl() != null) {
-//			productDTO.setImageUrl("http://localhost:8080/api/image/product/"
-//				+ cartItemDTO.getCartProduct().getImageUrl());
-//		}
 		return productDTO;
 	}
 
@@ -117,6 +109,13 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
+	public List<ProductDTO> findByStoreId(int storeId) {
+		return productRepository.findByCreatorId(storeId).stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
+	}
+
+	@Override
 	public List<ProductDTO> searchByName(String name) {
 		return productRepository.searchByName(name).stream()
 			.map(this::convertToDto)
@@ -149,5 +148,4 @@ public class ProductServiceImpl implements IProductService {
 		number = Math.floor(number * 10) / 10;
 		return number;
 	}
-
 }

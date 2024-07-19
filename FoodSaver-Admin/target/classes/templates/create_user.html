@@ -73,12 +73,40 @@
 								<div class="card-body">
 									<form action="#" th:action="@{/admin/users/add}" th:object="${userDTO}"
 										enctype="multipart/form-data" method="POST">
+										<!--Hình đại diện-->
 										<div class="mb-3">
 											<label class="form-label" for="basic-default-avatar">Hình đại diện</label>
 											<input type="file" class="form-control" id="basic-default-avatar"
 												th:field="*{imageFile}" />
 											<p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger"
 												th:errors="*{imageFile}" />
+										</div>
+										<!--Hình đại diện cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeImage">Hình đại diện cửa
+												hàng</label>
+											<input type="file" class="form-control" id="basic-default-storeImage"
+												th:field="*{imageStoreFile}" />
+											<p th:if="${#fields.hasErrors('imageStoreFile')}"
+												th:errorclass="text-danger" th:errors="*{imageStoreFile}" />
+										</div>
+										<!--Tên cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeName">Tên cửa hàng</label>
+											<input type="text" class="form-control" id="basic-default-storeName"
+												placeholder="Nhập tên cửa hàng" th:field="*{storeName}" />
+											<p th:if="${#fields.hasErrors('storeName')}" th:errorclass="text-danger"
+												th:errors="*{storeName}" />
+										</div>
+										<!--Mô tả cửa hàng-->
+										<div th:if="${role_id == 2}" th:class="mb-3">
+											<label class="form-label" for="basic-default-storeDescription">Mô tả cửa
+												hàng</label>
+											<textarea rows="5" class="form-control" id="basic-default-storeDescription"
+												placeholder="Mô tả cửa hàng"
+												th:field="*{storeDescription}" /></textarea>
+											<p th:if="${#fields.hasErrors('storeDescription')}"
+												th:errorclass="text-danger" th:errors="*{storeDescription}"></p>
 										</div>
 
 										<div class="mb-3">
@@ -109,9 +137,8 @@
 												<input type="text" id="basic-default-email" class="form-control"
 													placeholder="Nhập email" aria-label="john.doe"
 													aria-describedby="basic-default-email2" th:field="*{email}" />
-
 											</div>
-										<!--	<div class="form-text">You can use letters, numbers & periods</div>-->
+											<!--	<div class="form-text">You can use letters, numbers & periods</div>-->
 											<p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger"
 												th:errors="*{email}"></p>
 										</div>
