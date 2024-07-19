@@ -16,7 +16,17 @@ import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 final userInfoProvider = StateProvider(
-  (ref) => UserEntity(address: '', id: 0, name: '', imageUrl: '', email: '', phone: ''),
+  (ref) => UserEntity(
+    address: '',
+    id: 0,
+    name: '',
+    imageUrl: '',
+    email: '',
+    phone: '',
+    storeName: '',
+    storeImageUrl: '',
+    storeDescription: '',
+  ),
 );
 Future<void> main() async {
   await DependencyInjection.registerDependecies();

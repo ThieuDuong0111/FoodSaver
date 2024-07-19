@@ -175,24 +175,20 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  child: Row(
                                     children: [
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: 'bởi ',
-                                              style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
-                                            ),
-                                            TextSpan(
-                                              text: state.productEntity.creator.name,
-                                              style: AppTextStyle.primaryText().copyWith(
-                                                color: const Color(0xFF03A33A),
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
+                                      Icon(
+                                        Icons.verified_user,
+                                        color: Colors.orangeAccent,
+                                        size: 15.w,
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      Expanded(
+                                        child: Text(
+                                          state.productEntity.creator.storeName.toString(),
+                                          style: AppTextStyle.primaryText()
+                                              .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                          maxLines: 1,
                                         ),
                                       ),
                                     ],

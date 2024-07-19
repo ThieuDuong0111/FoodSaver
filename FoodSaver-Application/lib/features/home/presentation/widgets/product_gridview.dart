@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/parse_utils.dart';
-import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/product_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -89,23 +88,6 @@ class ProductGridView extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              SizedBox(width: 5.w),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 16.w,
-                                    color: Colors.amber,
-                                  ),
-                                  SizedBox(width: 2.w),
-                                  Text(
-                                    products[index]!.rating.toString(),
-                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
@@ -119,11 +101,7 @@ class ProductGridView extends StatelessWidget {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'bởi ',
-                                      style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
-                                    ),
-                                    TextSpan(
-                                      text: products[index]!.creator.name,
+                                      text: products[index]!.creator.storeName,
                                       style: AppTextStyle.primaryText().copyWith(
                                         color: const Color(0xFF03A33A),
                                         fontWeight: FontWeight.w400,
@@ -133,23 +111,23 @@ class ProductGridView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 3.w),
-                            if (ValidateUtils.isNotNullOrEmpty(products[index]!.creator.imageUrl))
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(18.w),
-                                child: ImageParse(
-                                  width: 18.w,
-                                  height: 18.w,
-                                  url: products[index]!.creator.imageUrl,
-                                  type: 'user',
+                            SizedBox(width: 5.w),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  size: 16.w,
+                                  color: Colors.amber,
                                 ),
-                              )
-                            else
-                              Icon(
-                                Icons.account_circle,
-                                size: 18.w,
-                                color: AppColors.greyColor,
-                              ),
+                                SizedBox(width: 2.w),
+                                Text(
+                                  products[index]!.rating.toString(),
+                                  style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         SizedBox(height: 3.h),

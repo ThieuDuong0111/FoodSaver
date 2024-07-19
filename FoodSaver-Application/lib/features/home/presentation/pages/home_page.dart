@@ -241,7 +241,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                             (banner) => Align(
                               alignment: Alignment.topCenter,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.r),
+                                borderRadius: BorderRadius.circular(15.r),
                                 child: ImageParse(
                                   width: bannerWidth,
                                   height: bannerHeight,
@@ -305,7 +305,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                   padding: EdgeInsets.all(10.w),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderRadius: BorderRadius.circular(10.r),
                                     boxShadow: const [
                                       BoxShadow(
                                         color: Color.fromRGBO(9, 30, 66, 0.25),
@@ -350,6 +350,101 @@ class _HomeWrapperState extends State<HomeWrapper> {
                                             height: 60.h,
                                             url: state.homeEntity.categories[index]!.imageUrl,
                                             type: 'category',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                      child: Text(
+                        'Cửa hàng mới lên sàn',
+                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    SizedBox(height: 7.h),
+                    SizedBox(
+                      height: 160.h,
+                      child: ListView.builder(
+                        itemCount: state.homeEntity.stores.length,
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: 10.w),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 3.h),
+                                child: Container(
+                                  width: 115.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.r),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(9, 30, 66, 0.25),
+                                        blurRadius: 8,
+                                        spreadRadius: -2,
+                                        offset: Offset(
+                                          0,
+                                          4,
+                                        ),
+                                      ),
+                                      BoxShadow(
+                                        color: Color.fromRGBO(9, 30, 66, 0.08),
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.r),
+                                          topRight: Radius.circular(10.r),
+                                        ),
+                                        child: ImageParse(
+                                          width: 115.h,
+                                          height: 115.h,
+                                          url: state.homeEntity.stores[index]!.storeImageUrl,
+                                          type: 'store',
+                                        ),
+                                      ),
+                                      SizedBox(height: 10.h),
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.verified_user,
+                                                    color: Colors.orangeAccent,
+                                                    size: 15.w,
+                                                  ),
+                                                  SizedBox(width: 5.w),
+                                                  Expanded(
+                                                    child: Text(
+                                                      state.homeEntity.stores[index]!.storeName.toString(),
+                                                      style: AppTextStyle.primaryText()
+                                                          .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),

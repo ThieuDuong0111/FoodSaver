@@ -158,14 +158,14 @@ class _CartWrapperState extends State<CartWrapper> {
                                                               width: 20.w,
                                                               height: 20.w,
                                                               url: state.cartEntity.cartByCreator[index]!.cartItems
-                                                                  .first.cartProduct.creator.imageUrl,
-                                                              type: 'user',
+                                                                  .first.cartProduct.creator.storeImageUrl,
+                                                              type: 'store',
                                                             ),
                                                           ),
                                                           SizedBox(width: 10.w),
                                                           Text(
                                                             state.cartEntity.cartByCreator[index]!.cartItems.first
-                                                                .cartProduct.creator.name!,
+                                                                .cartProduct.creator.storeName!,
                                                             style: AppTextStyle.primaryText().copyWith(
                                                               color: const Color(0xFF03A33A),
                                                               fontWeight: FontWeight.w500,
@@ -264,7 +264,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                                                   );
                                                                                 },
                                                                                 child: Icon(
-                                                                                  Icons.delete_outline,
+                                                                                  Icons.delete,
                                                                                   color: AppColors.primaryBrand,
                                                                                   size: 20.w,
                                                                                 ),
@@ -383,7 +383,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                                                       }
                                                                                     },
                                                                                     child: Icon(
-                                                                                      Icons.remove_circle_outline,
+                                                                                      Icons.remove_circle,
                                                                                       color: AppColors.primaryBrand,
                                                                                       size: 20.w,
                                                                                     ),
@@ -420,7 +420,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                                                       );
                                                                                     },
                                                                                     child: Icon(
-                                                                                      Icons.add_circle_outline,
+                                                                                      Icons.add_circle,
                                                                                       color: AppColors.primaryBrand,
                                                                                       size: 20.w,
                                                                                     ),

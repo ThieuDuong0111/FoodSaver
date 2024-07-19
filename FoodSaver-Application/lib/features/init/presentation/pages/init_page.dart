@@ -9,6 +9,7 @@ import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/ima
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/pages/my_profile_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/store/presentation/pages/store_page.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_colors.dart';
 
 class InitPage extends StatelessWidget {
@@ -56,7 +57,7 @@ class _InitwrapperState extends State<Initwrapper> {
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
-        children: const [HomePage(), CategoryPage(), MyProfilePage()],
+        children: const [HomePage(), StorePage(), CategoryPage(), MyProfilePage()],
       ),
       bottomNavigationBar: Container(
         // height: 46.h,
@@ -88,6 +89,12 @@ class _InitwrapperState extends State<Initwrapper> {
                     Icons.home,
                   ),
                   label: 'Trang chủ',
+                ),
+                const BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.store,
+                  ),
+                  label: 'Cửa hàng',
                 ),
                 const BottomNavigationBarItem(
                   icon: Icon(

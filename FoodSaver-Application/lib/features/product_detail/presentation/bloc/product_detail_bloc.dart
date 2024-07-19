@@ -9,6 +9,7 @@ import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entitie
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/product_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_add_feedback_category_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_category_usecase.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_store_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_detail_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_get_feedbacks_category_usecase.dart';
 import 'package:injectable/injectable.dart';
@@ -23,9 +24,11 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     this._productByCategoryUsecase,
     this._productAddFeedBackUsecase,
     this._productGetFeedBacksUsecase,
+    this._productByStoreUsecase,
   ) : super(ProductDetailInitial()) {
     on<ProductDetailPageEvent>(_productDetailPage);
     on<ProductByCategoryPageEvent>(_producByCategoryPage);
+    on<ProductByStorePageEvent>(_producByStorePage);
     on<ProductAddFeedBackEvent>(_productAddFeedBack);
     on<ProductGetFeedBacksEvent>(_productGetFeedBacks);
   }
@@ -53,6 +56,19 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     result.fold(
       (left) => emit(ProductByCategoryPageErrorState(failure: left)),
       (right) => emit(ProductByCategoryPageFinishedState(listProductEntity: right)),
+    );
+  }
+
+  final ProductByStoreUsecase _productByStoreUsecase;
+  FutureOr<void> _producByStorePage(
+    ProductByStorePageEvent event,
+    Emitter<ProductDetailState> emit,
+  ) async {
+    emit(ProductByStorePageLoadingState());
+    final Either<Failure, List<ProductEntity>> result = await _productByStoreUsecase(event.storeId);
+    result.fold(
+      (left) => emit(ProductByStorePageErrorState(failure: left)),
+      (right) => emit(ProductByStorePageFinishedState(listProductEntity: right)),
     );
   }
 

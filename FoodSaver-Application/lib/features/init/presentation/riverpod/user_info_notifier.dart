@@ -8,7 +8,17 @@ class UserInfoNotifier extends ChangeNotifier {
   static final provider = ChangeNotifierProvider<UserInfoNotifier>((ref) {
     return UserInfoNotifier();
   });
-  UserEntity _userEntity = UserEntity(id: 0, address: '', name: '', imageUrl: '', email: '', phone: '');
+  UserEntity _userEntity = UserEntity(
+    id: 0,
+    address: '',
+    name: '',
+    imageUrl: '',
+    email: '',
+    phone: '',
+    storeName: '',
+    storeImageUrl: '',
+    storeDescription: '',
+  );
   UserEntity get userInfo => _userEntity;
 
   Future<void> setUserInfo(UserEntity userEntity) async {

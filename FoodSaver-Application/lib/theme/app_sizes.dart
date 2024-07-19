@@ -14,8 +14,14 @@ class AppSizes {
   static double homeMainAxisSpacing = 12.w;
   static double categoryCrossAxisSpacing = 8.w;
   static double categoryMainAxisSpacing = 8.w;
+  static double storeCrossAxisSpacing = 10.w;
+  static double storeMainAxisSpacing = 10.w;
 
   static double homeProductImageSize(BuildContext context) {
     return (MediaQuery.sizeOf(context).width - paddingHorizontal * 2 - homeCrossAxisSpacing) / 2 - 1.w * 2;
+  }
+
+  static double storeImageSize(BuildContext context) {
+    return (MediaQuery.sizeOf(context).width - paddingHorizontal * 2 - storeCrossAxisSpacing) / 2;
   }
 }

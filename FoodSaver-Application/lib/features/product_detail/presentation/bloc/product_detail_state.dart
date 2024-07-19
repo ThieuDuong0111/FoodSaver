@@ -37,6 +37,20 @@ class ProductByCategoryPageFinishedState extends ProductDetailState {
   final List<ProductEntity> listProductEntity;
 }
 
+class ProductByStorePageLoadingState extends ProductDetailState {}
+
+class ProductByStorePageErrorState extends ProductDetailState {
+  const ProductByStorePageErrorState({required this.failure});
+  final Failure failure;
+}
+
+class ProductByStorePageFinishedState extends ProductDetailState {
+  const ProductByStorePageFinishedState({
+    required this.listProductEntity,
+  });
+  final List<ProductEntity> listProductEntity;
+}
+
 class ProductAddFeedBackLoadingState extends ProductDetailState {}
 
 class ProductAddFeedBackErrorState extends ProductDetailState {

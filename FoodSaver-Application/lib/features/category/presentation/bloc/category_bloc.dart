@@ -17,6 +17,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc(this._listCategoiresUsecase) : super(CategoryInitial()) {
     on<CategoriesPageEvent>(_listCategoriesPage);
   }
+
   final ListCategoiresUsecase _listCategoiresUsecase;
   FutureOr<void> _listCategoriesPage(
     CategoriesPageEvent event,
@@ -28,6 +29,5 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       (left) => emit(CategoriesPageErrorState(failure: left)),
       (right) => emit(CategoriesPageFinishedState(listCategories: right)),
     );
-    return null;
   }
 }

@@ -108,7 +108,19 @@ class _SignInWrapperState extends State<SignInWrapper> {
                 }
                 if (state is ContinueWithoutSignInFinishedState) {
                   final notifier = ref.read(UserInfoNotifier.provider);
-                  notifier.setUserInfo(UserEntity(id: 0, address: '', name: '', imageUrl: '', email: '', phone: ''));
+                  notifier.setUserInfo(
+                    UserEntity(
+                      id: 0,
+                      address: '',
+                      name: '',
+                      imageUrl: '',
+                      email: '',
+                      phone: '',
+                      storeName: '',
+                      storeImageUrl: '',
+                      storeDescription: '',
+                    ),
+                  );
                   context.router.replace(const InitPageRoute());
                 }
               },

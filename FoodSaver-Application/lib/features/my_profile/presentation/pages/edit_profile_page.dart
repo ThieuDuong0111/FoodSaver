@@ -94,6 +94,9 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
                       email: state.userEntity.email,
                       phone: state.userEntity.phone,
                       address: state.userEntity.address,
+                      storeName: '',
+                      storeImageUrl: '',
+                      storeDescription: '',
                     ),
                   );
                   setState(() {

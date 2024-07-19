@@ -26,3 +26,8 @@ class ProductGetFeedBacksEvent extends ProductDetailEvent {
   const ProductGetFeedBacksEvent(this.productId);
   final int productId;
 }
+
+class ProductByStorePageEvent extends ProductDetailEvent {
+  const ProductByStorePageEvent(this.storeId);
+  final int storeId;
+}

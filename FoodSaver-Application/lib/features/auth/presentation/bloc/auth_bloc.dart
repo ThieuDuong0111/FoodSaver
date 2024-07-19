@@ -30,7 +30,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthInitAppLoadingState());
     final Either<Failure, UserEntity> result = await _userInfoUsecase(NoParams());
     final Either<Failure, CartEntity> cart = await _cartGetItemsUsecase(NoParams());
-    UserEntity userEntity = UserEntity(id: 0, address: '', name: '', imageUrl: '', email: '', phone: '');
+    UserEntity userEntity = UserEntity(
+      id: 0,
+      address: '',
+      name: '',
+      imageUrl: '',
+      email: '',
+      phone: '',
+      storeName: '',
+      storeImageUrl: '',
+      storeDescription: '',
+    );
 
     result.fold(
       (left) => emit(const AuthInitAppErrorState()),

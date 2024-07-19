@@ -5,40 +5,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
-import 'package:funix_thieudvfx_foodsaver/features/category/presentation/bloc/category_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
+import 'package:funix_thieudvfx_foodsaver/features/store/presentation/bloc/store_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
-class CategoryPage extends StatelessWidget {
-  const CategoryPage({
+class StorePage extends StatelessWidget {
+  const StorePage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CategoryBloc>(
+    return BlocProvider<StoreBloc>(
       create: (context) => DependencyInjection.instance(),
-      child: const CategoryWrapper(),
+      child: const StoreWrapper(),
     );
   }
 }
 
-class CategoryWrapper extends StatefulWidget {
-  const CategoryWrapper({
+class StoreWrapper extends StatefulWidget {
+  const StoreWrapper({
     super.key,
   });
 
   @override
-  State<CategoryWrapper> createState() => _CategoryWrapperState();
+  State<StoreWrapper> createState() => _StoreWrapperState();
 }
 
-class _CategoryWrapperState extends State<CategoryWrapper> {
-  late CategoryBloc _categoryBloc;
+class _StoreWrapperState extends State<StoreWrapper> {
+  late StoreBloc _storeBloc;
   @override
   void initState() {
-    _categoryBloc = BlocProvider.of<CategoryBloc>(context);
-    _categoryBloc.add(const CategoriesPageEvent());
+    _storeBloc = BlocProvider.of<StoreBloc>(context);
+    _storeBloc.add(const StoresPageEvent());
     super.initState();
   }
 
@@ -52,47 +52,40 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
         title:
-            Center(child: Text('Danh mục sản phẩm', style: AppTextStyle.mediumTitle().copyWith(color: Colors.white))),
+            Center(child: Text('Danh sách cửa hàng', style: AppTextStyle.mediumTitle().copyWith(color: Colors.white))),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(
-        child: BlocBuilder<CategoryBloc, CategoryState>(
-          bloc: _categoryBloc,
+        child: BlocBuilder<StoreBloc, StoreState>(
+          bloc: _storeBloc,
           builder: (context, state) {
-            if (state is CategoriesPageFinishedState) {
+            if (state is StoresPageFinishedState) {
               return Column(
                 children: [
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 12.h),
                   GridView.builder(
                     padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: AppSizes.categoryCrossAxisSpacing,
-                      mainAxisSpacing: AppSizes.categoryMainAxisSpacing,
-                      childAspectRatio: 167 / 201,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: AppSizes.storeCrossAxisSpacing,
+                      mainAxisSpacing: AppSizes.storeMainAxisSpacing,
+                      childAspectRatio: 150 / 201,
                     ),
-                    itemCount: state.listCategories.length,
+                    itemCount: state.listStores.length,
                     itemBuilder: (context, index) {
                       //Home Product Component
                       return InkWell(
                         onTap: () {
-                          context.router.push(
-                            ProductByCategoryPageRoute(
-                              categoryId: state.listCategories[index].id,
-                              categoryName: state.listCategories[index].name.toString(),
-                            ),
-                          );
+                          context.router.push(ProductByStorePageRoute(storeId: state.listStores[index].id));
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 3.h),
                           child: Container(
-                            width: 115.h,
-                            padding: EdgeInsets.all(5.w),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(15.r),
+                              borderRadius: BorderRadius.circular(12.r),
                               boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(9, 30, 66, 0.25),
@@ -111,20 +104,42 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                             ),
                             child: Column(
                               children: [
-                                Text(
-                                  state.listCategories[index].name.toString(),
-                                  style: AppTextStyle.primaryText()
-                                      .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 5.h),
                                 Align(
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.r),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12.r),
+                                      topRight: Radius.circular(12.r),
+                                    ),
                                     child: ImageParse(
-                                      width: 70.h,
-                                      height: 70.h,
-                                      url: state.listCategories[index].imageUrl,
-                                      type: 'category',
+                                      width: AppSizes.storeImageSize(context),
+                                      height: AppSizes.storeImageSize(context),
+                                      url: state.listStores[index].storeImageUrl,
+                                      type: 'store',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10.h),
+                                Flexible(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.verified_user,
+                                          color: Colors.orangeAccent,
+                                          size: 15.w,
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Flexible(
+                                          child: Text(
+                                            '${state.listStores[index].storeName}',
+                                            style: AppTextStyle.primaryText()
+                                                .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                            maxLines: 1,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -138,7 +153,7 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
                   SizedBox(height: AppSizes.paddingBottom),
                 ],
               );
-            } else if (state is CategoriesPageLoadingState) {
+            } else if (state is StoresPageLoadingState) {
               return const LoadingPage();
             } else {
               return const SizedBox();

@@ -17,11 +17,13 @@ import 'package:funix_thieudvfx_foodsaver/features/my_profile/presentation/pages
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/pages/order_detail_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/order_history/presentation/pages/order_history_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_by_category_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_by_store_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_detail_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/pages/product_get_feedbacks_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/search/presentation/pages/search_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_in/presentation/pages/sign_in_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/sign_up/presentation/pages/sign_up_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/store/presentation/pages/store_page.dart';
 import 'package:injectable/injectable.dart';
 
 part 'navigation_service.gr.dart';
@@ -56,6 +58,10 @@ abstract class NavigationService implements RootStackRouter {}
       page: SearchPage,
     ),
     AutoRoute<Object>(
+      path: 'store',
+      page: StorePage,
+    ),
+    AutoRoute<Object>(
       path: 'category',
       page: CategoryPage,
     ),
@@ -66,6 +72,10 @@ abstract class NavigationService implements RootStackRouter {}
     AutoRoute<Object>(
       path: 'product_get_feedbacks',
       page: ProductGetFeedBacksPage,
+    ),
+    AutoRoute<Object>(
+      path: 'product_by_store',
+      page: ProductByStorePage,
     ),
     AutoRoute<Object>(
       path: 'product_by_category',

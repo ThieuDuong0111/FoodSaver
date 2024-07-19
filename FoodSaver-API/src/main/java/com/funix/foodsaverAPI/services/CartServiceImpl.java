@@ -208,7 +208,7 @@ public class CartServiceImpl implements ICartService {
 				// Create Order
 				Order order = new Order(currentCart.getUserCarts(), new Date(),
 					ParseUtils.generateOrderCode(), false, creatorIds.get(i),
-					userService.getUserById(creatorIds.get(i)).getName(), 0, 0);
+					userService.getUserById(creatorIds.get(i)).getStoreName(), 0, 0);
 				List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 				orderRepository.save(order);
 
