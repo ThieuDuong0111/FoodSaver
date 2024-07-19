@@ -96,11 +96,15 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                             systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
                             title: Stack(
                               children: [
-                                Image.network(
-                                  '${ApiEndpoints.baseUrl}/image/store/${state.listProductEntity.first.creator.storeImageUrl}',
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.width / 1.5,
-                                  fit: BoxFit.fill,
+                                Column(
+                                  children: [
+                                    Image.network(
+                                      '${ApiEndpoints.baseUrl}/image/store/${state.listProductEntity.first.creator.storeImageUrl}',
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.width / 1.5,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ],
                                 ),
                                 Positioned(
                                   top: 20.h,
@@ -109,9 +113,17 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                                     onTap: () {
                                       context.router.pop();
                                     },
-                                    child: const Icon(
-                                      Icons.arrow_back_ios,
-                                      color: Colors.white,
+                                    child: Container(
+                                      padding: EdgeInsets.only(top: 12.w, bottom: 12.w, left: 12.w, right: 3.w),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.greyColor.withOpacity(0.5),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: const Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -124,6 +136,45 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                SizedBox(height: 15.h),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.verified_user,
+                                            color: Colors.orangeAccent,
+                                            size: 15.w,
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Expanded(
+                                            child: Text(
+                                              '${state.listProductEntity.first.creator.storeName}',
+                                              style: AppTextStyle.mediumTitle()
+                                                  .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 5.h),
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 20.w),
+                                          Expanded(
+                                            child: Text(
+                                              '${state.listProductEntity.first.creator.address}',
+                                              style: AppTextStyle.primaryText()
+                                                  .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 SizedBox(height: 15.h),
                                 ProductListViewVertical(
                                   products: state.listProductEntity,

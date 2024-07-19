@@ -259,6 +259,21 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               TextSpan(
                                 children: [
                                   TextSpan(
+                                    text: 'Địa chỉ: ',
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: state.productEntity.creator.address,
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
                                     text: 'Ngày hết hạn: ',
                                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                   ),
