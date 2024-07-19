@@ -37,7 +37,7 @@ class ProductDetailRemoteDataSourceImpl implements ProductDetailRemoteDataSource
       );
 
       if (response.statusCode == 200) {
-        final ProductModel model = ProductModel.fromJson(json.decode(response.body));
+        final ProductModel model = ProductModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
         return Right(_productFromModelToEntityMapper.fromModel(model));
       }
       throw Exception();

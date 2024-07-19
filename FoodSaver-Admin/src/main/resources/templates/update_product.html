@@ -132,8 +132,7 @@
 											<label class="form-label" for="basic-default-expiredDate">Thời gian hết
 												hạn</label>
 											<input type="datetime-local" class="form-control"
-												id="basic-default-expiredDate" placeholder="Số lượng"
-												th:field="*{expiredDate}" />
+												id="basic-default-expiredDate" th:field="*{expiredDate}" />
 											<p th:if="${#fields.hasErrors('expiredDate')}" th:errorclass="text-danger"
 												th:errors="*{expiredDate}" />
 										</div>
@@ -146,7 +145,8 @@
 										</div>
 
 										<input type="hidden" th:value="*{id}" th:attr="name='id'" />
-										<input type="hidden" th:value="*{discountPrice}" th:attr="name='discountPrice'" />
+										<input type="hidden" th:value="*{discountPrice}"
+											th:attr="name='discountPrice'" />
 										<input type="hidden" th:value="*{image}" th:attr="name='image'" />
 										<input type="hidden" th:value="*{imageUrl}" th:attr="name='imageUrl'" />
 										<input type="hidden" th:value="*{imageType}" th:attr="name='imageType'" />

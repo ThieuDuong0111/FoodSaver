@@ -381,7 +381,10 @@ class _HomeWrapperState extends State<HomeWrapper> {
                           return Padding(
                             padding: EdgeInsets.only(right: 10.w),
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                context.router
+                                    .push(ProductByStorePageRoute(storeId: state.homeEntity.stores[index]!.id));
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 3.h),
                                 child: Container(

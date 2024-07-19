@@ -41,7 +41,7 @@ class SignInRemoteDataSourceImpl implements SignInRemoteDataSource {
         },
         body: signInRequest,
       );
-      model = SignInModel.fromJson(json.decode(response.body));
+      model = SignInModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         //Save token
         await _appStorage.writeValue(key: 'token', value: model.token);

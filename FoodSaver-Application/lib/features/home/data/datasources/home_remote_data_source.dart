@@ -35,7 +35,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
           'Content-Type': 'application/json',
         },
       );
-      final HomeModel model = HomeModel.fromJson(json.decode(response.body));
+      final HomeModel model = HomeModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         return Right(_homeFromModelToEntityMapper.fromModel(model));
       }

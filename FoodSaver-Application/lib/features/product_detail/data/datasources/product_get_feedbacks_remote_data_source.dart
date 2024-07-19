@@ -37,7 +37,7 @@ class ProductGetFeedBacksRemoteDataSourceImpl implements ProductGetFeedBacksRemo
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> jsonResponse = json.decode(response.body) as List<dynamic>;
+        final List<dynamic> jsonResponse = json.decode(_appHttpClient.utf8convert(response.body)) as List<dynamic>;
         final List<FeedBackModel> models =
             jsonResponse.map((json) => FeedBackModel.fromJson(json as Map<String, dynamic>)).toList();
         final List<FeedBackEntity> entities = models.map(_feedBackFromModelToEntityMapper.fromModel).toList();

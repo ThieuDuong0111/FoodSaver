@@ -42,6 +42,8 @@ abstract class AppHttpClient {
   Future<String> read(Uri url, {Map<String, String>? headers});
 
   Future<Uint8List> readBytes(Uri url, {Map<String, String>? headers});
+
+  String utf8convert(String text);
 }
 
 @Injectable(as: AppHttpClient)
@@ -127,5 +129,11 @@ class AppHttpClientImpl implements AppHttpClient {
     _appLogger.info('Method: READBYTES\nUrl: $url\nHeaders: $headers');
 
     return response;
+  }
+
+  @override
+  String utf8convert(String text) {
+    final List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

@@ -44,7 +44,7 @@ class OrderHistoryRemoteDataSourceImpl implements OrderHistoryRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> jsonResponse = json.decode(response.body) as List<dynamic>;
+        final List<dynamic> jsonResponse = json.decode(_appHttpClient.utf8convert(response.body)) as List<dynamic>;
         final List<OrderModel> models =
             jsonResponse.map((json) => OrderModel.fromJson(json as Map<String, dynamic>)).toList();
         final List<OrderEntity> entities = models.map(_orderFromModelToEntityMapper.fromModel).toList();

@@ -51,7 +51,7 @@ class SignUpRemoteDataSourceImpl implements SignUpRemoteDataSource {
         },
         body: signUpRequest,
       );
-      model = SignUpModel.fromJson(json.decode(response.body));
+      model = SignUpModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         return Right(_signUpFromModelToEntityMapper.fromModel(model)!);
       }

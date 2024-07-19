@@ -1,5 +1,6 @@
 package com.funix.foodsaveradmin.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class ProductControllerFoodCreator {
 	public String showNewProductForm(
 		Model model) {
 		ProductDTO productDTO = new ProductDTO();
+		Date currentDateTime = new Date();
+		productDTO.setExpiredDate(currentDateTime);
 		productDTO.setCategories(categoryServiceImpl.getAllCategories());
 		productDTO.setUnits(unitServiceImpl.getAllUnits());
 		model.addAttribute("productDTO", productDTO);

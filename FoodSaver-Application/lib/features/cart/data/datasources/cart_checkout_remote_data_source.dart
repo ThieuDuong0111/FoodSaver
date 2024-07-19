@@ -43,7 +43,7 @@ class CartCheckoutRemoteDataSourceImpl implements CartCheckoutRemoteDataSource {
           'Authorization': 'Bearer $token',
         },
       );
-      final CartModel model = CartModel.fromJson(json.decode(response.body));
+      final CartModel model = CartModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         return Right(_cartFromModelToEntityMapper.fromModel(model));
       }

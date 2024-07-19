@@ -42,7 +42,7 @@ class OrderDetailRemoteDataSourceImpl implements OrderDetailRemoteDataSource {
           'Authorization': 'Bearer $token',
         },
       );
-      final OrderModel model = OrderModel.fromJson(json.decode(response.body));
+      final OrderModel model = OrderModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         return Right(_orderFromModelToEntityMapper.fromModel(model));
       }

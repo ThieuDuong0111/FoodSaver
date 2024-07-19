@@ -44,7 +44,8 @@ class ProductAddFeedBackRemoteDataSourceImpl implements ProductAddFeedBackRemote
       );
 
       if (response.statusCode == 200) {
-        final AddFeedBackRequest model = AddFeedBackRequest.fromJson(json.decode(response.body));
+        final AddFeedBackRequest model =
+            AddFeedBackRequest.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
         return Right(model);
       }
       throw Exception();

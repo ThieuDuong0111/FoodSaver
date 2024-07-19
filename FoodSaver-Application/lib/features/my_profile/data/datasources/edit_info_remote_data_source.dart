@@ -84,7 +84,7 @@ class EditInfoRemoteDataSourceImpl implements EditInfoRemoteDataSource {
       //   },
       // );
 
-      // final UserModel model = UserModel.fromJson(json.decode(response.body));
+      // final UserModel model = UserModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       // if (response.statusCode == 200) {
       //   return Right(_userFromModelToEntityMapper.fromModel(model)!);
       // }

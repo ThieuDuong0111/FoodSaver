@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
@@ -22,7 +24,7 @@ class AppTextStyle {
   static TextStyle mediumTitle() {
     return TextStyle(
       color: Colors.black,
-      fontSize: 16.sp,
+      fontSize: 15.sp,
       fontWeight: FontWeight.w500,
     );
   }
@@ -60,5 +62,10 @@ class AppTextStyle {
       color: AppColors.greyColor,
       fontSize: 13.sp,
     );
+  }
+
+  static String utf8convert(String text) {
+    final List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
   }
 }

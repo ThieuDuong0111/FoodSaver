@@ -38,7 +38,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Future<void>.delayed(const Duration(seconds: 2));
   //Load Intl
-  await Lang.load(const Locale('vi', 'VN'));
+  // await Lang.load(const Locale('vi', 'VN'));
   //App Logger
   // final appLogger = DependencyInjection.instance<AppLogger>();
   // await runZonedGuarded(

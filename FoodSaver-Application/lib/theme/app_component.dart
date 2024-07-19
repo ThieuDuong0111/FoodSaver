@@ -16,7 +16,7 @@ class AppComponent {
             color: color,
           ),
         ),
-        Text(title, style: AppTextStyle.mediumTitle().copyWith(color: color)),
+        Flexible(child: Text(title, style: AppTextStyle.mediumTitle().copyWith(color: color))),
         Visibility(
           visible: false,
           maintainSize: true,

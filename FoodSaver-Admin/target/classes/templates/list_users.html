@@ -77,7 +77,7 @@
 										<tr>
 											<th>Id</th>
 											<th>Hình đại diện</th>
-											<th th:if="${role_id == 3}">Tên</th>
+											<th>Tên</th>
 											<th th:if="${role_id == 2}">Tên Cửa hàng</th>
 											<th>Email</th>
 											<th>Số điện thoại</th>
@@ -92,9 +92,9 @@
 													th:src="@{'/images/none_image.png'} " width="33px" height="33px"
 													style="border-radius: 50%;" /></td>
 											<td th:unless="${user.avatar == null || user.avatar == ''}"><img
-													th:src="@{'data:image/jpeg;base64,' + ${user.avatar}}"
-													width="33px" height="33px" , style="border-radius: 50%;" /></td>
-											<td th:if="${role_id == 3}" th:text="${user.name}"></td>
+													th:src="@{'data:image/jpeg;base64,' + ${user.avatar}}" width="33px"
+													height="33px" , style="border-radius: 50%;" /></td>
+											<td th:text="${user.name}"></td>
 											<td th:if="${role_id == 2}" th:text="${user.storeName}"></td>
 											<td th:text="${user.email}"></td>
 											<td th:text="${user.phone}"></td>

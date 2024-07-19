@@ -42,7 +42,7 @@ class UserInfoRemoteDataSourceImpl implements UserInfoRemoteDataSource {
           'Authorization': 'Bearer $token',
         },
       );
-      final UserModel model = UserModel.fromJson(json.decode(response.body));
+      final UserModel model = UserModel.fromJson(json.decode(_appHttpClient.utf8convert(response.body)));
       if (response.statusCode == 200) {
         return Right(_userFromModelToEntityMapper.fromModel(model)!);
       }

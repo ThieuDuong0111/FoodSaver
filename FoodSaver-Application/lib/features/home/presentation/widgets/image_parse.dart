@@ -34,6 +34,7 @@ class ImageParse extends StatelessWidget {
         '${ApiEndpoints.baseUrl}/image/$type/$url',
         width: width,
         height: height,
+        fit: BoxFit.fill,
       ),
     );
   }

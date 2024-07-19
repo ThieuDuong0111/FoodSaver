@@ -161,9 +161,11 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                                         style: AppTextStyle.mediumTitle().copyWith(color: AppColors.primaryBrand),
                                       ),
                                       // SizedBox(width: 1.w),
-                                      Text(
-                                        ' (${state.productEntity.unit.name})',
-                                        style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
+                                      Flexible(
+                                        child: Text(
+                                          ' (${state.productEntity.unit.name})',
+                                          style: AppTextStyle.mediumTitle().copyWith(color: Colors.black),
+                                        ),
                                       ),
                                     ],
                                   ),
