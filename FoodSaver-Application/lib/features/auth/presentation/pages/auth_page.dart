@@ -10,6 +10,7 @@ import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loa
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/cart_items_count_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
+import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -58,10 +59,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
           },
           builder: (context, state) {
             return Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.backGroundColor,
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.backGroundColor,
                 systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
                 toolbarHeight: 90.h,
               ),

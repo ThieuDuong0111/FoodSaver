@@ -57,7 +57,7 @@ class _CartWrapperState extends State<CartWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
@@ -179,7 +179,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                       Container(
                                                         width: double.infinity,
                                                         height: 1.h,
-                                                        color: const Color(0xFFCACACA),
+                                                        color: const Color(0xFFCACACA).withOpacity(0.5),
                                                       ),
                                                     ],
                                                   )
@@ -446,7 +446,7 @@ class _CartWrapperState extends State<CartWrapper> {
                                                           Container(
                                                             width: double.infinity,
                                                             height: 1.h,
-                                                            color: const Color(0xFFCACACA),
+                                                            color: const Color(0xFFCACACA).withOpacity(0.5),
                                                           ),
                                                       ],
                                                     );

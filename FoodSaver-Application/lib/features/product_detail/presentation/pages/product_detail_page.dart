@@ -90,7 +90,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
     currentScreenWidth = MediaQuery.of(context).size.width - AppSizes.paddingHorizontal * 2;
     remainWidth = currentScreenWidth - ratingWidth;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
@@ -306,7 +306,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 10.h),
                             InkWell(
@@ -578,7 +578,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 10.h),
                             Row(
@@ -615,7 +615,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 5.h),
                             Row(
@@ -644,7 +644,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 5.h),
                             Row(
@@ -673,7 +673,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 5.h),
                             Row(
@@ -703,7 +703,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(height: 5.h),
                             Row(
@@ -733,7 +733,7 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                             Container(
                               width: double.infinity,
                               height: 1.h,
-                              color: const Color(0xFFCACACA),
+                              color: const Color(0xFFCACACA).withOpacity(0.5),
                             ),
                             SizedBox(
                               height: AppSizes.buttonHeight + 24.h,

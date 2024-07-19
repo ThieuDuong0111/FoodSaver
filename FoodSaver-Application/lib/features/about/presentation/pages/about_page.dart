@@ -36,7 +36,7 @@ class _AboutWrapperState extends State<AboutWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,

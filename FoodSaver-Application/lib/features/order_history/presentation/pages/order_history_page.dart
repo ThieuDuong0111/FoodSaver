@@ -48,7 +48,7 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
@@ -88,11 +88,19 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12.r),
                                       color: Colors.white,
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
-                                          color: const Color(0XFF000000).withOpacity(0.25),
-                                          blurRadius: 3,
-                                          offset: const Offset(3, 4),
+                                          color: Color.fromRGBO(9, 30, 66, 0.25),
+                                          blurRadius: 8,
+                                          spreadRadius: -2,
+                                          offset: Offset(
+                                            0,
+                                            4,
+                                          ),
+                                        ),
+                                        BoxShadow(
+                                          color: Color.fromRGBO(9, 30, 66, 0.08),
+                                          spreadRadius: 1,
                                         ),
                                       ],
                                     ),

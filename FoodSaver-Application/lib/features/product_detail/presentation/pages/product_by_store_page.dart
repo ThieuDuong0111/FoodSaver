@@ -89,7 +89,7 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                 if (state is ProductByStorePageFinishedState) {
                   return state.listProductEntity.isNotEmpty
                       ? Scaffold(
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.backGroundColor,
                           appBar: AppBar(
                             backgroundColor: AppColors.primaryBrand,
                             automaticallyImplyLeading: false,
@@ -188,7 +188,7 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                           ),
                         )
                       : Scaffold(
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.backGroundColor,
                           appBar: AppBar(
                             automaticallyImplyLeading: false,
                             titleSpacing: AppSizes.paddingHorizontal,
@@ -201,7 +201,7 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                         );
                 } else if (state is ProductByStorePageLoadingState) {
                   return Scaffold(
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.backGroundColor,
                     appBar: AppBar(
                       automaticallyImplyLeading: false,
                       titleSpacing: AppSizes.paddingHorizontal,
@@ -214,7 +214,7 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                   );
                 } else {
                   return Scaffold(
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.backGroundColor,
                     appBar: AppBar(
                       automaticallyImplyLeading: false,
                       titleSpacing: AppSizes.paddingHorizontal,

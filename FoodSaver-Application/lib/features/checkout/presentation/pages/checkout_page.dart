@@ -47,7 +47,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
@@ -77,7 +77,7 @@ class _CheckoutWrapperState extends State<CheckoutWrapper> {
             Container(
               width: double.infinity,
               height: 1.h,
-              color: const Color(0xFFCACACA),
+              color: const Color(0xFFCACACA).withOpacity(0.5),
             ),
             SizedBox(height: 12.h),
             Text.rich(

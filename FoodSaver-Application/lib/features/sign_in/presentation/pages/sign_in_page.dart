@@ -66,7 +66,7 @@ class _SignInWrapperState extends State<SignInWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(0),
         child: AppBar(

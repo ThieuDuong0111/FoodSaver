@@ -47,7 +47,7 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         titleSpacing: AppSizes.paddingHorizontal,
@@ -67,310 +67,368 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 12.h),
-                  Text(
-                    'Mã: ${state.orderEntity.orderCode!}',
-                    style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.verified_user,
-                              color: Colors.orangeAccent,
-                              size: 15.w,
-                            ),
-                            SizedBox(width: 5.w),
-                            Expanded(
-                              child: Text(
-                                state.orderEntity.creatorName!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.smallText().copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 5.w),
-                      Text(
-                        ParseUtils.formatDateTime(
-                          state.orderEntity.publishedDate.toString(),
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.smallText().copyWith(
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
                   Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 10.h),
-                  Column(
-                    children: state.orderEntity.orderDetails
-                        .map(
-                          (e) => Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.r),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(9, 30, 66, 0.25),
+                          blurRadius: 8,
+                          spreadRadius: -2,
+                          offset: Offset(
+                            0,
+                            4,
+                          ),
+                        ),
+                        BoxShadow(
+                          color: Color.fromRGBO(9, 30, 66, 0.08),
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Mã: ${state.orderEntity.orderCode!}',
+                          style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.r),
-                                    child: ImageParse(
-                                      width: 45.w,
-                                      height: 45.w,
-                                      url: e!.productImage.toString(),
-                                      type: 'order/${e.id}',
-                                    ),
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.orangeAccent,
+                                    size: 15.w,
                                   ),
                                   SizedBox(width: 5.w),
                                   Expanded(
-                                    flex: 3,
-                                    child: Text(e.productName!, style: AppTextStyle.smallText()),
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  Expanded(
-                                    child: Text('x${e.unitQuantity}', style: AppTextStyle.smallText()),
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  Expanded(
-                                    flex: 2,
                                     child: Text(
-                                      ParseUtils.formatCurrencyWithoutSymbol(e.unitPrice.toDouble()),
-                                      style: AppTextStyle.smallText(),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      ParseUtils.formatCurrencyWithoutSymbol((e.unitPrice * e.unitQuantity).toDouble()),
-                                      style: AppTextStyle.smallText(),
-                                      textAlign: TextAlign.right,
+                                      state.orderEntity.creatorName!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppTextStyle.smallText().copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5.h),
-                              Container(
-                                width: double.infinity,
-                                height: 1.h,
-                                color: const Color(0xFFCACACA),
+                            ),
+                            SizedBox(width: 5.w),
+                            Text(
+                              ParseUtils.formatDateTime(
+                                state.orderEntity.publishedDate.toString(),
                               ),
-                              SizedBox(height: 8.h),
-                            ],
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        ParseUtils.convertStatusTypeText(state.orderEntity.statusType),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.smallText().copyWith(
-                          color: ParseUtils.convertStatusTypeColor(
-                            state.orderEntity.statusType,
-                          ),
-                          fontWeight: FontWeight.w500,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.smallText().copyWith(
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(width: 5.w),
-                      Text(
-                        ParseUtils.formatCurrency(
-                          state.orderEntity.totalAmount.toDouble(),
+                        SizedBox(height: 10.h),
+                        Row(
+                          children: [
+                            Text(
+                              'Trạng thái: ',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.smallText().copyWith(
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              ParseUtils.convertStatusTypeText(state.orderEntity.statusType),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.smallText().copyWith(
+                                color: ParseUtils.convertStatusTypeColor(
+                                  state.orderEntity.statusType,
+                                ),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 15.h),
-                  Text(
-                    'Thông tin người bán: ',
-                    style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 10.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Hình ảnh:',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w400,
-                          ),
+                        SizedBox(height: 10.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5),
                         ),
-                      ),
-                      Flexible(
-                        child: ValidateUtils.isNotNullOrEmpty(state.orderEntity.creator.imageUrl)
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20.w),
-                                child: ImageParse(
-                                  width: 40.w,
-                                  height: 40.w,
-                                  url: state.orderEntity.creator.imageUrl,
-                                  type: 'user',
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: state.orderEntity.orderDetails
+                              .map(
+                                (e) => Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(5.r),
+                                          child: ImageParse(
+                                            width: 45.w,
+                                            height: 45.w,
+                                            url: e!.productImage.toString(),
+                                            type: 'order/${e.id}',
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Text(e.productName!, style: AppTextStyle.smallText()),
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Expanded(
+                                          child: Text('x${e.unitQuantity}', style: AppTextStyle.smallText()),
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            ParseUtils.formatCurrencyWithoutSymbol(e.unitPrice.toDouble()),
+                                            style: AppTextStyle.smallText(),
+                                            textAlign: TextAlign.right,
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.w),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            ParseUtils.formatCurrencyWithoutSymbol(
+                                              (e.unitPrice * e.unitQuantity).toDouble(),
+                                            ),
+                                            style: AppTextStyle.smallText(),
+                                            textAlign: TextAlign.right,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.h),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 1.h,
+                                      color: const Color(0xFFCACACA).withOpacity(0.5),
+                                    ),
+                                    SizedBox(height: 8.h),
+                                  ],
                                 ),
                               )
-                            : Icon(
-                                Icons.account_circle,
-                                size: 40.w,
-                                color: AppColors.greyColor,
+                              .toList(),
+                        ),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(width: 5.w),
+                            Text(
+                              ParseUtils.formatCurrency(
+                                state.orderEntity.totalAmount.toDouble(),
                               ),
-                      ),
-                    ],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 5.h),
+                  SizedBox(height: 15.h),
                   Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Tên:',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w400,
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.r),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(9, 30, 66, 0.25),
+                          blurRadius: 8,
+                          spreadRadius: -2,
+                          offset: Offset(
+                            0,
+                            4,
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          '${state.orderEntity.creator.name}',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.right,
+                        BoxShadow(
+                          color: Color.fromRGBO(9, 30, 66, 0.08),
+                          spreadRadius: 1,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Số điện thoại:',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w400,
-                          ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Thông tin người bán: ',
+                          style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w600),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          '${state.orderEntity.creator.phone}',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.right,
+                        SizedBox(height: 10.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Email:',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w400,
-                          ),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Hình ảnh:',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: ValidateUtils.isNotNullOrEmpty(state.orderEntity.creator.imageUrl)
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.w),
+                                      child: ImageParse(
+                                        width: 40.w,
+                                        height: 40.w,
+                                        url: state.orderEntity.creator.imageUrl,
+                                        type: 'user',
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.account_circle,
+                                      size: 40.w,
+                                      color: AppColors.greyColor,
+                                    ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          '${state.orderEntity.creator.email}',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.right,
+                        SizedBox(height: 5.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5).withOpacity(0.5),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
-                  ),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Địa chỉ:',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w400,
-                          ),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Tên:',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${state.orderEntity.creator.name}',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          '${state.orderEntity.creator.address}',
-                          style: AppTextStyle.smallText().copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.right,
+                        SizedBox(height: 5.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5.h),
-                  Container(
-                    width: double.infinity,
-                    height: 1.h,
-                    color: const Color(0xFFCACACA),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Số điện thoại:',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${state.orderEntity.creator.phone}',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5),
+                        ),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                'Email:',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 7,
+                              child: Text(
+                                '${state.orderEntity.creator.email}',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5.h),
+                        Container(
+                          width: double.infinity,
+                          height: 1.h,
+                          color: const Color(0xFFCACACA).withOpacity(0.5),
+                        ),
+                        SizedBox(height: 5.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Địa chỉ:',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                '${state.orderEntity.creator.address}',
+                                style: AppTextStyle.smallText().copyWith(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               );

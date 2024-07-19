@@ -53,7 +53,7 @@ class _InitwrapperState extends State<Initwrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backGroundColor,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -78,7 +78,7 @@ class _InitwrapperState extends State<Initwrapper> {
               unselectedFontSize: 12.sp,
               selectedItemColor: AppColors.primaryBrand,
               unselectedItemColor: AppColors.greyColor,
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.backGroundColor,
               elevation: 1,
               type: BottomNavigationBarType.fixed,
               currentIndex: bottomSelectedIndex,

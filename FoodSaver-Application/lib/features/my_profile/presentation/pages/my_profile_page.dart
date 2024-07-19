@@ -49,7 +49,7 @@ class _MyProfileWrapperState extends State<MyProfileWrapper> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backGroundColor,
         appBar: AppBar(
           backgroundColor: AppColors.primaryBrand,
           systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
