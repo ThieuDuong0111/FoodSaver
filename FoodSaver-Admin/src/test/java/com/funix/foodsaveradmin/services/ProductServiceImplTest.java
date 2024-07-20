@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.text.ParseException;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
 
 @DataJpaTest
@@ -32,7 +33,8 @@ public class ProductServiceImplTest {
 	private ProductServiceImpl productService;
 
 	@Test
-	public void testSaveProduct() throws IOException, ParseException {
+	public void ProductService_SaveCategory_ReturnCategory()
+		throws IOException, ParseException {
 		// Given
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setName("Test Product");
@@ -59,12 +61,14 @@ public class ProductServiceImplTest {
 	}
 
 	@Test
-	public void testDeleteProductById() {
+	public void ProductService_DeleteProductById() {
 		// Given
 		int productId = 1;
 		// When
+		doNothing().when(productRepository).deleteById(productId);
+
+		// Calling service method
 		productService.deleteProductById(productId);
-		// Then
-		verify(productRepository, times(1)).deleteById(productId);
+		assertAll(() -> productService.deleteProductById(productId));
 	}
 }

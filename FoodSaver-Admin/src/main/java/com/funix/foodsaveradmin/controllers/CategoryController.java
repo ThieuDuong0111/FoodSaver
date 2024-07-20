@@ -57,7 +57,8 @@ public class CategoryController {
 	@GetMapping("/update/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
-		CategoryDTO categoryDTO = categoryServiceImpl.getCategoryById(id);
+		CategoryDTO categoryDTO = categoryServiceImpl
+			.convertToDto(categoryServiceImpl.getCategoryById(id));
 		model.addAttribute("categoryDTO", categoryDTO);
 		return "update_category";
 	}

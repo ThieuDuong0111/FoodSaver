@@ -11,8 +11,10 @@ import com.funix.foodsaverAPI.services.CategoryServiceImpl;
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
+
 	@Autowired
 	private CategoryServiceImpl categoryServiceImpl;
+
 	@GetMapping({ "/categories/all" })
 	public ResponseEntity<?> getAllProducts() {
 		return ResponseEntity.ok(categoryServiceImpl.getAllCategories());

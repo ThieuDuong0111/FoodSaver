@@ -17,7 +17,7 @@ public interface ICategoryService {
 
 	void saveCategory(CategoryDTO categoryDTO);
 
-	CategoryDTO getCategoryById(int id);
+	Category getCategoryById(int id);
 
 	void deleteCategoryById(int id);
 

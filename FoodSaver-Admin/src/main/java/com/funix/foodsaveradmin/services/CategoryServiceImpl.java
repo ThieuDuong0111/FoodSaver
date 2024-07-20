@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public CategoryDTO getCategoryById(int id) {
+	public Category getCategoryById(int id) {
 		Optional<Category> optionalCategory = categoryRepository.findById(id);
 		Category category = null;
 		if (optionalCategory.isPresent()) {
@@ -78,7 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
 		} else {
 			throw new RuntimeException("Category not found for id : " + id);
 		}
-		return convertToDto(category);
+		return category;
 	}
 
 	@Override

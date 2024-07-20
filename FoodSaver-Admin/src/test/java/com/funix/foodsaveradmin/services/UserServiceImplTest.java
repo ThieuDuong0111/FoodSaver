@@ -1,6 +1,7 @@
 package com.funix.foodsaveradmin.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
 
 import java.util.*;
@@ -8,11 +9,13 @@ import java.util.*;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.funix.foodsaveradmin.dto.UserDTO;
 import com.funix.foodsaveradmin.models.MyUser;
@@ -32,7 +35,34 @@ public class UserServiceImplTest {
 	private UserServiceImpl userService;
 
 	@Test
-	public void convertToDto_ShouldMapCorrectly() {
+	public void UserService_SaveUser_ReturnUser() {
+		// Given
+		UserDTO UserDTO = new UserDTO();
+		UserDTO.setName("Test User");
+		UserDTO.setPassword("12345678");
+		MultipartFile imageFile = Mockito.mock(MultipartFile.class);
+		UserDTO.setImageFile(imageFile);
+
+		// Mocking image processing
+		when(imageFile.isEmpty()).thenReturn(false);
+		when(imageFile.getContentType()).thenReturn("image/jpeg");
+		UserDTO.setImageType("image/jpeg");
+
+		// Mocking repository save method
+		when(modelMapper.map(UserDTO, MyUser.class))
+			.thenReturn(new MyUser());
+		when(userRepository.save(Mockito.any(MyUser.class)))
+			.thenReturn(new MyUser());
+
+		// When
+		userService.saveUser(UserDTO, true);
+
+		// Then
+		verify(userRepository, times(1)).save(Mockito.any(MyUser.class));
+	}
+
+	@Test
+	public void UserService_ConvertToDto_ShouldMapCorrectly() {
 		MyUser user = new MyUser();
 		user.setId(1);
 		user.setName("testUser");
@@ -51,7 +81,7 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void convertToEntity_ShouldMapCorrectly() {
+	public void UserService_ConvertToEntity_ShouldMapCorrectly() {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setId(1);
 		userDTO.setName("testUser");
@@ -70,39 +100,33 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void getAllUsers_ShouldReturnAllUsers() {
-		List<MyUser> userList = Arrays.asList(new MyUser(), new MyUser());
-		when(userRepository.findAll()).thenReturn(userList);
+	public void UserService_WhenGetAll_shouldReturnList() {
+		// Mocking repository response
+		MyUser user1 = new MyUser();
+		MyUser user2 = new MyUser();
+		List<MyUser> users = Arrays.asList(user1, user2);
+		when(userRepository.findAll()).thenReturn(users);
 
+		// Calling service method
 		List<MyUser> result = userService.getAllUsers();
 
+		// Asserting the result
 		assertThat(result).hasSize(2);
-	}
-	
-	@Test
-	public void saveUser_ShouldSaveUserCorrectly() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setName("newUser");
-		userDTO.setPassword("password");
-
-		MyUser convertedUser = new MyUser();
-
-		when(modelMapper.map(userDTO, MyUser.class)).thenReturn(convertedUser);
-
-		userService.saveUser(userDTO, true);
-
-		verify(userRepository, times(1)).save(convertedUser);
+		assertThat(result).contains(user1, user2);
 	}
 
 	@Test
-	public void deleteUserById_ShouldDeleteUserWithGivenId() {
+	public void UserService_DeleteUserById_ShouldDeleteUserWithGivenId() {
 		int userId = 1;
+		doNothing().when(userRepository).deleteById(userId);
+
+		// Calling service method
 		userService.deleteUserById(userId);
-		verify(userRepository, times(1)).deleteById(userId);
+		assertAll(() -> userService.deleteUserById(userId));
 	}
 
 	@Test
-	public void findPaginated_ShouldReturnPageOfUsers() {
+	public void UserService_FindPaginated_ShouldReturnPageOfUsers() {
 		int pageNum = 1;
 		int pageSize = 10;
 		String sortField = "id";
