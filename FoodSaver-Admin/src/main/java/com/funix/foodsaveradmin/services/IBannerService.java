@@ -17,7 +17,7 @@ public interface IBannerService {
 
 	void saveBanner(BannerDTO BannerDTO);
 
-	BannerDTO getBannerById(int id);
+	Banner getBannerById(int id);
 
 	void deleteBannerById(int id);
 	

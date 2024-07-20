@@ -17,7 +17,7 @@ public interface IUnitService {
 
 	void saveUnit(UnitDTO UnitDTO);
 
-	UnitDTO getUnitById(int id);
+	Unit getUnitById(int id);
 
 	void deleteUnitById(int id);
 

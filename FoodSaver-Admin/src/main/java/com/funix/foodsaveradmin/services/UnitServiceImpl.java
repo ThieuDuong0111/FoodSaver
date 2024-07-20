@@ -43,7 +43,7 @@ public class UnitServiceImpl implements IUnitService {
 	}
 
 	@Override
-	public UnitDTO getUnitById(int id) {
+	public Unit getUnitById(int id) {
 		Optional<Unit> optionalUnit = UnitRepository.findById(id);
 		Unit Unit = null;
 		if (optionalUnit.isPresent()) {
@@ -51,7 +51,7 @@ public class UnitServiceImpl implements IUnitService {
 		} else {
 			throw new RuntimeException("Unit not found for id : " + id);
 		}
-		return convertToDto(Unit);
+		return Unit;
 	}
 
 	@Override

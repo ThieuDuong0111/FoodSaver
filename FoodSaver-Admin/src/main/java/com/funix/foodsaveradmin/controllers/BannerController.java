@@ -57,7 +57,8 @@ public class BannerController {
 	@GetMapping("/update/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
-		BannerDTO BannerDTO = bannerServiceImpl.getBannerById(id);
+		BannerDTO BannerDTO = bannerServiceImpl
+			.convertToDto(bannerServiceImpl.getBannerById(id));
 		model.addAttribute("bannerDTO", BannerDTO);
 		return "update_banner";
 	}

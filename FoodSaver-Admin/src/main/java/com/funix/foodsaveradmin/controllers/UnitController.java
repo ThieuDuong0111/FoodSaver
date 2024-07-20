@@ -57,7 +57,8 @@ public class UnitController {
 	@GetMapping("/update/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") int id,
 		Model model) {
-		UnitDTO unitDTO = unitServiceImpl.getUnitById(id);
+		UnitDTO unitDTO = unitServiceImpl
+			.convertToDto(unitServiceImpl.getUnitById(id));
 		model.addAttribute("unitDTO", unitDTO);
 		return "update_unit";
 	}

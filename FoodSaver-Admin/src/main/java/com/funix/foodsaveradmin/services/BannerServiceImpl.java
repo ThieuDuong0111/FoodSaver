@@ -24,6 +24,7 @@ public class BannerServiceImpl implements IBannerService {
 
 	@Autowired
 	private IBannerRepository bannerRepository;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -33,8 +34,8 @@ public class BannerServiceImpl implements IBannerService {
 	}
 
 	@Override
-	public BannerDTO convertToDto(Banner Banner) {
-		return modelMapper.map(Banner, BannerDTO.class);
+	public BannerDTO convertToDto(Banner banner) {
+		return modelMapper.map(banner, BannerDTO.class);
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class BannerServiceImpl implements IBannerService {
 	}
 
 	@Override
-	public BannerDTO getBannerById(int id) {
+	public Banner getBannerById(int id) {
 		Optional<Banner> optionalBanner = bannerRepository.findById(id);
 		Banner Banner = null;
 		if (optionalBanner.isPresent()) {
@@ -79,7 +80,8 @@ public class BannerServiceImpl implements IBannerService {
 		} else {
 			throw new RuntimeException("Banner not found for id : " + id);
 		}
-		return convertToDto(Banner);
+//		BannerDTO bannerDTO = convertToDto(Banner); 
+		return Banner;
 	}
 
 	@Override
