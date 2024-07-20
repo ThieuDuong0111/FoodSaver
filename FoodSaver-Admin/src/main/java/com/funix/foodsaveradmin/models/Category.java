@@ -37,6 +37,17 @@ public class Category {
 	@Column(length = 20)
 	private String imageType;
 
+	public Category() {
+		super();
+	}
+
+	public Category(int id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
 	public int getId() {
 		return id;
 	}

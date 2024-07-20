@@ -13,7 +13,7 @@ public interface IBannerService {
 
 	Banner convertToEntity(BannerDTO BannerDTO);
 
-	List<Banner> getAllCategories();
+	List<Banner> getAllBanners();
 
 	void saveBanner(BannerDTO BannerDTO);
 

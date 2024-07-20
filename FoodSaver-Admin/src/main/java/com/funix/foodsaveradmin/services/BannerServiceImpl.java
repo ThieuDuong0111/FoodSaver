@@ -28,7 +28,7 @@ public class BannerServiceImpl implements IBannerService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<Banner> getAllCategories() {
+	public List<Banner> getAllBanners() {
 		return bannerRepository.findAll();
 	}
 

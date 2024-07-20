@@ -13,7 +13,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.web.multipart.MultipartFile;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -27,6 +31,22 @@ public class CategoryServiceImplTest {
 
 	@InjectMocks
 	private CategoryServiceImpl categoryService;
+	
+	@Test
+	public void whenGetAll_shouldReturnList() {
+		// Mocking repository response
+		Category category1 = new Category(1, "Category 1", "Description 1");
+		Category category2 = new Category(2, "Category 2", "Description 2");
+		List<Category> categories = Arrays.asList(category1, category2);
+		when(categoryRepository.findAll()).thenReturn(categories);
+
+		// Calling service method
+		List<Category> result = categoryService.getAllCategories();
+
+		// Asserting the result
+		assertThat(result).hasSize(2);
+		assertThat(result).contains(category1, category2);
+	}
 
 	@Test
 	public void testSaveCategory() {

@@ -10,6 +10,7 @@ import com.funix.foodsaveradmin.models.Category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
@@ -20,67 +21,74 @@ public class CategoryRepositoryTest {
 	private ICategoryRepository categoryRepository;
 
 	@Test
-	public void testSaveCategory() {
-		// Create a new category and save it to the repository
+	public void CategoryRepository_Category_ReturnSaveCategory() {
 		Category category = new Category();
 		category.setName("Beverage");
 		category.setDescription("Drinks and other beverages");
+
 		categoryRepository.save(category);
 
-		// Retrieve the category by name
-		Optional<Category> found = categoryRepository.findByName("Beverage");
+		Category savedCategory = categoryRepository.save(category);
 
-		// Verify the category was saved correctly
-		assertThat(found).isPresent();
-		assertThat(found.get().getName()).isEqualTo("Beverage");
-		assertThat(found.get().getDescription())
+		assertThat(savedCategory.getName()).isEqualTo("Beverage");
+		assertThat(savedCategory.getDescription())
 			.isEqualTo("Drinks and other beverages");
 	}
 
 	@Test
-	public void testFindByName() {
-		// Create a new category and save it to the repository
-		Category category = new Category();
-		category.setName("Food");
-		category.setDescription("Various food items");
-		categoryRepository.save(category);
+	public void CategoryRepository_GetAll_ReturnListCategory() {
+		Category category1 = new Category();
+		category1.setName("Beverage1");
+		category1.setDescription("Drinks and other beverages 1");
 
-		// Retrieve the category by name
-		Optional<Category> found = categoryRepository.findByName("Food");
+		Category category2 = new Category();
+		category2.setName("Beverage 2");
+		category2.setDescription("Drinks and other beverages 2");
 
-		// Verify the category was found and the name is correct
-		assertThat(found).isPresent();
-		assertThat(found.get().getName()).isEqualTo("Food");
+		categoryRepository.save(category1);
+		categoryRepository.save(category2);
+
+		List<Category> categoryList = categoryRepository.findAll();
+
+		assertThat(categoryList).isNotNull();
 	}
 
 	@Test
-	public void testFindByName_NotFound() {
-		// Attempt to find a category that doesn't exist
-		Optional<Category> found = categoryRepository.findByName("Nonexistent");
-
-		// Verify no category is found
-		assertThat(found).isNotPresent();
-	}
-
-	@Test
-	public void testFindById() {
-		// Create a new category and save it to the repository
+	public void BannerRepository_FindById_Found() {
 		Category category = new Category();
-		category.setName("Snacks");
-		category.setDescription("Various snacks");
+		category.setName("Beverage");
+		category.setDescription("Drinks and other beverages");
 		categoryRepository.save(category);
-
-		// Retrieve the category by ID
+		
 		Optional<Category> found = categoryRepository
 			.findById(category.getId());
 
-		// Verify the category was found and the ID is correct
 		assertThat(found).isPresent();
 		assertThat(found.get().getId()).isEqualTo(category.getId());
 	}
 
 	@Test
-	public void testUpdateCategory() {
+	public void CategoryRepository_FindByName_Found() {
+		Category category = new Category();
+		category.setName("Beverage");
+		category.setDescription("Drinks and other beverages");
+		categoryRepository.save(category);
+
+		Optional<Category> found = categoryRepository
+			.findByName(category.getName());
+
+		assertThat(found).isPresent();
+		assertThat(found.get().getName()).isEqualTo(category.getName());
+	}
+
+	@Test
+	public void CategoryRepository_FindByName_NotFound() {
+		Optional<Category> found = categoryRepository.findByName("Nonexistent");
+		assertThat(found).isNotPresent();
+	}
+
+	@Test
+	public void CategoryRepository_UpdateCategory_Success() {
 		// Create a new category and save it to the repository
 		Category category = new Category();
 		category.setName("Confectionery");
@@ -108,7 +116,7 @@ public class CategoryRepositoryTest {
 	}
 
 	@Test
-	public void testDeleteCategory() {
+	public void CategoryRepository_DeleteCategory_Success() {
 		// Create a new category and save it to the repository
 		Category category = new Category();
 		category.setName("Dairy");

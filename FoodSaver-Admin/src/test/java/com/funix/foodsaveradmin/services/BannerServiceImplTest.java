@@ -39,7 +39,7 @@ public class BannerServiceImplTest {
 	private BannerServiceImpl bannerService;
 
 	@Test
-	public void testGetAllBanners() {
+	public void whenGetAll_shouldReturnList() {
 		// Mocking repository response
 		Banner banner1 = new Banner(1, "Banner 1", "image1", "url1",
 			"image/png");
@@ -49,7 +49,7 @@ public class BannerServiceImplTest {
 		when(bannerRepository.findAll()).thenReturn(banners);
 
 		// Calling service method
-		List<Banner> result = bannerService.getAllCategories();
+		List<Banner> result = bannerService.getAllBanners();
 
 		// Asserting the result
 		assertThat(result).hasSize(2);

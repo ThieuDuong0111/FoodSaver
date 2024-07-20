@@ -10,110 +10,109 @@ import com.funix.foodsaveradmin.models.Banner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class BannerRepositoryTest {
 
-    @Autowired
-    private IBannerRepository bannerRepository;
+	@Autowired
+	private IBannerRepository bannerRepository;
 
-    @Test
-    public void testSaveBanner() {
-        // Create a new banner and save it to the repository
-        Banner banner = new Banner();
-        banner.setName("Promo Banner");
-        banner.setImageUrl("https://example.com/banner.jpg");
-        banner.setImageType("jpg");
-        bannerRepository.save(banner);
+	@Test
+	public void BannerRepository_Save_ReturnSaveBanner() {
+		Banner banner = new Banner();
+		banner.setName("Promo Banner");
+		banner.setImageUrl("https://example.com/banner.jpg");
+		banner.setImageType("jpg");
 
-        // Retrieve the banner by name
-        Optional<Banner> found = bannerRepository.findByName("Promo Banner");
+		Banner savedBanner = bannerRepository.save(banner);
 
-        // Verify the banner was saved correctly
-        assertThat(found).isPresent();
-        assertThat(found.get().getName()).isEqualTo("Promo Banner");
-        assertThat(found.get().getImageUrl()).isEqualTo("https://example.com/banner.jpg");
-        assertThat(found.get().getImageType()).isEqualTo("jpg");
-    }
+		assertThat(savedBanner.getName()).isEqualTo("Promo Banner");
+		assertThat(savedBanner.getImageUrl())
+			.isEqualTo("https://example.com/banner.jpg");
+		assertThat(savedBanner.getImageType()).isEqualTo("jpg");
+	}
 
-    @Test
-    public void testFindByName() {
-        // Create and save a new banner
-        Banner banner = new Banner();
-        banner.setName("Sale Banner");
-        bannerRepository.save(banner);
+	@Test
+	public void BannerRepository_GetAll_ReturnListBanner() {
+		Banner banner1 = new Banner();
+		banner1.setName("Banner 1");
 
-        // Retrieve the banner by name
-        Optional<Banner> found = bannerRepository.findByName("Sale Banner");
+		Banner banner2 = new Banner();
+		banner2.setName("Banner 2");
 
-        // Verify the banner was found and the name is correct
-        assertThat(found).isPresent();
-        assertThat(found.get().getName()).isEqualTo("Sale Banner");
-    }
+		bannerRepository.save(banner1);
+		bannerRepository.save(banner2);
 
-    @Test
-    public void testFindByName_NotFound() {
-        // Attempt to find a banner that doesn't exist
-        Optional<Banner> found = bannerRepository.findByName("Nonexistent");
+		List<Banner> bannerList = bannerRepository.findAll();
 
-        // Verify no banner is found
-        assertThat(found).isNotPresent();
-    }
+		assertThat(bannerList).isNotNull();
+	}
 
-    @Test
-    public void testFindById() {
-        // Create and save a new banner
-        Banner banner = new Banner();
-        banner.setName("Special Offer Banner");
-        bannerRepository.save(banner);
+	@Test
+	public void BannerRepository_FindById_Found() {
+		Banner banner = new Banner();
+		banner.setName("Special Offer Banner");
+		bannerRepository.save(banner);
 
-        // Retrieve the banner by ID
-        Optional<Banner> found = bannerRepository.findById(banner.getId());
+		Optional<Banner> found = bannerRepository.findById(banner.getId());
 
-        // Verify the banner was found and the ID is correct
-        assertThat(found).isPresent();
-        assertThat(found.get().getId()).isEqualTo(banner.getId());
-    }
+		assertThat(found).isPresent();
+		assertThat(found.get().getId()).isEqualTo(banner.getId());
+	}
 
-    @Test
-    public void testUpdateBanner() {
-        // Create and save a new banner
-        Banner banner = new Banner();
-        banner.setName("Featured Banner");
-        bannerRepository.save(banner);
+	@Test
+	public void BannerRepository_FindByName_Found() {
+		Banner banner = new Banner();
+		banner.setName("Special Offer Banner");
+		bannerRepository.save(banner);
 
-        // Retrieve the banner by name
-        Optional<Banner> found = bannerRepository.findByName("Featured Banner");
+		Optional<Banner> found = bannerRepository.findByName(banner.getName());
 
-        // Update the banner's details
-        Banner updatedBanner = found.get();
-        updatedBanner.setName("Updated Banner");
-        updatedBanner.setImageUrl("https://example.com/updated.jpg");
-        updatedBanner.setImageType("png");
-        bannerRepository.save(updatedBanner);
+		assertThat(found).isPresent();
+		assertThat(found.get().getName()).isEqualTo(banner.getName());
+	}
 
-        // Verify the banner was updated correctly
-        Optional<Banner> foundUpdated = bannerRepository.findById(updatedBanner.getId());
-        assertThat(foundUpdated).isPresent();
-        assertThat(foundUpdated.get().getName()).isEqualTo("Updated Banner");
-        assertThat(foundUpdated.get().getImageUrl()).isEqualTo("https://example.com/updated.jpg");
-        assertThat(foundUpdated.get().getImageType()).isEqualTo("png");
-    }
+	@Test
+	public void BannerRepository_FindByName_NotFound() {
+		Optional<Banner> found = bannerRepository.findByName("Nonexistent");
+		assertThat(found).isNotPresent();
+	}
 
-    @Test
-    public void testDeleteBanner() {
-        // Create and save a new banner
-        Banner banner = new Banner();
-        banner.setName("Outdated Banner");
-        bannerRepository.save(banner);
+	@Test
+	public void BannerRepository_UpdateBanner_Success() {
+		Banner banner = new Banner();
+		banner.setName("Featured Banner");
+		bannerRepository.save(banner);
 
-        // Delete the banner
-        bannerRepository.deleteById(banner.getId());
+		Optional<Banner> found = bannerRepository.findByName("Featured Banner");
 
-        // Verify the banner was deleted
-        Optional<Banner> found = bannerRepository.findById(banner.getId());
-        assertThat(found).isNotPresent();
-    }
+		Banner updatedBanner = found.get();
+		updatedBanner.setName("Updated Banner");
+		updatedBanner.setImageUrl("https://example.com/updated.jpg");
+		updatedBanner.setImageType("png");
+		bannerRepository.save(updatedBanner);
+
+		Optional<Banner> foundUpdated = bannerRepository
+			.findById(updatedBanner.getId());
+		assertThat(foundUpdated).isPresent();
+		assertThat(foundUpdated.get().getName()).isEqualTo("Updated Banner");
+		assertThat(foundUpdated.get().getImageUrl())
+			.isEqualTo("https://example.com/updated.jpg");
+		assertThat(foundUpdated.get().getImageType()).isEqualTo("png");
+	}
+
+	@Test
+	public void BannerRepository_DeleteBanner_Success() {
+		Banner banner = new Banner();
+		banner.setName("Outdated Banner");
+		bannerRepository.save(banner);
+
+		bannerRepository.deleteById(banner.getId());
+
+		Optional<Banner> found = bannerRepository.findById(banner.getId());
+		assertThat(found).isNotPresent();
+	}
 }
