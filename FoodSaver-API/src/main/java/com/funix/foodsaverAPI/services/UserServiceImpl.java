@@ -176,7 +176,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public MyUser getUserByToken(HttpServletRequest request) {
+	public MyUser getUserByToken(HttpServletRequest request)
+		throws IllegalArgumentException {
 		String array[] = request.getHeader("Authorization").split(" ");
 		String name = jWTService.extractUsername(array[1]);
 		Optional<MyUser> optionalUser = userRepository.findByName(name);

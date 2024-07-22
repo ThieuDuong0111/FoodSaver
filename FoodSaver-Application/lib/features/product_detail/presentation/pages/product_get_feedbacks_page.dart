@@ -75,7 +75,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
         titleSpacing: AppSizes.paddingHorizontal,
         backgroundColor: AppColors.primaryBrand,
         systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
-        title: AppComponent.customAppBar(Colors.white, 'Feedbacks', context),
+        title: AppComponent.customAppBar(Colors.white, 'Bình luận và đánh giá', context),
         toolbarHeight: 50.h,
       ),
       body: SingleChildScrollView(

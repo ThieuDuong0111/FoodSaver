@@ -33,7 +33,7 @@ public interface IUserService {
 	
 	MyUser getUserByStoreImageUrl(String url);
 
-	MyUser getUserByToken(HttpServletRequest request);
+	MyUser getUserByToken(HttpServletRequest request) throws IllegalArgumentException;
 
 	// Sign-Up
 

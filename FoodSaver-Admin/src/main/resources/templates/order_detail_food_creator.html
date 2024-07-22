@@ -74,16 +74,14 @@
 													data-bs-target="#modalConfirm" th:attr="data-id=${order.id}">Xác
 													nhận</button>
 												<button class="btn btn-danger" data-bs-toggle="modal"
-													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Hủy
-													đơn</button>
+													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Từ chối</button>
 											</div>
 											<div th:if="${order.statusType == 1}">
 												<button class="btn btn-success" data-bs-toggle="modal"
-													data-bs-target="#modalApprove" th:attr="data-id=${order.id}">Duyệt
-													đơn</button>
+													data-bs-target="#modalApprove" th:attr="data-id=${order.id}">Hoàn
+													thành</button>
 												<button class="btn btn-danger" data-bs-toggle="modal"
-													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Hủy
-													đơn</button>
+													data-bs-target="#modalCancel" th:attr="data-id=${order.id}">Từ chối</button>
 											</div>
 											<div th:if="${order.statusType == 2 || order.statusType == 3}"><br><br></div>
 										</div>
@@ -238,17 +236,17 @@
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="modalToggleLabel">Hủy đơn
+									<h5 class="modal-title" id="modalToggleLabel">Từ chối đơn
 									</h5>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">Bạn có chắc chắn muốn hủy đơn hàng này</span>?</div>
+								<div class="modal-body">Bạn có chắc chắn muốn từ chối đơn hàng này</span>?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
 										Đóng
 									</button>
-									<button type="button" class="btn btn-danger" id="confirmCancel">Hủy</button>
+									<button type="button" class="btn btn-danger" id="confirmCancel">Từ chối</button>
 								</div>
 							</div>
 						</div>
