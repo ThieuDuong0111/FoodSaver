@@ -1,5 +1,7 @@
 package com.funix.foodsaveradmin.services;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +16,10 @@ import com.funix.foodsaveradmin.repositories.IFeedBackRepository;
 
 @Service
 public class FeedBackServiceImpl implements IFeedBackService {
+
 	@Autowired
 	private IFeedBackRepository feedBackRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -49,4 +53,15 @@ public class FeedBackServiceImpl implements IFeedBackService {
 			pageable);
 	}
 
+	@Override
+	public FeedBack getFeedbackById(int feedbackId) {
+		Optional<FeedBack> optionalFeedback = feedBackRepository.findById(feedbackId);
+		FeedBack feedBack = null;
+		if (optionalFeedback.isPresent()) {
+			feedBack = optionalFeedback.get();
+		} else {
+			throw new RuntimeException("Feedback not found for id : " + feedbackId);
+		}
+		return feedBack;
+	}
 }

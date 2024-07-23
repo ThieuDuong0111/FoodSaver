@@ -7,8 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class FeedBack {
@@ -19,6 +21,9 @@ public class FeedBack {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private MyUser userFeedBacks;
+
+	@OneToMany(mappedBy = "feedback")
+	private List<Answer> answers;
 
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
@@ -92,4 +97,13 @@ public class FeedBack {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 }

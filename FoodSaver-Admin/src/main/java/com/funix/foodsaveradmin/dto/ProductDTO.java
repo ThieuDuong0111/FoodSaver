@@ -43,7 +43,6 @@ public class ProductDTO {
 	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double price;
 
-//	@Min(value = 1, message = "Số tiền phải lớn hơn 0")
 	private double discountPrice;
 
 	@Min(value = 0, message = "Số lượng phải lớn hơn 0")
@@ -51,6 +50,8 @@ public class ProductDTO {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
 	private Date expiredDate;
+
+	private int soldCount;
 
 	public int getId() {
 		return id;
@@ -178,5 +179,13 @@ public class ProductDTO {
 
 	public void setExpiredDate(Date expiredDate) {
 		this.expiredDate = expiredDate;
+	}
+
+	public int getSoldCount() {
+		return soldCount;
+	}
+
+	public void setSoldCount(int soldCount) {
+		this.soldCount = soldCount;
 	}
 }

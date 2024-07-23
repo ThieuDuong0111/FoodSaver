@@ -61,6 +61,8 @@ public class Product {
 
 	private int quantity;
 
+	private int soldCount;
+
 	private Date expiredDate;
 
 	public int getId() {
@@ -181,6 +183,14 @@ public class Product {
 
 	public void setExpiredDate(Date expiredDate) {
 		this.expiredDate = expiredDate;
+	}
+
+	public int getSoldCount() {
+		return soldCount;
+	}
+
+	public void setSoldCount(int soldCount) {
+		this.soldCount = soldCount;
 	}
 
 }

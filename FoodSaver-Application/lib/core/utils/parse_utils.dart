@@ -23,6 +23,21 @@ class ParseUtils {
     return newFormat.format(dateTime);
   }
 
+  static String formatTimeDifference(String dateTimeString) {
+    final DateTime inputTime = DateTime.parse(dateTimeString);
+    final DateTime now = DateTime.now();
+
+    final Duration difference = now.difference(inputTime);
+
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} phút trước';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} giờ trước';
+    } else {
+      return '${difference.inDays} ngày trước';
+    }
+  }
+
   static String convertStatusTypeText(int statusType) {
     switch (statusType) {
       case 0:

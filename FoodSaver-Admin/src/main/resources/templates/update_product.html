@@ -151,7 +151,8 @@
 										<input type="hidden" th:value="*{imageUrl}" th:attr="name='imageUrl'" />
 										<input type="hidden" th:value="*{imageType}" th:attr="name='imageType'" />
 										<input type="hidden" th:value="${creator_id}" th:attr="name='creator.id'" />
-										</p>
+										<input type="hidden" th:value="*{soldCount}" th:attr="name='soldCount'" />
+
 										<div class="demo-inline-spacing">
 											<button type="submit" class="btn btn-primary">Xác nhận</button>
 											<a th:href="@{'/food_creator/products/page/1?sortField=id&sortDir=desc'}"

@@ -1,12 +1,12 @@
 package com.funix.foodsaveradmin.services;
 
-
 import org.springframework.data.domain.Page;
 
 import com.funix.foodsaveradmin.dto.FeedBackDTO;
 import com.funix.foodsaveradmin.models.FeedBack;
 
 public interface IFeedBackService {
+	FeedBack getFeedbackById(int feedbackId);
 
 	FeedBackDTO convertToDto(FeedBack feedBack);
 

@@ -9,7 +9,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-	<title>Phản hồi - Food Saver Creator</title>
+	<title>Chi tiết phản hồi - Food Saver Creator</title>
 
 	<meta name="description" content="" />
 
@@ -48,7 +48,7 @@
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
 			<!-- Menu -->
-			<div th:replace="~{fragments/food_creator_menu :: menu(role_id=7)}"></div>
+			<div th:replace="~{fragments/food_creator_menu :: menu(role_id=10)}"></div>
 			<!-- / Menu -->
 
 			<!-- Layout container -->
@@ -63,62 +63,30 @@
 					<div class="container-xxl flex-grow-1 container-p-y">
 						<div class="card">
 							<div class="table-header">
-								<h5 class="card-header">Phản hồi</h5>
+								<h5 class="card-header">Chi tiết phản hồi</h5>
 							</div>
 							<div class="table-responsive text-nowrap">
 								<table class="table">
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Khách hàng</th>
-											<th>Sản phẩm</th>
-											<th>Nội dung</th>
-											<th>Đánh giá</th>
-											<th>Thao tác</th>
+											<th>Trả lời</th>
+											<th>Người trả lời</th>
+											<th>Thời gian</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="feedback : ${listFeedBacks}">
-											<td th:text="${feedback.id}"></td>
+										<tr th:each="answer : ${listAnswers}">
+											<td th:text="${answer.id}"></td>
+											<td th:text="${answer.answer}"></td>
+											<td th:text="${answer.userAnswer.name}"></td>
 											<td
-												th:if="${feedback.userFeedBacks.avatar == null || feedback.userFeedBacks.avatar == ''}">
-												<img th:src="@{'/images/none_image.png'} " height="40px" , /><span
-													style="padding-left: 12px;"
-													th:text="${feedback.userFeedBacks.name}"></span>
-											</td>
-											<td
-												th:unless="${feedback.userFeedBacks.avatar == null || feedback.userFeedBacks.avatar == ''}">
-												<img th:src="@{'data:image/jpeg;base64,' + ${feedback.userFeedBacks.avatar}}"
-													height="40px" , style="border-radius: 50%;" /><span
-													style="padding-left: 12px;"
-													th:text="${feedback.userFeedBacks.name}"></span>
-											</td>
-											<td
-												th:if="${feedback.productFeedBacks.image == null || feedback.productFeedBacks.image == ''}">
-												<img th:src="@{'/images/none_image_product.jpg'} " height="40px"
-													, /><span style="padding-left: 12px;"
-													th:text="${feedback.productFeedBacks.name}"></span>
-											</td>
-											<td
-												th:unless="${feedback.productFeedBacks.image == null || feedback.productFeedBacks.image == ''}">
-												<img th:src="@{'data:image/jpeg;base64,' + ${feedback.productFeedBacks.image}}"
-													height="40px" , style="border-radius: 50%;" /><span
-													style="padding-left: 12px;"
-													th:text="${feedback.productFeedBacks.name}"></span>
-											</td>
-											<td th:text="${feedback.comment}"></td>
-											<td th:text="${feedback.rating} + ' sao'"></td>
-											<td>
-												<div class="demo-inline-spacing">
-													<a class="btn btn-primary"
-														th:href="@{/food_creator/feedbacks/detail/{id}/page/1?sortField=id&sortDir=desc(id=${feedback.id})}"
-														style="text-decoration: none; color: white;">
-														Xem chi tiết</a>
-												</div>
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseDateTime(answer.publishedDate)}">
 											</td>
 										</tr>
 									</tbody>
 								</table>
+
 								<div th:if="${totalPages > 1}" style="padding: 15px;">
 									<div class="table-pagination">
 										<div>
@@ -128,7 +96,7 @@
 											<ul class="pagination">
 												<li class="page-item first">
 													<a th:if="${currentPage >= 2}" class="page-link"
-														th:href="@{'/food_creator/feedbacks/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/food_creator/feedbacks/detail/' + ${feedback_id}+ '/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
 													<a th:unless="${currentPage >= 2}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-left"></i></a>
@@ -137,7 +105,7 @@
 													style="padding-left: 2px; padding-right: 2px;">
 													<li th:if="${currentPage != i}" class="page-item">
 														<a class="page-link"
-															th:href="@{'/food_creator/feedbacks/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+															th:href="@{'/food_creator/feedbacks/detail/' + ${feedback_id} + '/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 													</li>
 													<li th:unless="${currentPage != i}" class="page-item active">
 														<a class="page-link">[[${i}]]</a>
@@ -145,13 +113,40 @@
 												</span>
 												<li class="page-item last">
 													<a th:if="${currentPage < totalPages}" class="page-link"
-														th:href="@{'/food_creator/feedbacks/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
+														th:href="@{'/food_creator/feedbacks/detail/' + ${feedback_id} +'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 													<a th:unless="${currentPage < totalPages}" class="page-link"><i
 															class="tf-icon bx bx-chevrons-right"></i></a>
 												</li>
 											</ul>
 										</nav>
+									</div>
+								</div>
+								<div class="card mb-4">
+									<div class="card-header">
+										<h6 class="mb-0">Trả lời bình luận</h6>
+									</div>
+									<div class="card-body">
+										<form th:action="@{/food_creator/feedbacks/add_answer}" th:object="${answerDTO}"
+											method="POST">
+
+											<div class="mb-3">
+												<label class="form-label" for="basic-default-answer">Trả lời</label>
+												<textarea rows="5" class="form-control" id="basic-default-answer"
+													placeholder="Trả lời phản hồi" th:field="*{answer}" /></textarea>
+												<p th:if="${#fields.hasErrors('answer')}" th:errorclass="text-danger"
+													th:errors="*{answer}"></p>
+											</div>
+											<input type="hidden" th:value="${user_id}" th:attr="name='userAnswer.id'" />
+											<input type="hidden" th:value="${feedback_id}"
+												th:attr="name='feedback.id'" />
+											<div class="demo-inline-spacing">
+												<button type="submit" class="btn btn-primary">Xác nhận</button>
+												<a th:href="@{/food_creator/feedbacks/page/1?sortField=id&sortDir=desc}"
+													class="btn btn-secondary">Quay lại</a>
+											</div>
+										</form>
+
 									</div>
 								</div>
 							</div>
@@ -163,6 +158,9 @@
 					<div th:replace="~{fragments/footer :: footer}"></div>
 					<!-- / Footer -->
 
+					<!-- / Modal -->
+
+					<div class="content-backdrop fade"></div>
 				</div>
 				<!-- Content wrapper -->
 			</div>
@@ -173,8 +171,6 @@
 		<div class="layout-overlay layout-menu-toggle"></div>
 	</div>
 	<!-- / Layout wrapper -->
-
-
 
 	<!-- Core JS -->
 	<!-- build:js assets/vendor/js/core.js -->
@@ -199,7 +195,6 @@
 	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </body>
 
 </html>

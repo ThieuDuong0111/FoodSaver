@@ -1,6 +1,7 @@
 package com.funix.foodsaverAPI.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class FeedBackDTO {
 	private int id;
@@ -8,6 +9,8 @@ public class FeedBackDTO {
 	private UserDTO userFeedBacks;
 
 	private ProductDTO productFeedBacks;
+
+	private List<AnswerDTO> answers;
 
 	private String comment;
 
@@ -61,5 +64,13 @@ public class FeedBackDTO {
 
 	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
+	}
+
+	public List<AnswerDTO> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<AnswerDTO> answers) {
+		this.answers = answers;
 	}
 }

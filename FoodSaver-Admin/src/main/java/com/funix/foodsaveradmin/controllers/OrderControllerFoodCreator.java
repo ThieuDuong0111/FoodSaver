@@ -31,7 +31,7 @@ public class OrderControllerFoodCreator {
 	}
 
 	@GetMapping("/detail/{id}")
-	public String showFormForUpdate(@PathVariable(value = "id") int id,
+	public String showDetail(@PathVariable(value = "id") int id,
 		Model model) {
 		Order order = orderServiceImpl
 			.convertToEntity(orderServiceImpl.getOrderById(id));

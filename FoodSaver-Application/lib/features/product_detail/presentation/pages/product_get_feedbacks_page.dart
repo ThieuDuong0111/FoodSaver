@@ -52,6 +52,7 @@ class ProductGetFeedBacksWrapper extends StatefulWidget {
 
 class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper> {
   late TextEditingController _feedBackController;
+  late TextEditingController _replyController;
   late ProductDetailBloc _productDetailBloc;
   late FToast fToast;
   double rating = 1;
@@ -61,6 +62,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
     _productDetailBloc.add(ProductGetFeedBacksEvent(widget.productId));
     _feedBackController = TextEditingController();
+    _replyController = TextEditingController();
     super.initState();
     fToast = FToast();
     fToast.init(context);
@@ -125,6 +127,10 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
+                                      Text(
+                                        'Bình luận: ',
+                                        style: AppTextStyle.primaryText(),
+                                      ),
                                       TextField(
                                         controller: _feedBackController,
                                       ),
@@ -252,33 +258,54 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    //Feedbacks
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        if (ValidateUtils.isNotNullOrEmpty(
+                                          state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                        ))
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(20.w),
+                                            child: ImageParse(
+                                              width: 35.w,
+                                              height: 35.w,
+                                              url: state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                              type: 'user',
+                                            ),
+                                          )
+                                        else
+                                          Icon(
+                                            Icons.account_circle,
+                                            size: 35.w,
+                                            color: AppColors.greyColor,
+                                          ),
+                                        SizedBox(width: 8.w),
                                         Expanded(
-                                          child: Row(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              if (ValidateUtils.isNotNullOrEmpty(
-                                                state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
-                                              ))
-                                                ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20.w),
-                                                  child: ImageParse(
-                                                    width: 35.w,
-                                                    height: 35.w,
-                                                    url: state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
-                                                    type: 'user',
-                                                  ),
-                                                )
-                                              else
-                                                Icon(
-                                                  Icons.account_circle,
-                                                  size: 35.w,
-                                                  color: AppColors.greyColor,
+                                              Container(
+                                                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(15.r),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Color.fromRGBO(9, 30, 66, 0.25),
+                                                      blurRadius: 8,
+                                                      spreadRadius: -2,
+                                                      offset: Offset(
+                                                        0,
+                                                        4,
+                                                      ),
+                                                    ),
+                                                    BoxShadow(
+                                                      color: Color.fromRGBO(9, 30, 66, 0.08),
+                                                      spreadRadius: 1,
+                                                    ),
+                                                  ],
                                                 ),
-                                              SizedBox(width: 8.w),
-                                              Expanded(
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
@@ -287,6 +314,7 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                       style: AppTextStyle.smallText()
                                                           .copyWith(fontWeight: FontWeight.w500),
                                                     ),
+                                                    SizedBox(height: 5.h),
                                                     Row(
                                                       children: [
                                                         IgnorePointer(
@@ -307,25 +335,321 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                         ),
                                                       ],
                                                     ),
+                                                    SizedBox(height: 5.h),
+                                                    Text(
+                                                      state.listFeedBacksEntity[index].comment.toString(),
+                                                      style: AppTextStyle.smallText()
+                                                          .copyWith(fontWeight: FontWeight.w400),
+                                                    ),
+                                                    SizedBox(height: 5.h),
                                                   ],
                                                 ),
                                               ),
+                                              SizedBox(height: 6.h),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      ParseUtils.formatTimeDifference(
+                                                        state.listFeedBacksEntity[index].publishedDate.toString(),
+                                                      ),
+                                                      style: AppTextStyle.smallText()
+                                                          .copyWith(fontWeight: FontWeight.w400),
+                                                    ),
+                                                    SizedBox(width: 8.w),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        if (ValidateUtils.isLogined(userinfo)) {
+                                                          final AlertDialog alert = AlertDialog(
+                                                            insetPadding: EdgeInsets.zero,
+                                                            titlePadding: EdgeInsets.zero,
+                                                            buttonPadding: EdgeInsets.zero,
+                                                            actionsPadding: EdgeInsets.zero,
+                                                            contentPadding: EdgeInsets.zero,
+                                                            backgroundColor: Colors.transparent,
+                                                            content: Padding(
+                                                              padding: EdgeInsets.symmetric(
+                                                                horizontal: AppSizes.paddingHorizontal,
+                                                              ),
+                                                              child: Container(
+                                                                width: double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                  color: Colors.white,
+                                                                  borderRadius: BorderRadius.circular(20.r),
+                                                                ),
+                                                                padding: EdgeInsets.all(20.w),
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Trả lời: ',
+                                                                      style: AppTextStyle.primaryText(),
+                                                                    ),
+                                                                    TextField(
+                                                                      controller: _replyController,
+                                                                    ),
+                                                                    SizedBox(height: 18.h),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                                                      child: Column(
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            width: double.infinity,
+                                                                            height: 30.h,
+                                                                            child: ElevatedButton(
+                                                                              onPressed: () {
+                                                                                // _productDetailBloc.add(
+                                                                                //   ProductAddFeedBackEvent(
+                                                                                //     AddFeedBackRequest(
+                                                                                //       userId: userinfo.id,
+                                                                                //       productId: widget.productId,
+                                                                                //       comment: _feedBackController.text,
+                                                                                //       rating: rating.toInt(),
+                                                                                //     ),
+                                                                                //   ),
+                                                                                // );
+                                                                              },
+                                                                              style: ButtonStyle(
+                                                                                backgroundColor:
+                                                                                    WidgetStateProperty.all<Color>(
+                                                                                  AppColors.primaryBrand,
+                                                                                ),
+                                                                                shape: WidgetStateProperty.all<
+                                                                                    OutlinedBorder>(
+                                                                                  RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(
+                                                                                      AppSizes.buttonBorderRadius,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              child: Text(
+                                                                                'Xác nhận',
+                                                                                style: AppTextStyle.primaryText()
+                                                                                    .copyWith(color: Colors.white),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(height: 5.h),
+                                                                          SizedBox(
+                                                                            width: double.infinity,
+                                                                            height: 30.h,
+                                                                            child: ElevatedButton(
+                                                                              onPressed: () {
+                                                                                context.router.pop();
+                                                                              },
+                                                                              style: ButtonStyle(
+                                                                                backgroundColor:
+                                                                                    WidgetStateProperty.all<Color>(
+                                                                                  Colors.white,
+                                                                                ),
+                                                                                shape: WidgetStateProperty.all<
+                                                                                    OutlinedBorder>(
+                                                                                  RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(
+                                                                                      AppSizes.buttonBorderRadius,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              child: Text(
+                                                                                'Quay lại',
+                                                                                style: AppTextStyle.primaryText()
+                                                                                    .copyWith(color: Colors.black),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return alert;
+                                                            },
+                                                          );
+                                                        } else {
+                                                          AppDialog.showAppDialog(
+                                                            context: context,
+                                                            content:
+                                                                'Bạn hãy đăng nhập để sử dụng tính năng này. Quay lại trang đăng nhập?',
+                                                            buttonName: 'Đồng ý',
+                                                            action: () {
+                                                              context.router.pushAndPopUntil(
+                                                                const SignInPageRoute(),
+                                                                predicate: (_) => false,
+                                                              );
+                                                            },
+                                                          );
+                                                        }
+                                                      },
+                                                      child: Text(
+                                                        'Trả lời',
+                                                        style: AppTextStyle.smallText()
+                                                            .copyWith(fontWeight: FontWeight.w400),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 15.h),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(width: 8.w),
-                                        Text(
-                                          ParseUtils.formatDateTime(
-                                            state.listFeedBacksEntity[index].publishedDate.toString(),
-                                          ),
-                                          style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w400),
-                                        ),
                                       ],
                                     ),
-                                    SizedBox(height: 5.h),
-                                    Text(
-                                      state.listFeedBacksEntity[index].comment.toString(),
-                                      style: AppTextStyle.smallText().copyWith(fontWeight: FontWeight.w400),
+                                    //Answers
+                                    ListView.builder(
+                                      padding: EdgeInsets.only(left: 38.w),
+                                      shrinkWrap: true,
+                                      physics: const ScrollPhysics(),
+                                      itemCount: state.listFeedBacksEntity[index].answers.length,
+                                      itemBuilder: (context, indexAnswer) {
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            if (state.listFeedBacksEntity[index].answers[indexAnswer].isCreator)
+                                              if (ValidateUtils.isNotNullOrEmpty(
+                                                state.listFeedBacksEntity[index].answers[indexAnswer].userAnswer
+                                                    .storeImageUrl,
+                                              ))
+                                                ClipRRect(
+                                                  borderRadius: BorderRadius.circular(20.w),
+                                                  child: ImageParse(
+                                                    width: 30.w,
+                                                    height: 30.w,
+                                                    url: state.listFeedBacksEntity[index].answers[indexAnswer]
+                                                        .userAnswer.storeImageUrl,
+                                                    type: 'store',
+                                                  ),
+                                                )
+                                              else
+                                                Icon(
+                                                  Icons.account_circle,
+                                                  size: 30.w,
+                                                  color: AppColors.greyColor,
+                                                ),
+                                            if (!state.listFeedBacksEntity[index].answers[indexAnswer].isCreator)
+                                              if (ValidateUtils.isNotNullOrEmpty(
+                                                state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                              ))
+                                                ClipRRect(
+                                                  borderRadius: BorderRadius.circular(20.w),
+                                                  child: ImageParse(
+                                                    width: 30.w,
+                                                    height: 30.w,
+                                                    url: state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                                    type: 'user',
+                                                  ),
+                                                )
+                                              else
+                                                Icon(
+                                                  Icons.account_circle,
+                                                  size: 30.w,
+                                                  color: AppColors.greyColor,
+                                                ),
+                                            SizedBox(width: 8.w),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.circular(15.r),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color: Color.fromRGBO(9, 30, 66, 0.25),
+                                                          blurRadius: 8,
+                                                          spreadRadius: -2,
+                                                          offset: Offset(
+                                                            0,
+                                                            4,
+                                                          ),
+                                                        ),
+                                                        BoxShadow(
+                                                          color: Color.fromRGBO(9, 30, 66, 0.08),
+                                                          spreadRadius: 1,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            if (state.listFeedBacksEntity[index].answers[indexAnswer]
+                                                                .isCreator)
+                                                              Row(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons.verified_user,
+                                                                    color: Colors.orangeAccent,
+                                                                    size: 15.w,
+                                                                  ),
+                                                                  SizedBox(width: 5.w),
+                                                                ],
+                                                              )
+                                                            else
+                                                              const SizedBox(),
+                                                            Expanded(
+                                                              child: Text(
+                                                                state.listFeedBacksEntity[index].answers[indexAnswer]
+                                                                        .isCreator
+                                                                    ? state.listFeedBacksEntity[index]
+                                                                        .answers[indexAnswer].userAnswer.storeName!
+                                                                    : state
+                                                                        .listFeedBacksEntity[index].userFeedBacks.name
+                                                                        .toString(),
+                                                                style: AppTextStyle.smallText()
+                                                                    .copyWith(fontWeight: FontWeight.w500),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 5.h),
+                                                        Text(
+                                                          state.listFeedBacksEntity[index].answers[indexAnswer].answer
+                                                              .toString(),
+                                                          style: AppTextStyle.smallText()
+                                                              .copyWith(fontWeight: FontWeight.w400),
+                                                        ),
+                                                        SizedBox(height: 5.h),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 6.h),
+                                                  Padding(
+                                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          ParseUtils.formatTimeDifference(
+                                                            state.listFeedBacksEntity[index].answers[indexAnswer]
+                                                                .publishedDate
+                                                                .toString(),
+                                                          ),
+                                                          style: AppTextStyle.smallText()
+                                                              .copyWith(fontWeight: FontWeight.w400),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                     SizedBox(height: 15.h),
                                   ],
