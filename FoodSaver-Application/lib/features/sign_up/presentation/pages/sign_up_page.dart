@@ -57,13 +57,13 @@ class _SignUpWrapperState extends State<SignUpWrapper> {
   late FToast fToast;
   @override
   void initState() {
+    super.initState();
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
     _rePasswordController = TextEditingController();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
     _addressController = TextEditingController();
-    super.initState();
     fToast = FToast();
     fToast.init(context);
   }

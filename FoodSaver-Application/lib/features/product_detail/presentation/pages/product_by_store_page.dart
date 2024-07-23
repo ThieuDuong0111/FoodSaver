@@ -59,12 +59,12 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
 
   @override
   void initState() {
+    super.initState();
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
     _productDetailBloc.add(ProductByStorePageEvent(widget.storeId));
     _cartBloc = BlocProvider.of<CartBloc>(context);
     fToast = FToast();
     fToast.init(context);
-    super.initState();
   }
 
   @override

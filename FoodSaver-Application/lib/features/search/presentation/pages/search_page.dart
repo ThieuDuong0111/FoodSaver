@@ -37,9 +37,9 @@ class _SearchWrapperState extends State<SearchWrapper> {
   late SearchBloc _searchBloc;
   @override
   void initState() {
+    super.initState();
     _searchBloc = BlocProvider.of<SearchBloc>(context);
     _searchController = TextEditingController();
-    super.initState();
   }
 
   @override

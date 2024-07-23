@@ -37,9 +37,9 @@ class _StoreWrapperState extends State<StoreWrapper> {
   late StoreBloc _storeBloc;
   @override
   void initState() {
+    super.initState();
     _storeBloc = BlocProvider.of<StoreBloc>(context);
     _storeBloc.add(const StoresPageEvent());
-    super.initState();
   }
 
   @override

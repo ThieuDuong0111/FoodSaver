@@ -60,11 +60,11 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
 
   @override
   void initState() {
+    super.initState();
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
     _productDetailBloc.add(ProductGetFeedBacksEvent(widget.productId));
     _feedBackController = TextEditingController();
     _replyController = TextEditingController();
-    super.initState();
     fToast = FToast();
     fToast.init(context);
   }
@@ -662,7 +662,6 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                         );
                                       },
                                     ),
-                                    SizedBox(height: 15.h),
                                   ],
                                 );
                               },

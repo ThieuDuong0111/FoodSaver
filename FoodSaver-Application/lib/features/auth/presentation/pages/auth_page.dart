@@ -36,9 +36,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   void initState() {
+    super.initState();
     _authBloc = BlocProvider.of<AuthBloc>(context);
     _authBloc.add(const AuthInitAppEvent());
-    super.initState();
   }
 
   @override

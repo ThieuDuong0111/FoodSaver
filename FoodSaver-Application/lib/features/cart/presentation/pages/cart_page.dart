@@ -46,10 +46,10 @@ class _CartWrapperState extends State<CartWrapper> {
   late FToast fToast;
   @override
   void initState() {
+    super.initState();
     _cartBloc = BlocProvider.of<CartBloc>(context);
     _cartBlocAction = BlocProvider.of<CartBloc>(context);
     _cartBloc.add(const CartGetItemsEvent());
-    super.initState();
     fToast = FToast();
     fToast.init(context);
   }

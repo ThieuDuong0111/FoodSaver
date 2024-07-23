@@ -77,10 +77,10 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
   int commentsCount = 1;
   @override
   void initState() {
+    super.initState();
     _productDetailBloc = BlocProvider.of<ProductDetailBloc>(context);
     _productDetailBloc.add(ProductDetailPageEvent(widget.productId));
     _cartBloc = BlocProvider.of<CartBloc>(context);
-    super.initState();
     fToast = FToast();
     fToast.init(context);
   }

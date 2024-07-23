@@ -39,9 +39,9 @@ class _OrderDetailWrapperState extends State<OrderDetailWrapper> {
   late OrderHistoryBloc _orderHistoryBloc;
   @override
   void initState() {
+    super.initState();
     _orderHistoryBloc = BlocProvider.of<OrderHistoryBloc>(context);
     _orderHistoryBloc.add(OrderDetailPageEvent(orderId: widget.orderId));
-    super.initState();
   }
 
   @override

@@ -40,9 +40,9 @@ class _OrderHistoryWrapperState extends State<OrderHistoryWrapper> {
   late OrderHistoryBloc _orderHistoryBloc;
   @override
   void initState() {
+    super.initState();
     _orderHistoryBloc = BlocProvider.of<OrderHistoryBloc>(context);
     _orderHistoryBloc.add(const OrderHistoryPageEvent());
-    super.initState();
   }
 
   @override

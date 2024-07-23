@@ -52,13 +52,13 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
   late FToast fToast;
   @override
   void initState() {
+    super.initState();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
     _addressController = TextEditingController();
     _myProfileBloc = BlocProvider.of<MyProfileBloc>(context);
     fToast = FToast();
     fToast.init(context);
-    super.initState();
   }
 
   @override

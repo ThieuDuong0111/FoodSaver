@@ -37,9 +37,9 @@ class _CategoryWrapperState extends State<CategoryWrapper> {
   late CategoryBloc _categoryBloc;
   @override
   void initState() {
+    super.initState();
     _categoryBloc = BlocProvider.of<CategoryBloc>(context);
     _categoryBloc.add(const CategoriesPageEvent());
-    super.initState();
   }
 
   @override
