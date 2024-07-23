@@ -4,9 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:funix_thieudvfx_foodsaver/core/exception/api_exception.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/add_answer_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/add_feedback_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/feedback_entity.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/product_entity.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_add_answer_category_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_add_feedback_category_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_category_usecase.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/usecases/product_by_store_usecase.dart';
@@ -25,12 +27,14 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     this._productAddFeedBackUsecase,
     this._productGetFeedBacksUsecase,
     this._productByStoreUsecase,
+    this._productAddAnswerUsecase,
   ) : super(ProductDetailInitial()) {
     on<ProductDetailPageEvent>(_productDetailPage);
     on<ProductByCategoryPageEvent>(_producByCategoryPage);
     on<ProductByStorePageEvent>(_producByStorePage);
     on<ProductAddFeedBackEvent>(_productAddFeedBack);
     on<ProductGetFeedBacksEvent>(_productGetFeedBacks);
+    on<ProductAddAnswerEvent>(_productAddAnswer);
   }
 
   final ProductDetailUsecase _productDetailUsecase;
@@ -95,6 +99,19 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     result.fold(
       (left) => emit(ProductGetFeedBacksErrorState(failure: left)),
       (right) => emit(ProductGetFeedBacksFinishedState(listFeedBacksEntity: right)),
+    );
+  }
+
+  final ProductAddAnswerUsecase _productAddAnswerUsecase;
+  FutureOr<void> _productAddAnswer(
+    ProductAddAnswerEvent event,
+    Emitter<ProductDetailState> emit,
+  ) async {
+    emit(ProductAddAnswerLoadingState());
+    final Either<Failure, AddAnswerRequest> result = await _productAddAnswerUsecase(event.addAnswerRequest);
+    result.fold(
+      (left) => emit(ProductAddAnswerErrorState(failure: left)),
+      (right) => emit(ProductAddAnswerFinishedState(addAnswerRequest: right)),
     );
   }
 }

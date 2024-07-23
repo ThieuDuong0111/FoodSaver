@@ -42,6 +42,7 @@ class ProductFromModelToEntityMapperImpl extends ProductFromModelToEntityMapper 
       rating3Count: model.rating3Count,
       rating4Count: model.rating4Count,
       rating5Count: model.rating5Count,
+      soldCount: model.soldCount,
     );
     return productentity;
   }

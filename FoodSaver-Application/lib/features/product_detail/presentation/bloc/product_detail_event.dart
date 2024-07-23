@@ -31,3 +31,8 @@ class ProductByStorePageEvent extends ProductDetailEvent {
   const ProductByStorePageEvent(this.storeId);
   final int storeId;
 }
+
+class ProductAddAnswerEvent extends ProductDetailEvent {
+  const ProductAddAnswerEvent(this.addAnswerRequest);
+  final AddAnswerRequest addAnswerRequest;
+}

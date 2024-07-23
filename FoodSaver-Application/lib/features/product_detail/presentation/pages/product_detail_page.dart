@@ -261,6 +261,24 @@ class _ProductDetailWrapperState extends State<ProductDetailWrapper> {
                               TextSpan(
                                 children: [
                                   TextSpan(
+                                    text: 'Đã bán: ',
+                                    style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: state.productEntity.soldCount.toString(),
+                                    style: AppTextStyle.primaryText().copyWith(
+                                      color: const Color(0xFF03A33A),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
                                     text: 'Địa chỉ: ',
                                     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w500),
                                   ),

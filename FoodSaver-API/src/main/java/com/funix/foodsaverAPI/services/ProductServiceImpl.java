@@ -95,8 +95,15 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductDTO> getTop20Products() {
+	public List<ProductDTO> getTop20NewestProducts() {
 		return productRepository.getTop20Products().stream()
+			.map(this::convertToDto)
+			.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ProductDTO> getTop5MostPurchaseProducts() {
+		return productRepository.getTop5MostPurchaseProducts().stream()
 			.map(this::convertToDto)
 			.collect(Collectors.toList());
 	}
@@ -148,4 +155,5 @@ public class ProductServiceImpl implements IProductService {
 		number = Math.floor(number * 10) / 10;
 		return number;
 	}
+
 }

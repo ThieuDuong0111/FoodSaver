@@ -29,6 +29,7 @@ class ProductEntity with _$ProductEntity implements DomainEntity {
     required int rating3Count,
     required int rating2Count,
     required int rating1Count,
+    required int soldCount,
   }) = _ProductEntity;
   ProductEntity._();
 }

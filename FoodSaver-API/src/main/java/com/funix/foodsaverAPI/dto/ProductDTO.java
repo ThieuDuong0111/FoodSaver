@@ -53,6 +53,8 @@ public class ProductDTO {
 
 	private Boolean isOutOfStock;
 
+	private int soldCount;
+
 	public int getId() {
 		return id;
 	}
@@ -219,5 +221,13 @@ public class ProductDTO {
 
 	public void setRating1Count(int rating1Count) {
 		this.rating1Count = rating1Count;
+	}
+
+	public int getSoldCount() {
+		return soldCount;
+	}
+
+	public void setSoldCount(int soldCount) {
+		this.soldCount = soldCount;
 	}
 }

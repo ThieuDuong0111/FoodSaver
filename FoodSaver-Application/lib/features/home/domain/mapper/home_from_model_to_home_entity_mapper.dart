@@ -28,7 +28,8 @@ class HomeFromModelToEntityMapperImpl extends HomeFromModelToEntityMapper {
   HomeEntity fromModel(HomeModel model) {
     final HomeEntity homeEntity = HomeEntity(
       categories: model.categories.map(_categoryFromModelToEntityMapper.fromModel).toList(),
-      products: model.products.map(_productFromModelToEntityMapper.fromModel).toList(),
+      mostRatingProducts: model.mostRatingProducts.map(_productFromModelToEntityMapper.fromModel).toList(),
+      newestProducts: model.newestProducts.map(_productFromModelToEntityMapper.fromModel).toList(),
       banners: model.banners.map(_bannerFromModelToEntityMapper.fromModel).toList(),
       stores: model.stores.map(_userFromModelToEntityMapper.fromModel).toList(),
     );

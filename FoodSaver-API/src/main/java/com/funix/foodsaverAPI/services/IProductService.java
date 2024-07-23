@@ -16,7 +16,9 @@ public interface IProductService {
 
 	Product getProductById(int id);
 
-	List<ProductDTO> getTop20Products();
+	List<ProductDTO> getTop20NewestProducts();
+	
+	List<ProductDTO> getTop5MostPurchaseProducts();
 
 	Product getProductByImageUrl(String url);
 

@@ -13,7 +13,8 @@ class HomeModel with _$HomeModel implements DataModel {
   factory HomeModel({
     required List<CategoryModel> categories,
     required List<UserModel> stores,
-    required List<ProductModel> products,
+    required List<ProductModel> mostRatingProducts,
+    required List<ProductModel> newestProducts,
     required List<BannerModel> banners,
   }) = _HomeModel;
 

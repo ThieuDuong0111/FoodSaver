@@ -12,7 +12,8 @@ class HomeEntity with _$HomeEntity implements DomainEntity {
   factory HomeEntity({
     required List<CategoryEntity?> categories,
     required List<UserEntity?> stores,
-    required List<ProductEntity?> products,
+    required List<ProductEntity?> mostRatingProducts,
+    required List<ProductEntity?> newestProducts,
     required List<BannerEntity?> banners,
   }) = _HomeEntity;
   HomeEntity._();

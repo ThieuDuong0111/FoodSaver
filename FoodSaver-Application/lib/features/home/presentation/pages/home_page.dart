@@ -9,9 +9,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:funix_thieudvfx_foodsaver/core/utils/validate_utils.dart';
 import 'package:funix_thieudvfx_foodsaver/dependency_injection.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/loading_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toast_widget.dart';
+import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/bloc/home_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/product_gridview.dart';
+import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/product_listview_vertical.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/cart_items_count_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
@@ -27,8 +30,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
-      create: (context) => DependencyInjection.instance(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBloc>(
+          create: (context) => DependencyInjection.instance(),
+        ),
+        BlocProvider<CartBloc>(
+          create: (context) => DependencyInjection.instance(),
+        ),
+      ],
       child: const HomeWrapper(),
     );
   }
@@ -43,6 +53,7 @@ class HomeWrapper extends StatefulWidget {
 
 class _HomeWrapperState extends State<HomeWrapper> {
   late HomeBloc _homeBloc;
+  late CartBloc _cartBloc;
   late FToast fToast;
   final CarouselController _carouselController = CarouselController();
   double bannerWidth = 0;
@@ -51,9 +62,10 @@ class _HomeWrapperState extends State<HomeWrapper> {
   int _currentBannerIndex = 0;
   @override
   void initState() {
+    super.initState();
     _homeBloc = BlocProvider.of<HomeBloc>(context);
     _homeBloc.add(const HomePageEvent());
-    super.initState();
+    _cartBloc = BlocProvider.of<CartBloc>(context);
     fToast = FToast();
     fToast.init(context);
   }
@@ -219,259 +231,295 @@ class _HomeWrapperState extends State<HomeWrapper> {
             bloc: _homeBloc,
             builder: (context, state) {
               if (state is HomePageFinishedState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10.h),
-                    CarouselSlider(
-                      carouselController: _carouselController,
-                      options: CarouselOptions(
-                        enlargeCenterPage: true,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 7),
-                        viewportFraction: 1,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _currentBannerIndex = index;
-                          });
-                        },
-                      ),
-                      items: state.homeEntity.banners
-                          .map(
-                            (banner) => Align(
-                              alignment: Alignment.topCenter,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.r),
-                                child: ImageParse(
-                                  width: bannerWidth,
-                                  height: bannerHeight,
-                                  url: banner!.imageUrl.toString(),
-                                  type: 'banner',
-                                ),
+                return Consumer(
+                  builder: (context, ref, child) {
+                    return BlocListener<CartBloc, CartState>(
+                      listenWhen: (previous, current) => true,
+                      bloc: _cartBloc,
+                      listener: (context, state) {
+                        if (state is CartPageFinishedState) {
+                          final CartItemsCountNotifier cartItemsCount = ref.read(CartItemsCountNotifier.provider);
+                          cartItemsCount.setCartItemsCount(state.cartEntity.itemsCount);
+                          fToast.showToast(child: const ToastWidget(message: 'Thêm vào giỏ hàng thành công'));
+                        }
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.h),
+                          CarouselSlider(
+                            carouselController: _carouselController,
+                            options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 7),
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentBannerIndex = index;
+                                });
+                              },
+                            ),
+                            items: state.homeEntity.banners
+                                .map(
+                                  (banner) => Align(
+                                    alignment: Alignment.topCenter,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      child: ImageParse(
+                                        width: bannerWidth,
+                                        height: bannerHeight,
+                                        url: banner!.imageUrl.toString(),
+                                        type: 'banner',
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          // SizedBox(height: 10.h),
+                          Center(
+                            child: AnimatedSmoothIndicator(
+                              onDotClicked: (index) {
+                                _carouselController.jumpToPage(index);
+                              },
+                              activeIndex: _currentBannerIndex,
+                              count: state.homeEntity.banners.length,
+                              effect: const ExpandingDotsEffect(
+                                spacing: 4,
+                                radius: 5,
+                                dotWidth: 5,
+                                dotHeight: 5,
+                                dotColor: AppColors.greyColor,
+                                activeDotColor: AppColors.primaryBrand,
                               ),
                             ),
-                          )
-                          .toList(),
-                    ),
-                    // SizedBox(height: 10.h),
-                    Center(
-                      child: AnimatedSmoothIndicator(
-                        onDotClicked: (index) {
-                          _carouselController.jumpToPage(index);
-                        },
-                        activeIndex: _currentBannerIndex,
-                        count: state.homeEntity.banners.length,
-                        effect: const ExpandingDotsEffect(
-                          spacing: 4,
-                          radius: 5,
-                          dotWidth: 5,
-                          dotHeight: 5,
-                          dotColor: AppColors.greyColor,
-                          activeDotColor: AppColors.primaryBrand,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                      child: Text(
-                        'Danh mục',
-                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SizedBox(height: 7.h),
-                    SizedBox(
-                      height: 135.h,
-                      child: ListView.builder(
-                        itemCount: state.homeEntity.categories.length,
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: 10.w),
-                            child: InkWell(
-                              onTap: () {
-                                context.router.push(
-                                  ProductByCategoryPageRoute(
-                                    categoryId: state.homeEntity.categories[index]!.id,
-                                    categoryName: state.homeEntity.categories[index]!.name.toString(),
+                          ),
+                          SizedBox(height: 15.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                            child: Text(
+                              'Danh mục',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(height: 7.h),
+                          SizedBox(
+                            height: 135.h,
+                            child: ListView.builder(
+                              itemCount: state.homeEntity.categories.length,
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 10.w),
+                                  child: InkWell(
+                                    onTap: () {
+                                      context.router.push(
+                                        ProductByCategoryPageRoute(
+                                          categoryId: state.homeEntity.categories[index]!.id,
+                                          categoryName: state.homeEntity.categories[index]!.name.toString(),
+                                        ),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 3.h),
+                                      child: Container(
+                                        width: 115.h,
+                                        padding: EdgeInsets.all(10.w),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10.r),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Color.fromRGBO(9, 30, 66, 0.25),
+                                              blurRadius: 8,
+                                              spreadRadius: -2,
+                                              offset: Offset(
+                                                0,
+                                                4,
+                                              ),
+                                            ),
+                                            BoxShadow(
+                                              color: Color.fromRGBO(9, 30, 66, 0.08),
+                                              spreadRadius: 1,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              state.homeEntity.categories[index]!.name.toString(),
+                                              style: AppTextStyle.primaryText()
+                                                  .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                            ),
+                                            SizedBox(height: 1.h),
+                                            Flexible(
+                                              child: Text(
+                                                state.homeEntity.categories[index]!.description.toString(),
+                                                style: AppTextStyle.smallText()
+                                                    .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(10.r),
+                                                child: ImageParse(
+                                                  width: 60.h,
+                                                  height: 60.h,
+                                                  url: state.homeEntity.categories[index]!.imageUrl,
+                                                  type: 'category',
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 );
                               },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 3.h),
-                                child: Container(
-                                  width: 115.h,
-                                  padding: EdgeInsets.all(10.w),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color.fromRGBO(9, 30, 66, 0.25),
-                                        blurRadius: 8,
-                                        spreadRadius: -2,
-                                        offset: Offset(
-                                          0,
-                                          4,
-                                        ),
-                                      ),
-                                      BoxShadow(
-                                        color: Color.fromRGBO(9, 30, 66, 0.08),
-                                        spreadRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        state.homeEntity.categories[index]!.name.toString(),
-                                        style: AppTextStyle.primaryText()
-                                            .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                                      ),
-                                      SizedBox(height: 1.h),
-                                      Flexible(
-                                        child: Text(
-                                          state.homeEntity.categories[index]!.description.toString(),
-                                          style: AppTextStyle.smallText()
-                                              .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      SizedBox(height: 5.h),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: ClipRRect(
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                            child: Text(
+                              'Cửa hàng mới lên sàn',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(height: 7.h),
+                          SizedBox(
+                            height: 160.h,
+                            child: ListView.builder(
+                              itemCount: state.homeEntity.stores.length,
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 10.w),
+                                  child: InkWell(
+                                    onTap: () {
+                                      context.router
+                                          .push(ProductByStorePageRoute(storeId: state.homeEntity.stores[index]!.id));
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 3.h),
+                                      child: Container(
+                                        width: 115.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
                                           borderRadius: BorderRadius.circular(10.r),
-                                          child: ImageParse(
-                                            width: 60.h,
-                                            height: 60.h,
-                                            url: state.homeEntity.categories[index]!.imageUrl,
-                                            type: 'category',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                      child: Text(
-                        'Cửa hàng mới lên sàn',
-                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SizedBox(height: 7.h),
-                    SizedBox(
-                      height: 160.h,
-                      child: ListView.builder(
-                        itemCount: state.homeEntity.stores.length,
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: 10.w),
-                            child: InkWell(
-                              onTap: () {
-                                context.router
-                                    .push(ProductByStorePageRoute(storeId: state.homeEntity.stores[index]!.id));
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 3.h),
-                                child: Container(
-                                  width: 115.h,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color.fromRGBO(9, 30, 66, 0.25),
-                                        blurRadius: 8,
-                                        spreadRadius: -2,
-                                        offset: Offset(
-                                          0,
-                                          4,
-                                        ),
-                                      ),
-                                      BoxShadow(
-                                        color: Color.fromRGBO(9, 30, 66, 0.08),
-                                        spreadRadius: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.r),
-                                          topRight: Radius.circular(10.r),
-                                        ),
-                                        child: ImageParse(
-                                          width: 115.h,
-                                          height: 115.h,
-                                          url: state.homeEntity.stores[index]!.storeImageUrl,
-                                          type: 'store',
-                                        ),
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Flexible(
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 5.w),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.verified_user,
-                                                    color: Colors.orangeAccent,
-                                                    size: 15.w,
-                                                  ),
-                                                  SizedBox(width: 5.w),
-                                                  Expanded(
-                                                    child: Text(
-                                                      state.homeEntity.stores[index]!.storeName.toString(),
-                                                      style: AppTextStyle.primaryText()
-                                                          .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                                                      maxLines: 1,
-                                                    ),
-                                                  ),
-                                                ],
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Color.fromRGBO(9, 30, 66, 0.25),
+                                              blurRadius: 8,
+                                              spreadRadius: -2,
+                                              offset: Offset(
+                                                0,
+                                                4,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            BoxShadow(
+                                              color: Color.fromRGBO(9, 30, 66, 0.08),
+                                              spreadRadius: 1,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.r),
+                                                topRight: Radius.circular(10.r),
+                                              ),
+                                              child: ImageParse(
+                                                width: 115.h,
+                                                height: 115.h,
+                                                url: state.homeEntity.stores[index]!.storeImageUrl,
+                                                type: 'store',
+                                              ),
+                                            ),
+                                            SizedBox(height: 10.h),
+                                            Flexible(
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.verified_user,
+                                                          color: Colors.orangeAccent,
+                                                          size: 15.w,
+                                                        ),
+                                                        SizedBox(width: 5.w),
+                                                        Expanded(
+                                                          child: Text(
+                                                            state.homeEntity.stores[index]!.storeName.toString(),
+                                                            style: AppTextStyle.primaryText().copyWith(
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                            maxLines: 1,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
-                          );
-                        },
+                          ),
+                          SizedBox(height: 20.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                            child: Text(
+                              'Sản phẩm được mua nhiều nhất',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
+                          ProductListViewVertical(
+                            products: state.homeEntity.mostRatingProducts,
+                            cartBloc: _cartBloc,
+                            userEntity: ref.watch(UserInfoNotifier.provider).userInfo,
+                          ),
+                          SizedBox(height: 5.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
+                            child: Text(
+                              'Sản phẩm mới nhất',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(height: 10.h),
+                          ProductGridView(products: state.homeEntity.newestProducts),
+
+                          SizedBox(height: AppSizes.paddingBottom),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
-                      child: Text(
-                        'Sản phẩm mới nhất',
-                        style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    ProductGridView(products: state.homeEntity.products),
-                    SizedBox(height: AppSizes.paddingBottom),
-                  ],
+                    );
+                  },
                 );
               } else if (state is HomePageLoadingState) {
                 return const LoadingPage();

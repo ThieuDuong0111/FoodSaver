@@ -30,6 +30,7 @@ class ProductModel with _$ProductModel implements DataModel {
     required int rating3Count,
     required int rating2Count,
     required int rating1Count,
+    required int soldCount,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);

@@ -30,6 +30,9 @@ class ParseUtils {
     final Duration difference = now.difference(inputTime);
 
     if (difference.inMinutes < 60) {
+      if (difference.inMinutes == 0) {
+        return 'ngay bây giờ';
+      }
       return '${difference.inMinutes} phút trước';
     } else if (difference.inHours < 24) {
       return '${difference.inHours} giờ trước';

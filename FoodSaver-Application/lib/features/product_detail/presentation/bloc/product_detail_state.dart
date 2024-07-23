@@ -78,3 +78,17 @@ class ProductGetFeedBacksFinishedState extends ProductDetailState {
   });
   final List<FeedBackEntity> listFeedBacksEntity;
 }
+
+class ProductAddAnswerLoadingState extends ProductDetailState {}
+
+class ProductAddAnswerErrorState extends ProductDetailState {
+  const ProductAddAnswerErrorState({required this.failure});
+  final Failure failure;
+}
+
+class ProductAddAnswerFinishedState extends ProductDetailState {
+  const ProductAddAnswerFinishedState({
+    required this.addAnswerRequest,
+  });
+  final AddAnswerRequest addAnswerRequest;
+}

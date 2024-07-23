@@ -38,6 +38,6 @@ public class HomeControllerTest {
         assertThat(homeDTO.getBanners()).isNotNull();
         assertThat(homeDTO.getCategories()).isNotNull();
         assertThat(homeDTO.getStores()).isNotNull();
-        assertThat(homeDTO.getProducts()).isNotNull();
+        assertThat(homeDTO.getNewestProducts()).isNotNull();
     }
 }

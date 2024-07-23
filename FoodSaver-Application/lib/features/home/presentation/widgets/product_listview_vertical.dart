@@ -14,18 +14,31 @@ import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/app_dialog.dart';
 import 'package:funix_thieudvfx_foodsaver/theme/theme.dart';
 
-class ProductListViewVertical extends StatelessWidget {
+class ProductListViewVertical extends StatefulWidget {
   final CartBloc cartBloc;
   final List<ProductEntity?> products;
-  final FToast fToast;
+
   final UserEntity userEntity;
   const ProductListViewVertical({
     super.key,
     required this.products,
     required this.cartBloc,
-    required this.fToast,
     required this.userEntity,
   });
+
+  @override
+  State<ProductListViewVertical> createState() => _ProductListViewVerticalState();
+}
+
+class _ProductListViewVerticalState extends State<ProductListViewVertical> {
+  late FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,7 @@ class ProductListViewVertical extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingHorizontal),
       shrinkWrap: true,
       physics: const ScrollPhysics(),
-      itemCount: products.length,
+      itemCount: widget.products.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.only(bottom: 15.h),
@@ -42,8 +55,8 @@ class ProductListViewVertical extends StatelessWidget {
             onTap: () {
               context.router.push(
                 ProductDetailPageRoute(
-                  productId: products[index]!.id,
-                  productName: products[index]!.name.toString(),
+                  productId: widget.products[index]!.id,
+                  productName: widget.products[index]!.name.toString(),
                 ),
               );
             },
@@ -54,7 +67,7 @@ class ProductListViewVertical extends StatelessWidget {
                   child: ImageParse(
                     width: size,
                     height: size,
-                    url: products[index]!.imageUrl,
+                    url: widget.products[index]!.imageUrl,
                     type: 'product',
                   ),
                 ),
@@ -65,15 +78,30 @@ class ProductListViewVertical extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          products[index]!.name.toString(),
-                          style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                widget.products[index]!.name.toString(),
+                                style: AppTextStyle.primaryText()
+                                    .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              '(${widget.products[index]!.soldCount} đã bán)',
+                              style:
+                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                          products[index]!.description.toString(),
+                          widget.products[index]!.description.toString(),
                           style: AppTextStyle.primaryText()
                               .copyWith(color: AppColors.greyColor, fontWeight: FontWeight.w500),
                           maxLines: 1,
@@ -84,7 +112,7 @@ class ProductListViewVertical extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                ParseUtils.formatCurrency(products[index]!.price.toDouble()),
+                                ParseUtils.formatCurrency(widget.products[index]!.price.toDouble()),
                                 style:
                                     AppTextStyle.primaryText().copyWith(color: Colors.red, fontWeight: FontWeight.w500),
                                 maxLines: 1,
@@ -93,15 +121,16 @@ class ProductListViewVertical extends StatelessWidget {
                             SizedBox(width: 5.w),
                             InkWell(
                               onTap: () {
-                                if (ValidateUtils.isLogined(userEntity)) {
-                                  if (products[index]!.isExpired!) {
+                                if (ValidateUtils.isLogined(widget.userEntity)) {
+                                  if (widget.products[index]!.isExpired!) {
                                     fToast.showToast(child: const ToastWidget(message: 'Sản phẩm này đã hết hạn.'));
-                                  } else if (products[index]!.quantity < 1) {
+                                  } else if (widget.products[index]!.quantity < 1) {
                                     fToast.showToast(child: const ToastWidget(message: 'Sản phẩm này đã hết hàng.'));
                                   } else {
-                                    cartBloc.add(
+                                    widget.cartBloc.add(
                                       CartUpdateItemEvent(
-                                        cartUpdateRequest: CartUpdateRequest(id: products[index]!.id, quantity: 1),
+                                        cartUpdateRequest:
+                                            CartUpdateRequest(id: widget.products[index]!.id, quantity: 1),
                                       ),
                                     );
                                   }

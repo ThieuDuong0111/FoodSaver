@@ -15,6 +15,9 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 
 	@Query(value = "SELECT * FROM Product p ORDER BY p.id DESC LIMIT 20", nativeQuery = true)
 	List<Product> getTop20Products();
+	
+	@Query(value = "SELECT * FROM Product p ORDER BY p.sold_count DESC LIMIT 5", nativeQuery = true)
+	List<Product> getTop5MostPurchaseProducts();
 
 	Optional<Product> findByImageUrl(String imageUrl);
 

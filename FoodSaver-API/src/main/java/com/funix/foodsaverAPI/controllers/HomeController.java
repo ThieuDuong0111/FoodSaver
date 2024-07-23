@@ -34,7 +34,8 @@ public class HomeController {
 		homeDTO.setBanners(bannerServiceImpl.getAllBanners());
 		homeDTO.setCategories(categoryServiceImpl.getAllCategories());
 		homeDTO.setStores(userServiceImpl.get10NewestStore());
-		homeDTO.setProducts(productServiceImpl.getTop20Products());
+		homeDTO.setMostRatingProducts(productServiceImpl.getTop5MostPurchaseProducts());
+		homeDTO.setNewestProducts(productServiceImpl.getTop20NewestProducts());
 		return ResponseEntity.ok(homeDTO);
 	}
 }

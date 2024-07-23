@@ -88,6 +88,15 @@ class ProductGridView extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              // SizedBox(width: 5.w),
+                              // Flexible(
+                              //   child: Text(
+                              //     '${products[index]!.soldCount} đã bán',
+                              //     style: AppTextStyle.primaryText().copyWith(fontWeight: FontWeight.w400),
+                              //     maxLines: 1,
+                              //     overflow: TextOverflow.ellipsis,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

@@ -179,7 +179,6 @@ class _ProductByStoreWrapperState extends State<ProductByStoreWrapper> {
                                 ProductListViewVertical(
                                   products: state.listProductEntity,
                                   cartBloc: _cartBloc,
-                                  fToast: fToast,
                                   userEntity: ref.watch(UserInfoNotifier.provider).userInfo,
                                 ),
                                 SizedBox(height: AppSizes.paddingBottom),

@@ -15,6 +15,7 @@ import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/widgets/toa
 import 'package:funix_thieudvfx_foodsaver/features/home/presentation/widgets/image_parse.dart';
 import 'package:funix_thieudvfx_foodsaver/features/init/presentation/riverpod/user_info_notifier.dart';
 import 'package:funix_thieudvfx_foodsaver/features/my_profile/domain/entities/user_entity.dart';
+import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/add_answer_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/domain/entities/add_feedback_request.dart';
 import 'package:funix_thieudvfx_foodsaver/features/product_detail/presentation/bloc/product_detail_bloc.dart';
 import 'package:funix_thieudvfx_foodsaver/service/navigation_service.dart';
@@ -92,9 +93,16 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                   context.router.pop();
                   fToast.showToast(child: const ToastWidget(message: 'Thêm bình luận thành công'));
                 }
-                if (state is ProductAddFeedBackErrorState) {
+                if (state is ProductAddAnswerFinishedState) {
+                  _productDetailBloc.add(ProductGetFeedBacksEvent(widget.productId));
+                  _replyController.text = '';
+                  context.router.pop();
+                  fToast.showToast(child: const ToastWidget(message: 'Đã thêm trả lời bình luận'));
+                }
+                if (state is ProductAddFeedBackErrorState || state is ProductAddAnswerErrorState) {
                   _productDetailBloc.add(ProductGetFeedBacksEvent(widget.productId));
                   _feedBackController.text = '';
+                  _replyController.text = '';
                   context.router.pop();
                   fToast.showToast(child: const ToastWidget(message: 'Đã có lỗi xảy ra. Vui lòng thử lại!'));
                 }
@@ -399,16 +407,17 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                                             height: 30.h,
                                                                             child: ElevatedButton(
                                                                               onPressed: () {
-                                                                                // _productDetailBloc.add(
-                                                                                //   ProductAddFeedBackEvent(
-                                                                                //     AddFeedBackRequest(
-                                                                                //       userId: userinfo.id,
-                                                                                //       productId: widget.productId,
-                                                                                //       comment: _feedBackController.text,
-                                                                                //       rating: rating.toInt(),
-                                                                                //     ),
-                                                                                //   ),
-                                                                                // );
+                                                                                _productDetailBloc.add(
+                                                                                  ProductAddAnswerEvent(
+                                                                                    AddAnswerRequest(
+                                                                                      userId: userinfo.id,
+                                                                                      feedBackId: state
+                                                                                          .listFeedBacksEntity[index]
+                                                                                          .id,
+                                                                                      answer: _replyController.text,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
                                                                               },
                                                                               style: ButtonStyle(
                                                                                 backgroundColor:
@@ -538,14 +547,16 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                 ),
                                             if (!state.listFeedBacksEntity[index].answers[indexAnswer].isCreator)
                                               if (ValidateUtils.isNotNullOrEmpty(
-                                                state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                                state.listFeedBacksEntity[index].answers[indexAnswer].userAnswer
+                                                    .imageUrl,
                                               ))
                                                 ClipRRect(
                                                   borderRadius: BorderRadius.circular(20.w),
                                                   child: ImageParse(
                                                     width: 30.w,
                                                     height: 30.w,
-                                                    url: state.listFeedBacksEntity[index].userFeedBacks.imageUrl,
+                                                    url: state.listFeedBacksEntity[index].answers[indexAnswer]
+                                                        .userAnswer.imageUrl,
                                                     type: 'user',
                                                   ),
                                                 )
@@ -606,8 +617,8 @@ class _ProductGetFeedBacksWrapperState extends State<ProductGetFeedBacksWrapper>
                                                                         .isCreator
                                                                     ? state.listFeedBacksEntity[index]
                                                                         .answers[indexAnswer].userAnswer.storeName!
-                                                                    : state
-                                                                        .listFeedBacksEntity[index].userFeedBacks.name
+                                                                    : state.listFeedBacksEntity[index]
+                                                                        .answers[indexAnswer].userAnswer.name
                                                                         .toString(),
                                                                 style: AppTextStyle.smallText()
                                                                     .copyWith(fontWeight: FontWeight.w500),
