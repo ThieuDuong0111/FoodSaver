@@ -47,6 +47,9 @@ public class Order {
 	@Column(nullable = false)
 	private int paymentType;
 
+	@Column(nullable = false)
+	private int shippingType;
+
 	public int getId() {
 		return id;
 	}
@@ -134,4 +137,13 @@ public class Order {
 	public void setPaymentType(int paymentType) {
 		this.paymentType = paymentType;
 	}
+
+	public int getShippingType() {
+		return shippingType;
+	}
+
+	public void setShippingType(int shippingType) {
+		this.shippingType = shippingType;
+	}
+
 }

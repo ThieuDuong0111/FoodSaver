@@ -20,6 +20,7 @@ class OrderEntity with _$OrderEntity implements DomainEntity {
     required String statusTypeParse,
     required int paymentType,
     required String paymentTypeParse,
+    required int shippingType,
   }) = _OrderEntity;
   OrderEntity._();
 }

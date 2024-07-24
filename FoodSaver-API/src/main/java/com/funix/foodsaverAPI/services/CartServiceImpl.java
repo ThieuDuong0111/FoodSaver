@@ -16,6 +16,7 @@ import com.funix.foodsaverAPI.dto.CartByCreatorDTO;
 import com.funix.foodsaverAPI.dto.CartDTO;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
+import com.funix.foodsaverAPI.dto.OrderDTO;
 import com.funix.foodsaverAPI.models.Cart;
 import com.funix.foodsaverAPI.models.CartItem;
 import com.funix.foodsaverAPI.models.MyUser;
@@ -47,6 +48,9 @@ public class CartServiceImpl implements ICartService {
 
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
+	
+	@Autowired
+	private OrderServiceImpl orderServiceImpl;
 
 	@Autowired
 	private IUserService userService;
@@ -186,7 +190,101 @@ public class CartServiceImpl implements ICartService {
 				if (cartItems.get(i)
 					.getUnitQuantity() > currentProductQuantity) {
 					throw new IllegalArgumentException(
-						"Product quantity is not enough.");
+						"Sản phẩm không đủ số lượng.");
+				}
+			}
+
+//			// Update Product Quantity and Product SoldCount
+//			for (int i = 0; i < cartItems.size(); i++) {
+//				Product product = productServiceImpl
+//					.getProductById(cartItems.get(i).getCartProduct().getId());
+//				product.setQuantity(product.getQuantity() - cartItems.get(i)
+//					.getUnitQuantity());
+//				product.setSoldCount(product.getSoldCount()
+//					+ cartItems.get(i).getUnitQuantity());
+//			}
+//
+//			// Get Distinct Creator Id
+//			List<Integer> creatorIds = cartRepository
+//				.getDistinctCreatorId(currentCart.getId());
+//
+//			// Seperate Order
+//			for (int i = 0; i < creatorIds.size(); i++) {
+//
+//				// Create Order
+//				Order order = new Order(currentCart.getUserCarts(), new Date(),
+//					ParseUtils.generateOrderCode(), false, creatorIds.get(i),
+//					userService.getUserById(creatorIds.get(i)).getStoreName(),
+//					0, 0);
+//				List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+//				orderRepository.save(order);
+//
+//				for (int j = 0; j < cartItems.size(); j++) {
+//					if (creatorIds.get(i) == cartItems.get(j).getCartProduct()
+//						.getCreator().getId()) {
+//						orderDetails.add(new OrderDetail(order,
+//							cartItems.get(j).getCartProduct().getId(),
+//							cartItems.get(j).getCartProduct().getName(),
+//							cartItems.get(j).getCartProduct()
+//								.getImageUrl(),
+//							cartItems.get(j).getCartProduct().getImageType(),
+//							cartItems.get(j).getCartProduct().getImage(),
+//							cartItems.get(j).getUnitQuantity(),
+//							cartItems.get(j).getUnitPrice()));
+//					}
+//				}
+//				order.setOrderDetails(orderDetails);
+//				order.setTotalAmount(calculateTotalAmountOfOrder(order));
+//				orderDetailRepository.saveAll(order.getOrderDetails());
+//			}
+//
+//			// Update Cart Done
+//			currentCart.setIsDone(true);
+//			cartRepository.save(currentCart);
+//
+//			// Create new cart
+//			Cart newCart = new Cart(new ArrayList<CartItem>(), user, new Date(),
+//				false);
+//			cartRepository
+//				.save(newCart);
+
+			CartDTO cartDTO = convertToDto(currentCart);
+			// --- Tách cartItems theo creator
+			cartDTO.setTotalAmount(calculateTotalAmountOfCart(currentCart));
+			cartDTO.setItemsCount(currentCart.getCartItems().size());
+			seperateCartItemsByCreator(currentCart, cartDTO);
+			return cartDTO;
+		} else {
+			CartDTO cartDTO = convertToDto(currentCart);
+			// --- Tách cartItems theo creator
+			cartDTO.setTotalAmount(calculateTotalAmountOfCart(currentCart));
+			cartDTO.setItemsCount(currentCart.getCartItems().size());
+			seperateCartItemsByCreator(currentCart, cartDTO);
+			return cartDTO;
+		}
+	}
+
+	@Override
+	public List<OrderDTO> completeOrder(OrderDTO orderDTO,
+		HttpServletRequest request)
+		throws ParseException {
+		List<OrderDTO> listOrders = new ArrayList<OrderDTO>();
+
+		MyUser user = userService.getUserByToken(request);
+		Cart currentCart = cartRepository.getItemsByUserId(user.getId()).get();
+		List<CartItem> cartItems = currentCart.getCartItems();
+
+		if (cartItems.size() > 0) {
+			// Check quantity
+			int currentProductQuantity = 0;
+			for (int i = 0; i < cartItems.size(); i++) {
+				currentProductQuantity = productServiceImpl
+					.getProductById(cartItems.get(i).getCartProduct().getId())
+					.getQuantity();
+				if (cartItems.get(i)
+					.getUnitQuantity() > currentProductQuantity) {
+					throw new IllegalArgumentException(
+						"Sản phẩm không đủ số lượng.");
 				}
 			}
 
@@ -212,6 +310,10 @@ public class CartServiceImpl implements ICartService {
 					ParseUtils.generateOrderCode(), false, creatorIds.get(i),
 					userService.getUserById(creatorIds.get(i)).getStoreName(),
 					0, 0);
+				// Set Payment Type
+				order.setPaymentType(orderDTO.getPaymentType());
+				// Set Shipping Type
+				order.setShippingType(orderDTO.getShippingType());
 				List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 				orderRepository.save(order);
 
@@ -232,6 +334,7 @@ public class CartServiceImpl implements ICartService {
 				order.setOrderDetails(orderDetails);
 				order.setTotalAmount(calculateTotalAmountOfOrder(order));
 				orderDetailRepository.saveAll(order.getOrderDetails());
+				listOrders.add(orderServiceImpl.convertToDto(order));
 			}
 
 			// Update Cart Done
@@ -243,15 +346,11 @@ public class CartServiceImpl implements ICartService {
 				false);
 			cartRepository
 				.save(newCart);
-
-			CartDTO cartDTO = convertToDto(newCart);
-			cartDTO.setCartByCreator(new ArrayList<CartByCreatorDTO>());
-			cartDTO.setTotalAmount(new BigDecimal(0.0));
-			return cartDTO;
+			return listOrders;
 		} else {
-			return convertToDto(currentCart);
+			throw new IllegalArgumentException(
+				"Sản phẩm không đủ số lượng.");
 		}
-
 	}
 
 	@Override

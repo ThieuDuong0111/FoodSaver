@@ -76,38 +76,26 @@ class _ProductListViewVerticalState extends State<ProductListViewVertical> {
                   child: SizedBox(
                     height: size,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                widget.products[index]!.name.toString(),
-                                style: AppTextStyle.primaryText()
-                                    .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(width: 4.w),
-                            Text(
-                              '(${widget.products[index]!.soldCount} đã bán)',
-                              style:
-                                  AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w400),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        Flexible(
+                          child: Text(
+                            widget.products[index]!.name.toString(),
+                            style:
+                                AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                          widget.products[index]!.description.toString(),
-                          style: AppTextStyle.primaryText()
-                              .copyWith(color: AppColors.greyColor, fontWeight: FontWeight.w500),
+                          '${widget.products[index]!.soldCount} đã bán',
+                          style: AppTextStyle.primaryText().copyWith(color: Colors.black, fontWeight: FontWeight.w400),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 5.h),
                         Row(
                           children: [
                             Expanded(

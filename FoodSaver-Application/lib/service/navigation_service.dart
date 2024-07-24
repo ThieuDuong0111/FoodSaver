@@ -7,6 +7,8 @@ import 'package:funix_thieudvfx_foodsaver/core/constants/widget_keys.dart';
 import 'package:funix_thieudvfx_foodsaver/features/about/presentation/pages/about_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/auth/presentation/pages/auth_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/cart_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/select_payment_page.dart';
+import 'package:funix_thieudvfx_foodsaver/features/cart/presentation/pages/select_shipping_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/category/presentation/pages/category_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/checkout/presentation/pages/checkout_page.dart';
 import 'package:funix_thieudvfx_foodsaver/features/customer_support/presentation/pages/customer_support_page.dart';
@@ -84,6 +86,14 @@ abstract class NavigationService implements RootStackRouter {}
     AutoRoute<Object>(
       path: 'cart',
       page: CartPage,
+    ),
+    AutoRoute<Object>(
+      path: 'select_payment',
+      page: SelectPaymentPage,
+    ),
+    AutoRoute<Object>(
+      path: 'select_shipping',
+      page: SelectShippingPage,
     ),
     AutoRoute<Object>(
       path: 'checkout',

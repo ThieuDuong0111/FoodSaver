@@ -86,4 +86,34 @@ class ParseUtils {
         return Colors.black;
     }
   }
+
+  static String convertPaymentTypeText(int paymentType) {
+    switch (paymentType) {
+      case 1:
+        {
+          return 'Thanh toán khi nhận hàng';
+        }
+      case 2:
+        {
+          return 'Chuyển khoản';
+        }
+      default:
+        return '';
+    }
+  }
+
+  static String convertShippingTypeText(int shipingType) {
+    switch (shipingType) {
+      case 1:
+        {
+          return 'Giao hàng';
+        }
+      case 2:
+        {
+          return 'Lấy hàng tại chỗ';
+        }
+      default:
+        return '';
+    }
+  }
 }

@@ -28,6 +28,8 @@ public class OrderDTO {
 
 	private String paymentTypeParse;
 
+	private int shippingType;
+
 	public OrderDTO() {
 		super();
 	}
@@ -127,4 +129,13 @@ public class OrderDTO {
 	public void setPaymentTypeParse(String paymentTypeParse) {
 		this.paymentTypeParse = paymentTypeParse;
 	}
+
+	public int getShippingType() {
+		return shippingType;
+	}
+
+	public void setShippingType(int shippingType) {
+		this.shippingType = shippingType;
+	}
+
 }

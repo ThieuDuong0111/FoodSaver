@@ -41,6 +41,7 @@ class OrderFromModelToEntityMapperImpl extends OrderFromModelToEntityMapper {
       statusTypeParse: model.statusTypeParse,
       paymentType: model.paymentType,
       paymentTypeParse: model.paymentTypeParse,
+      shippingType: model.shippingType,
     );
     return orderEntity;
   }

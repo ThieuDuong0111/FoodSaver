@@ -67,7 +67,7 @@ public class ParseUtils {
 	public static String convertPaymentType(int statusType) {
 		switch (statusType) {
 		case 0: {
-			return "Tiền mặt";
+			return "Thanh toán khi nhận hàng";
 		}
 		case 1: {
 			return "Chuyển khoản";

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.funix.foodsaverAPI.dto.CartItemDTO;
 import com.funix.foodsaverAPI.dto.CartItemProductDTO;
 import com.funix.foodsaverAPI.dto.ErrorMessageResponse;
+import com.funix.foodsaverAPI.dto.OrderDTO;
 import com.funix.foodsaverAPI.services.CartServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,6 +52,19 @@ public class CartController {
 		try {
 			return ResponseEntity
 				.ok(cartServiceImpl.checkout(request));
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(
+				new ErrorMessageResponse(e.getMessage()),
+				HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/complete-order")
+	public ResponseEntity<?> completeOrder(@RequestBody OrderDTO orderDTO, HttpServletRequest request)
+		throws ParseException {
+		try {
+			return ResponseEntity
+				.ok(cartServiceImpl.completeOrder(orderDTO, request));
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(
 				new ErrorMessageResponse(e.getMessage()),

@@ -36,3 +36,17 @@ class CartCheckoutFinishedState extends CartState {
   });
   final CartEntity cartEntity;
 }
+
+class CartCompleteLoadingState extends CartState {}
+
+class CartCompleteErrorState extends CartState {
+  const CartCompleteErrorState({required this.failure});
+  final Failure failure;
+}
+
+class CartCompleteFinishedState extends CartState {
+  const CartCompleteFinishedState({
+    required this.listOrderEntity,
+  });
+  final List<OrderEntity> listOrderEntity;
+}
