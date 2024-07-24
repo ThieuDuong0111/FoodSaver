@@ -105,8 +105,10 @@
 													style="padding-left: 12px;"
 													th:text="${feedback.productFeedBacks.name}"></span>
 											</td>
-											<td th:text="${feedback.comment}"></td>
-											<td th:text="${feedback.rating}"></td>
+											<td><span
+													style="display: block; width: 400px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+													th:text="${feedback.comment}"></span> </td>
+											<td th:text="${feedback.rating} + ' sao'"></td>
 										</tr>
 									</tbody>
 								</table>

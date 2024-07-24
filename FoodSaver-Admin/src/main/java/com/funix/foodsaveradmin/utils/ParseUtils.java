@@ -66,11 +66,24 @@ public class ParseUtils {
 
 	public static String convertPaymentType(int statusType) {
 		switch (statusType) {
-		case 0: {
-			return "Thanh toán khi nhận hàng";
-		}
 		case 1: {
+			return "COD";
+		}
+		case 2: {
 			return "Chuyển khoản";
+		}
+		default:
+			return "";
+		}
+	}
+	
+	public static String convertShippingType(int shippingType) {
+		switch (shippingType) {
+		case 1: {
+			return "Giao hàng";
+		}
+		case 2: {
+			return "Lấy hàng tại chỗ";
 		}
 		default:
 			return "";

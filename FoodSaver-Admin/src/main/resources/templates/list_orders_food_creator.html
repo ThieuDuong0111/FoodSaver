@@ -77,13 +77,18 @@
 											<th>Thời gian</th>
 											<th>Trạng thái</th>
 											<th>Thanh toán</th>
+											<th>Giao hàng</th>
 											<th>Thao tác</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="order : ${listorders}">
 											<td th:text="${order.id}"></td>
-											<td th:text="${order.orderCode}"></td>
+											<td>
+												<span
+													style="display: block; width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+													th:text="${order.orderCode}"></span>
+											</td>
 											<td
 												th:if="${order.userOrders.avatar == null || order.userOrders.avatar == ''}">
 												<img th:src="@{'/images/none_image.jpg'} " height="40px" , /><span
@@ -109,6 +114,9 @@
 											</td>
 											<td
 												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).convertPaymentType(order.paymentType)}">
+											</td>
+											<td
+												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).convertShippingType(order.shippingType)}">
 											</td>
 											<td>
 												<div class="demo-inline-spacing">
