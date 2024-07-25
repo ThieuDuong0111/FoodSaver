@@ -78,7 +78,11 @@
 									<tbody>
 										<tr th:each="answer : ${listAnswers}">
 											<td th:text="${answer.id}"></td>
-											<td th:text="${answer.answer}"></td>
+											<td>
+												<span
+													style="display: block; width: 400px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+													th:text="${answer.answer}"></span>
+											</td>
 											<td th:text="${answer.userAnswer.name}"></td>
 											<td
 												th:text="${T(com.funix.foodsaveradmin.utils.ParseUtils).parseDateTime(answer.publishedDate)}">
