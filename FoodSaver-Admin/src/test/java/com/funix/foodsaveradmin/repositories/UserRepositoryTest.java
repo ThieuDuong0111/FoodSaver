@@ -21,7 +21,7 @@ public class UserRepositoryTest {
 	private IUserRepository userRepository;
 
 	@Test
-	public void UserRepository_Save_ReturnSaveUser() {
+	public void UserRepository_Save_ReturnUser() {
 		MyUser user = new MyUser();
 		user.setName("nguyenduong");
 		user.setPassword("12345678");
@@ -83,7 +83,7 @@ public class UserRepositoryTest {
 	@Test
 	public void UserRepository_FindById_NotFound() {
 		// Attempt to find a user that doesn't exist
-		Optional<MyUser> found = userRepository.findByName("nonexistent");
+		Optional<MyUser> found = userRepository.findById(100);
 		// Verify no user is found
 		assertThat(found).isNotPresent();
 	}
@@ -103,6 +103,13 @@ public class UserRepositoryTest {
 		// Verify the user was found and the name is correct
 		assertThat(found).isPresent();
 		assertThat(found.get().getName()).isEqualTo("nguyenduong");
+	}
+
+	@Test
+	public void UserRepository_FindByName_NotFound() {
+		Optional<MyUser> found = userRepository.findByName("testnotfound");
+		// Verify the user was found and the name is correct
+		assertThat(found).isNotPresent();
 	}
 
 	@Test

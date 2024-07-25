@@ -21,7 +21,7 @@ public class BannerRepositoryTest {
 	private IBannerRepository bannerRepository;
 
 	@Test
-	public void BannerRepository_Save_ReturnSaveBanner() {
+	public void BannerRepository_Save_ReturnBanner() {
 		Banner banner = new Banner();
 		banner.setName("Promo Banner");
 		banner.setImageUrl("https://example.com/banner.jpg");
@@ -61,6 +61,18 @@ public class BannerRepositoryTest {
 
 		assertThat(found).isPresent();
 		assertThat(found.get().getId()).isEqualTo(banner.getId());
+	}
+	
+	@Test
+	public void BannerRepository_FindById_NotFound() {
+		Banner banner = new Banner();
+		banner.setId(1);
+		banner.setName("Special Offer Banner");
+		bannerRepository.save(banner);
+
+		Optional<Banner> found = bannerRepository.findById(2);
+
+		assertThat(found).isNotPresent();
 	}
 
 	@Test

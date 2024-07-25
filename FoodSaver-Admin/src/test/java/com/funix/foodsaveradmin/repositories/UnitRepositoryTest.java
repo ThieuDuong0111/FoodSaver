@@ -21,7 +21,7 @@ public class UnitRepositoryTest {
 	private IUnitRepository unitRepository;
 
 	@Test
-	public void UnitRepository_Save_ReturnSaveUnit() {
+	public void UnitRepository_Save_ReturnUnit() {
 		// Create a new unit and save it to the repository
 		Unit unit = new Unit();
 		unit.setName("Kilogram");
@@ -64,6 +64,15 @@ public class UnitRepositoryTest {
 		// Verify the unit was found and the ID is correct
 		assertThat(found).isPresent();
 		assertThat(found.get().getId()).isEqualTo(unit.getId());
+	}
+	
+	@Test
+	public void UnitRepository_FindById_NotFound() {
+
+		// Retrieve the unit by ID
+		Optional<Unit> found = unitRepository.findById(100);
+
+		assertThat(found).isNotPresent();
 	}
 
 	@Test

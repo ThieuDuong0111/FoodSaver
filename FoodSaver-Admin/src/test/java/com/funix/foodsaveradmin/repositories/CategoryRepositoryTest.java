@@ -66,6 +66,20 @@ public class CategoryRepositoryTest {
 		assertThat(found).isPresent();
 		assertThat(found.get().getId()).isEqualTo(category.getId());
 	}
+	
+	@Test
+	public void BannerRepository_FindById_NotFound() {
+		Category category = new Category();
+		category.setId(20);
+		category.setName("Beverage");
+		category.setDescription("Drinks and other beverages");
+		categoryRepository.save(category);
+		
+		Optional<Category> found = categoryRepository
+			.findById(21);
+
+		assertThat(found).isNotPresent();
+	}
 
 	@Test
 	public void CategoryRepository_FindByName_Found() {

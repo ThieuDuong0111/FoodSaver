@@ -34,7 +34,7 @@ public class ProductRepositoryTest {
 	private IUnitRepository unitRepository;
 
 	@Test
-	public void ProductRepository_Save_ReturnSavedProduct() {
+	public void ProductRepository_Save_ReturnProduct() {
 		// Create a new category
 		Category category = new Category();
 		category.setName("Beverages");
@@ -151,6 +151,15 @@ public class ProductRepositoryTest {
 	}
 
 	@Test
+	public void ProductRepository_FindById_NotFound() {
+		// Retrieve the product by ID
+		Optional<Product> found = productRepository.findById(500);
+
+		// Verify the product was found and the ID is correct
+		assertThat(found).isNotPresent();
+	}
+
+	@Test
 	public void ProductRepository_FindByName_Found() {
 		// Create and save a new product
 		Product product = new Product();
@@ -165,7 +174,7 @@ public class ProductRepositoryTest {
 		assertThat(found).isPresent();
 		assertThat(found.get().getName()).isEqualTo("Juice");
 	}
-	
+
 	@Test
 	public void ProductRepository_FindByName_NotFound() {
 		// Attempt to find a product that doesn't exist
