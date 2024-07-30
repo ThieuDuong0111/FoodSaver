@@ -47,7 +47,7 @@ class CartContentWidget extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(15.r),
+                                borderRadius: BorderRadius.circular(10.r),
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromRGBO(9, 30, 66, 0.25),
