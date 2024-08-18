@@ -38,3 +38,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+FoodSaver-Admin/target/
+FoodSaver-API/target/

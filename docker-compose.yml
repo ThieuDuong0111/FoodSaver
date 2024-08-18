@@ -1,0 +1,19 @@
+version: "1"
+services:
+    foodsaveradmin:
+        build:
+            #đường dẫn đến service
+            context: FoodSaver-Admin
+            dockerfile: Dockerfile
+        image: foodsaveradmin:0.0.1
+        ports:
+            - 8081:8081
+
+    foodsaverapi:
+        build:
+            #đường dẫn đến service
+            context: FoodSaver-API
+            dockerfile: Dockerfile
+        image: foodsaverapi:0.0.1
+        ports:
+            - 8080:8080
