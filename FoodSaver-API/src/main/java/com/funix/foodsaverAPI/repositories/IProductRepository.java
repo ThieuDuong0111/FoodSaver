@@ -25,7 +25,7 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 	
 	List<Product> findByCreatorId(int creatorId);
 
-	@Query(value = "SELECT * FROM Product p WHERE name LIKE %:name%", nativeQuery = true)
+	@Query(value = "SELECT * FROM Product p WHERE p.name LIKE " + "%:name%", nativeQuery = true)
 	List<Product> searchByName(@Param("name") String name);
 
 }

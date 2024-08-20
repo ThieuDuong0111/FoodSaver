@@ -14,11 +14,4 @@ public class LoginController {
 		return "login_page";
 	}
 
-	/*
-	 * @PostMapping("/login") public String signIn(BindingResult result) {
-	 * 
-	 * if (result.hasErrors()) { return "login_page"; }
-	 * 
-	 * return "index"; }
-	 */
 }
