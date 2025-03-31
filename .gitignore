@@ -44,3 +44,6 @@ FoodSaver-Admin/build/
 
 FoodSaver-API/target/
 FoodSaver-API/build/
+/FoodSaver-Admin/target/classes/**
+/FoodSaver-Admin/target
+FoodSaver-API/target/classes/com/funix/foodsaverAPI/SecurityConfig.class

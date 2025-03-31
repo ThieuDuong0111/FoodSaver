@@ -19,17 +19,36 @@ public class BannerRepositoryTest {
 
 	@Autowired
 	private IBannerRepository bannerRepository;
-
+	
 	@Test
-	public void BannerRepository_Save_ReturnBanner() {
+	public void BannerRepository_Save_ReturnBanner_WithAllNull() {
 		Banner banner = new Banner();
-		banner.setName("Promo Banner");
+		bannerRepository.save(banner);
+	}
+	
+	@Test
+	public void BannerRepository_Save_ReturnBanner_WithNullName() {
+		Banner banner = new Banner();
 		banner.setImageUrl("https://example.com/banner.jpg");
 		banner.setImageType("jpg");
 
 		Banner savedBanner = bannerRepository.save(banner);
 
-		assertThat(savedBanner.getName()).isEqualTo("Promo Banner");
+		assertThat(savedBanner.getImageUrl())
+			.isEqualTo("https://example.com/banner.jpg");
+		assertThat(savedBanner.getImageType()).isEqualTo("jpg");
+	}
+
+	@Test
+	public void BannerRepository_Save_ReturnBanner_WithEmptyName() {
+		Banner banner = new Banner();
+		banner.setName("");
+		banner.setImageUrl("https://example.com/banner.jpg");
+		banner.setImageType("jpg");
+
+		Banner savedBanner = bannerRepository.save(banner);
+
+		assertThat(savedBanner.getName()).isEqualTo("");
 		assertThat(savedBanner.getImageUrl())
 			.isEqualTo("https://example.com/banner.jpg");
 		assertThat(savedBanner.getImageType()).isEqualTo("jpg");
